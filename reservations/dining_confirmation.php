@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('header.php');
+include('../includes/header.php');
 
 // Redirect if no success message (prevents direct access)
 if (!isset($_SESSION['success'])) {
@@ -158,10 +158,10 @@ unset($_SESSION['success']); // Clear the message after displaying
                         </div>
 
                         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="dining.php" class="btn btn-confirmation">
+                            <a href="../pages/dining.php" class="btn btn-confirmation">
                                 <i class="fas fa-utensils me-2"></i>Back to Dining
                             </a>
-                            <a href="index.php" class="btn btn-secondary-custom">
+                            <a href="../index.php" class="btn btn-secondary-custom">
                                 <i class="fas fa-home me-2"></i>Return Home
                             </a>
                         </div>
@@ -172,4 +172,4 @@ unset($_SESSION['success']); // Clear the message after displaying
     </div>
 </div>
 
-<?php include('footer.php'); ?>
+<?php include('../includes/footer.php'); ?>
