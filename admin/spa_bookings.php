@@ -3,13 +3,13 @@ session_start();
 
 // Check if user is logged in and is admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../login.php');
+    header('Location: ../auth/login.php');
     exit;
 }
 
-include('../header.php');
+include('../includes/header.php');
 include('sidebar.php');
-include('../db.php');
+include('../includes/db.php');
 
 // Get filter parameters
 $status_filter = isset($_GET['status']) ? $_GET['status'] : 'all';
@@ -206,4 +206,4 @@ $bookings = mysqli_query($conn, $query);
 </div>
 </div>
 
-<?php include('../footer.php'); ?>
+<?php include('../includes/footer.php'); ?>

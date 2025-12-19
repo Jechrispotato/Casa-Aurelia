@@ -1,0 +1,90 @@
+<?php
+session_start();
+include('../includes/header.php');
+?>
+
+<div class="bg-gray-950 min-h-screen py-24">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <h1 class="text-5xl font-serif font-bold text-white mb-12 text-center">Terms of Service</h1>
+
+        <div
+            class="bg-gray-900 rounded-[2rem] border border-gray-800 shadow-2xl p-8 md:p-16 space-y-12 text-gray-400 leading-relaxed text-lg">
+
+            <section>
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <span
+                        class="w-8 h-8 rounded-lg bg-yellow-600/10 text-yellow-600 flex items-center justify-center mr-4 text-sm">1</span>
+                    Introduction
+                </h2>
+                <p>Welcome to Grand Aurelia. These Terms of Service govern your use of our website and services. By
+                    booking a stay or using our facilities, you agree to comply with these terms.</p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <span
+                        class="w-8 h-8 rounded-lg bg-yellow-600/10 text-yellow-600 flex items-center justify-center mr-4 text-sm">2</span>
+                    Reservations & Cancellations
+                </h2>
+                <p>All reservations are subject to availability. Cancellations must be made at least 48 hours prior to
+                    check-in to avoid a cancellation fee equivalent to one night's stay.</p>
+                <ul class="list-disc pl-12 mt-4 space-y-3">
+                    <li>Check-in time is from 3:00 PM.</li>
+                    <li>Check-out time is until 11:00 AM.</li>
+                    <li>Late check-out may be available upon request and subject to fees.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <span
+                        class="w-8 h-8 rounded-lg bg-yellow-600/10 text-yellow-600 flex items-center justify-center mr-4 text-sm">3</span>
+                    Guest Responsibilities
+                </h2>
+                <p>Guests are expected to treat the property and staff with respect. Any damage to hotel property will
+                    be charged to the guest's account. Grand Aurelia is a non-smoking property.</p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <span
+                        class="w-8 h-8 rounded-lg bg-yellow-600/10 text-yellow-600 flex items-center justify-center mr-4 text-sm">4</span>
+                    Payment
+                </h2>
+                <p>We accept major credit cards. A valid credit card is required at the time of booking to guarantee
+                    your reservation. Full payment may be required upon check-in.</p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <span
+                        class="w-8 h-8 rounded-lg bg-yellow-600/10 text-yellow-600 flex items-center justify-center mr-4 text-sm">5</span>
+                    Liability
+                </h2>
+                <p>Grand Aurelia is not liable for loss of valuables or personal items. Please use the in-room safes
+                    provided.</p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <span
+                        class="w-8 h-8 rounded-lg bg-yellow-600/10 text-yellow-600 flex items-center justify-center mr-4 text-sm">6</span>
+                    Changes to Terms
+                </h2>
+                <p>We reserve the right to modify these terms at any time. Continued use of our services constitutes
+                    acceptance of the updated terms.</p>
+            </section>
+
+            <div class="pt-12 border-t border-gray-800 text-center">
+                <p class="text-sm text-gray-500">Last Updated: December 2025</p>
+                <a href="../index.php"
+                    class="inline-flex items-center mt-6 text-yellow-600 font-bold hover:text-yellow-500 transition-colors group">
+                    <i class="fas fa-arrow-left mr-2 transform group-hover:-translate-x-1 transition-transform"></i>
+                    Return to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include('../includes/footer.php'); ?>

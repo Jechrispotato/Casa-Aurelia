@@ -3,13 +3,13 @@ session_start();
 
 // Check if user is logged in and is admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../login.php');
+    header('Location: ../auth/login.php');
     exit;
 }
 
-include('../header.php');
+include('../includes/header.php');
 include('sidebar.php');
-include('../db.php');
+include('../includes/db.php');
 
 // Get pending bookings with error handling
 $pending_bookings_query = "SELECT b.*, r.room_name, u.username 
@@ -300,7 +300,7 @@ $total_spa = mysqli_fetch_assoc($total_spa_result)['total'] ?? 0;
 
         async function updateBookingStatus(bookingId, status) {
             try {
-                const response = await fetch('../admin/update_booking.php', {
+                const response = await fetch('update_booking.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
@@ -325,4 +325,4 @@ $total_spa = mysqli_fetch_assoc($total_spa_result)['total'] ?? 0;
 </div>
 </div>
 
-<?php include('../footer.php'); ?>
+<?php include('../includes/footer.php'); ?>

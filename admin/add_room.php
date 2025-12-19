@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit('Unauthorized');
 }
 
-include('../db.php');
+include('../includes/db.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $room_name = mysqli_real_escape_string($conn, $_POST['room_name']);
     $price = (float) $_POST['price'];
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     // Render the Add Room page for GET requests
-    include('../header.php');
+    include('../includes/header.php');
     include('sidebar.php');
     ?>
 
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     </div>
 
-    <?php include('../footer.php');
+    <?php include('../includes/footer.php');
     exit;
 }
 ?>

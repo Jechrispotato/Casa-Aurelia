@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit('Unauthorized');
 }
 
-include('../db.php');
+include('../includes/db.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $booking_id = (int)$_POST['booking_id'];

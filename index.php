@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php include 'includes/header.php'; ?>
 
 <!-- Hero Section -->
 <div class="relative h-screen min-h-[400px] flex items-center justify-center overflow-hidden ">
@@ -11,7 +11,7 @@
     <!-- Hero Content -->
     <div class="text-center px-4 max-w-5xl mx-auto space-y-8 animate-fade-in-up">
         <div class="space-y-4">
-            <img src="/aurelia_assets/aurelia_main_logo_only_white.png" alt="Logo" class="w-32 md:w-48 mx-auto mb-1">
+            <img src="aurelia_assets/aurelia_main_logo_only_white.png" alt="Logo" class="w-32 md:w-48 mx-auto mb-1">
             <h2 class="text-yellow-500 font-medium tracking-[0.2em] text-sm md:text-base uppercase animate-slide-down">Welcome to The Casa Aurelia</h2>
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight">
                 Experience <span class=" italic text-yellow-500">Luxury</span> <br> & Comfort
@@ -19,10 +19,10 @@
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-            <a href="add_booking.php" class="px-8 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full font-semibold tracking-wide transition-all duration-300 shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-1">
+            <a href="booking/add_booking.php" class="px-8 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full font-semibold tracking-wide transition-all duration-300 shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-1">
                 Book Your Stay
             </a>
-            <a href="view_rooms.php" class="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-full font-semibold tracking-wide transition-all duration-300 transform hover:-translate-y-1">
+            <a href="pages/view_rooms.php" class="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-full font-semibold tracking-wide transition-all duration-300 transform hover:-translate-y-1">
                 View Suites
             </a>
         </div>
@@ -120,7 +120,7 @@
                     <li class="flex items-center gap-3 reveal"><i class="fas fa-check text-yellow-500"></i> Award-winning wine list</li>
                     <li class="flex items-center gap-3"><i class="fas fa-check text-yellow-500"></i> Private dining options</li>
                 </ul>
-                <a href="dining.php" class="custom-btn-hover inline-block px-8 py-3 mt-4 border border-white text-white rounded-full hover:bg-white transition-all duration-300 reveal">
+                <a href="pages/dining.php" class="custom-btn-hover inline-block px-8 py-3 mt-4 border border-white text-white rounded-full hover:bg-white transition-all duration-300 reveal">
                     Explore Dining
                 </a>
             </div>
@@ -146,7 +146,7 @@
                     <span class="px-4 py-2 bg-gray-800 rounded-lg text-sm text-gray-300 reveal">Hydrotherapy</span>
                     <span class="px-4 py-2 bg-gray-800 rounded-lg text-sm text-gray-300 reveal">Yoga</span>
                 </div>
-                <a href="spa.php" class="custom-btn-hover inline-block px-8 py-3 mt-4 border border-white text-white rounded-full hover:bg-white transition-all duration-300">
+                <a href="pages/spa.php" class="custom-btn-hover inline-block px-8 py-3 mt-4 border border-white text-white rounded-full hover:bg-white transition-all duration-300">
                     Discover Spa
                 </a>
             </div>
@@ -170,7 +170,7 @@
                 </h2>
             </div>
 
-            <a href="view_rooms.php"
+            <a href="pages/view_rooms.php"
                 class="Accomodation_button backdrop-blur-sm bg-gray-700/50 border border-gray-700/50 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 hover:bg-yellow-500/20 hover:text-yellow-500 transition-colors duration-300 reveal">
                 VIEW ALL ROOMS
                 <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
@@ -197,7 +197,7 @@
                         <span class="flex items-center gap-2"><i class="fas fa-ruler-combined text-yellow-600"></i> 75 m²</span>
                         <span class="flex items-center gap-2"><i class="fas fa-mountain text-yellow-600"></i> City View</span>
                     </div>
-                    <a href="view_rooms.php" class="room_button block w-full text-center py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-xl group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
+                    <a href="pages/view_rooms.php" class="room_button block w-full text-center py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-xl group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
                         View Details
                     </a>
                 </div>
@@ -220,7 +220,7 @@
                         <span class="flex items-center gap-2"><i class="fas fa-ruler-combined text-yellow-600"></i> 55 m²</span>
                         <span class="flex items-center gap-2"><i class="fas fa-glass-cheers text-yellow-600"></i> Lounge</span>
                     </div>
-                    <a href="view_rooms.php" class="room_button block w-full text-center py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-xl group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
+                    <a href="pages/view_rooms.php" class="room_button block w-full text-center py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-xl group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
                         View Details
                     </a>
                 </div>
@@ -243,7 +243,7 @@
                         <span class="flex items-center gap-2"><i class="fas fa-ruler-combined text-yellow-600"></i> 60 m²</span>
                         <span class="flex items-center gap-2"><i class="fas fa-hot-tub text-yellow-600"></i> Jacuzzi</span>
                     </div>
-                    <a href="view_rooms.php" class="room_button block w-full text-center py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-xl group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
+                    <a href="pages/view_rooms.php" class="room_button block w-full text-center py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-xl group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
                         View Details
                     </a>
                 </div>
@@ -385,10 +385,10 @@
 
     <!-- Content -->
     <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <img src="/aurelia_assets/aurelia_main_logo_only_white.png" alt="Logo" class="w-32 md:w-48 mx-auto mb-1">
+        <img src="aurelia_assets/aurelia_main_logo_only_white.png" alt="Logo" class="w-32 md:w-48 mx-auto mb-1">
         <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 reveal">Ready for an Unforgettable Stay?</h2>
         <p class="text-gray-300 text-lg mb-10">Book your luxury escape today and experience the Grand Aurelia difference.</p>
-        <a href="add_booking.php" class="inline-block px-10 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-yellow-500/50 transition-all duration-300 transform hover:-translate-y-1">
+        <a href="booking/add_booking.php" class="inline-block px-10 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-yellow-500/50 transition-all duration-300 transform hover:-translate-y-1">
             Book Now
         </a>
     </div>
@@ -397,7 +397,7 @@
 <style>
     @font-face {
         font-family: 'Velista';
-        src: url('<?php echo $is_admin_page ? '../' : ''; ?>aurelia_assets/velista.otf') format('opentype');
+        src: url('aurelia_assets/velista.otf') format('opentype');
         font-weight: normal;
         font-style: normal;
         font-display: swap;
@@ -638,4 +638,4 @@
     });
 </script>
 
-<?php include 'footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

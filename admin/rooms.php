@@ -3,13 +3,13 @@ session_start();
 
 // Check if user is logged in and is admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../login.php');
+    header('Location: ../auth/login.php');
     exit;
 }
 
-include('../header.php');
+include('../includes/header.php');
 include('sidebar.php');
-include('../db.php');
+include('../includes/db.php');
 
 // Get all rooms with their booking status
 $rooms_query = "SELECT r.*, 
@@ -474,4 +474,4 @@ function formatPrice($price)
 </div>
 </div>
 
-<?php include('../footer.php'); ?>
+<?php include('../includes/footer.php'); ?>

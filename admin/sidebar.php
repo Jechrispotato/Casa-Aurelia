@@ -58,7 +58,7 @@ $current_admin_page = basename($_SERVER['PHP_SELF']);
         </nav>
 
         <div class="absolute bottom-0 w-full p-6">
-            <a href="../logout.php" class="flex items-center text-gray-400 hover:text-white transition-colors">
+            <a href="../auth/logout.php" class="flex items-center text-gray-400 hover:text-white transition-colors">
                 <i class="fas fa-sign-out-alt mr-3"></i> Logout
             </a>
         </div>
