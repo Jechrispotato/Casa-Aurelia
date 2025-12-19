@@ -32,3 +32,6 @@
 [2025-12-19 23:35:09] [booking_created] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Booking 38 created by user 9 for room 3
 [2025-12-19 23:47:41] [dining_reservation_created] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Reservation 8 created by user 9
 [2025-12-19 23:50:37] [booking_created] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Booking 39 created by user 9 for room 3
+[2025-12-20 00:15:35] [booking_cancelled] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Booking 37 cancelled by user 9
+[2025-12-20 00:15:59] [dining_reservation_created] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Reservation 9 created by user 9
+[2025-12-20 00:16:22] [dining_reservation_created] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Reservation 10 created by user 9
