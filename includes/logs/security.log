@@ -23,3 +23,5 @@
 [2025-12-19 18:59:50] [custom_treatment] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: User 8 requested non-standard treatment: Hot Stone Massage
 [2025-12-19 18:59:50] [spa_booking_created] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Spa booking 7 created by user 8
 [2025-12-19 19:00:04] [dining_reservation_created] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Reservation 7 created by user 8
+[2025-12-19 19:07:38] [booking_created] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Booking 35 created by user 8 for room 7
+[2025-12-19 19:09:50] [booking_created] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Booking 36 created by user 8 for room 6

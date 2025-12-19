@@ -1,10 +1,10 @@
 <?php
 session_start();
-include('header.php');
+include('../includes/header.php');
 
 // Redirect if no success message (prevents direct access)
 if (!isset($_SESSION['success'])) {
-    header('Location: view_rooms.php');
+    header('Location: ../pages/view_rooms.php');
     exit;
 }
 
@@ -41,7 +41,7 @@ unset($_SESSION['success']); // Clear the message after displaying
                                 class="px-8 py-4 bg-yellow-600 text-white font-bold rounded-2xl hover:bg-yellow-700 transition-all shadow-lg hover:shadow-yellow-600/30 transform hover:-translate-y-1">
                                 <i class="fas fa-list me-2"></i>My Reservations
                             </a>
-                            <a href="view_rooms.php"
+                            <a href="../pages/view_rooms.php"
                                 class="px-8 py-4 bg-gray-800 text-white font-bold rounded-2xl border border-gray-700 hover:bg-gray-700 transition-all transform hover:-translate-y-1">
                                 <i class="fas fa-hotel me-2"></i>Browse Collection
                             </a>
@@ -53,4 +53,4 @@ unset($_SESSION['success']); // Clear the message after displaying
     </div>
 </div>
 
-<?php include('footer.php'); ?>
+<?php include('../includes/footer.php'); ?>

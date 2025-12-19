@@ -154,6 +154,7 @@ unset($_SESSION['error']); // Clear the message after getting it
         /* yellow-600 */
         border-radius: 8px;
         padding: 20px;
+        color: white;
     }
 
     #price-value {
@@ -218,16 +219,16 @@ unset($_SESSION['error']); // Clear the message after getting it
 
                     <div class="booking-body">
                         <?php if ($error_message): ?>
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <?php echo htmlspecialchars($error_message); ?>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <?php echo htmlspecialchars($error_message); ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         <?php endif; ?>
 
                         <form action="process/process_booking.php" method="POST" id="bookingForm">
                             <!-- CSRF Token -->
                             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
-                            
+
                             <div class="mb-4">
                                 <label for="customer_name" class="form-label">Your Name</label>
                                 <input type="text" name="customer_name" id="customer_name" class="form-control"
@@ -288,7 +289,7 @@ unset($_SESSION['error']); // Clear the message after getting it
                             <div id="availability-message" class="alert d-none mb-4"></div>
 
                             <div class="booking-info">
-                                <div id="total-price" class="alert alert-info d-none mb-4">
+                                <div id="total-price" class="alert d-none mb-4">
                                     <div class="row align-items-center">
                                         <div class="col-md-8">
                                             <strong>Total Price for Your Stay:</strong>

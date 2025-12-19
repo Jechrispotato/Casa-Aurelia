@@ -1,11 +1,11 @@
 <?php
 header('Content-Type: application/json');
 session_start();
-include 'db.php';
+include '../includes/db.php';
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
-$room_id = isset($_REQUEST['room_id']) ? (int)$_REQUEST['room_id'] : 0;
-$user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
+$room_id = isset($_REQUEST['room_id']) ? (int) $_REQUEST['room_id'] : 0;
+$user_id = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : 0;
 
 if (!$room_id) {
     echo json_encode(['error' => 'Invalid Room ID']);
@@ -21,7 +21,8 @@ if ($action === 'get_interactions') {
     $userLiked = false;
     if ($user_id) {
         $checkLike = mysqli_query($conn, "SELECT id FROM room_likes WHERE room_id = $room_id AND user_id = $user_id");
-        if (mysqli_num_rows($checkLike) > 0) $userLiked = true;
+        if (mysqli_num_rows($checkLike) > 0)
+            $userLiked = true;
     }
 
     // Get Reviews
@@ -81,7 +82,7 @@ if ($action === 'post_review') {
         exit;
     }
 
-    $rating = isset($_POST['rating']) ? (int)$_POST['rating'] : 5;
+    $rating = isset($_POST['rating']) ? (int) $_POST['rating'] : 5;
     $comment = isset($_POST['comment']) ? mysqli_real_escape_string($conn, trim($_POST['comment'])) : '';
 
     if (empty($comment)) {

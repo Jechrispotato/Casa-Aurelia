@@ -531,20 +531,20 @@ function formatPrice($price)
                 document.getElementById('reviewCountBadge').textContent = data.reviews.length;
 
                 if (data.reviews.length === 0) {
-                    list.innerHTML = `<div class="text-center py-8 bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                        <p class="text-gray-500 text-sm">No reviews yet. Be the first to share your thoughts!</p>
+                    list.innerHTML = `<div class="text-center py-8 bg-gray-800 rounded-xl border border-dashed border-gray-700">
+                        <p class="text-gray-400 text-sm">No reviews yet. Be the first to share your thoughts!</p>
                     </div>`;
                 } else {
                     list.innerHTML = data.reviews.map(r => `
-                        <div class="border-b border-gray-100 pb-6 last:border-0 last:pb-0">
+                        <div class="border-b border-gray-700 pb-6 last:border-0 last:pb-0">
                             <div class="flex justify-between items-start mb-2">
-                                <span class="font-bold text-gray-900">${r.username || 'Guest'}</span>
+                                <span class="font-bold text-white">${r.username || 'Guest'}</span>
                                 <span class="text-xs text-gray-400">${r.date_formatted}</span>
                             </div>
                             <div class="text-yellow-400 text-xs mb-2">
                                 ${Array(5).fill(0).map((_, i) => `<i class="${i < r.rating ? 'fas' : 'far'} fa-star"></i>`).join('')}
                             </div>
-                            <p class="text-gray-600 text-sm leading-relaxed">${r.comment}</p>
+                            <p class="text-gray-300 text-sm leading-relaxed">${r.comment}</p>
                         </div>
                     `).join('');
                 }
