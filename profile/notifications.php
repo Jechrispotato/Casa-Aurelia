@@ -110,7 +110,7 @@ $unread_count = ($unread_res) ? (int) mysqli_fetch_assoc($unread_res)['c'] : 0;
                         $type_icon = 'fa-bell';
                         $icon_bg = 'bg-gray-800';
                         $icon_color = 'text-gray-400';
-                        
+
                         if ($type === 'dining') {
                             $type_icon = 'fa-utensils';
                             $icon_bg = 'bg-yellow-900/30';
@@ -137,10 +137,12 @@ $unread_count = ($unread_res) ? (int) mysqli_fetch_assoc($unread_res)['c'] : 0;
                         $status_class = isset($status_colors[$s_key]) ? $status_colors[$s_key] : 'bg-gray-800 text-gray-400 border-gray-700';
                         ?>
 
-                        <div class="p-5 <?php echo $is_unread ? 'bg-yellow-900/10 border-l-4 border-yellow-600' : 'bg-gray-800'; ?> rounded-xl border border-gray-700 hover:bg-gray-800/80 transition-all">
+                        <div
+                            class="p-5 <?php echo $is_unread ? 'bg-yellow-900/10 border-l-4 border-yellow-600' : 'bg-gray-800'; ?> rounded-xl border border-gray-700 hover:bg-gray-800/80 transition-all">
                             <div class="flex items-start gap-4">
                                 <!-- Icon -->
-                                <div class="shrink-0 w-12 h-12 rounded-full <?php echo $icon_bg . ' ' . $icon_color; ?> flex items-center justify-center">
+                                <div
+                                    class="shrink-0 w-12 h-12 rounded-full <?php echo $icon_bg . ' ' . $icon_color; ?> flex items-center justify-center">
                                     <i class="fas <?php echo $type_icon; ?>"></i>
                                 </div>
 
@@ -152,18 +154,19 @@ $unread_count = ($unread_res) ? (int) mysqli_fetch_assoc($unread_res)['c'] : 0;
                                         </h3>
                                         <span class="text-xs text-gray-500 shrink-0"><?php echo $date_formatted; ?></span>
                                     </div>
-                                    
+
                                     <p class="text-gray-300 mb-3 leading-relaxed">
                                         <?php echo htmlspecialchars($message); ?>
                                     </p>
 
                                     <div class="flex items-center gap-3 flex-wrap">
-                                        <span class="px-3 py-1 rounded-full text-xs font-bold uppercase border <?php echo $status_class; ?>">
+                                        <span
+                                            class="px-3 py-1 rounded-full text-xs font-bold uppercase border <?php echo $status_class; ?>">
                                             <?php echo htmlspecialchars($status); ?>
                                         </span>
-                                        
+
                                         <?php if (!empty($url)): ?>
-                                            <a href="<?php echo htmlspecialchars($url); ?>" 
+                                            <a href="<?php echo BOOKING_PATH; ?>view_bookings.php" 
                                                class="text-sm text-yellow-500 hover:text-yellow-400 font-medium flex items-center gap-1 transition-colors">
                                                 View Details <i class="fas fa-arrow-right text-xs"></i>
                                             </a>
@@ -176,8 +179,8 @@ $unread_count = ($unread_res) ? (int) mysqli_fetch_assoc($unread_res)['c'] : 0;
                 </div>
 
                 <!-- Mark All as Read Button -->
-                <a href="?mark_read=all" 
-                   class="block p-4 bg-gray-800 hover:bg-gray-700 text-center text-gray-300 font-semibold transition-colors border-t border-gray-700">
+                <a href="?mark_read=all"
+                    class="block p-4 bg-gray-800 hover:bg-gray-700 text-center text-gray-300 font-semibold transition-colors border-t border-gray-700">
                     <i class="fas fa-check-double mr-2"></i>Mark All as Read
                 </a>
             <?php else: ?>
@@ -199,8 +202,8 @@ $unread_count = ($unread_res) ? (int) mysqli_fetch_assoc($unread_res)['c'] : 0;
                 <i class="fas fa-info-circle"></i>
                 Notifications show status updates for your bookings from the last 30 days
             </p>
-            <a href="../booking/view_bookings.php" 
-               class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 border border-gray-700 text-gray-300 font-bold rounded-xl hover:bg-gray-800 hover:border-yellow-600 transition-all shadow-lg">
+            <a href="../booking/view_bookings.php"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 border border-gray-700 text-gray-300 font-bold rounded-xl hover:bg-gray-800 hover:border-yellow-600 transition-all shadow-lg">
                 <i class="fas fa-list"></i>View All My Bookings
             </a>
         </div>
