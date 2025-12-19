@@ -9,34 +9,40 @@ if (!defined('SITE_ROOT')) {
 <!-- Footer Section -->
 <footer class="bg-gray-900 text-gray-300 pt-20 pb-10 mt-auto relative overflow-hidden">
     <!-- Background Decor -->
-    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent opacity-50"></div>
+    <div
+        class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent opacity-50">
+    </div>
 
     <div class="container mx-auto px-4 max-w-7xl relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <!-- Brand Column -->
             <div class="left-panel flex flex-col items-center text-center space-y-6">
                 <a href="<?php echo SITE_ROOT; ?>index.php" class="block">
-                    <img src="<?php echo AURELIA_ASSETS; ?>aurelia_main_logo_only_white.png"
-                        alt="Casa Aurelia Logo" class="h-12">
+                    <img src="<?php echo AURELIA_ASSETS; ?>aurelia_main_logo_only_white.png" alt="Casa Aurelia Logo"
+                        class="h-12">
                 </a>
 
                 <a href="<?php echo SITE_ROOT; ?>index.php" class="block">
-                    <img src="<?php echo AURELIA_ASSETS; ?>casaaurelialogo1_white.png"
-                        alt="Casa Aurelia Logo" class="h-12">
+                    <img src="<?php echo AURELIA_ASSETS; ?>casaaurelialogo1_white.png" alt="Casa Aurelia Logo"
+                        class="h-12">
                 </a>
                 <p class="text-gray-400 leading-relaxed text-sm">
-                    Experience the epitome of luxury and comfort in the heart of Manila. Your sanctuary of elegance awaits.
+                    Experience the epitome of luxury and comfort in the heart of Manila. Your sanctuary of elegance
+                    awaits.
                 </p>
                 <div class="social-media flex gap-4 justify-center">
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 
                        hover:bg-white hover:text-gray-900 transition-all duration-300 shadow-lg hover:shadow-yellow-500/20">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 
                        hover:bg-white hover:text-gray-900 transition-all duration-300 shadow-lg hover:shadow-yellow-500/20">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 
                        hover:bg-white hover:text-gray-900 transition-all duration-300 shadow-lg hover:shadow-yellow-500/20">
                         <i class="fab fa-twitter"></i>
                     </a>
@@ -48,11 +54,20 @@ if (!defined('SITE_ROOT')) {
             <div class="lg:pl-8">
                 <h4 class="footer-headers text-white font-bold mb-6 text-lg">Explore</h4>
                 <ul class="space-y-4 text-sm">
-                    <li><a href="<?php echo SITE_ROOT; ?>index.php" class="hover:text-yellow-500 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-gray-600"></i> Home</a></li>
-                    <li><a href="<?php echo PAGES_PATH; ?>view_rooms.php" class="hover:text-yellow-500 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-gray-600"></i> Rooms & Suites</a></li>
-                    <li><a href="<?php echo PAGES_PATH; ?>dining.php" class="hover:text-yellow-500 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-gray-600"></i> Dining</a></li>
-                    <li><a href="<?php echo PAGES_PATH; ?>spa.php" class="hover:text-yellow-500 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-gray-600"></i> Spa & Wellness</a></li>
-                    <li><a href="#" class="hover:text-yellow-500 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-gray-600"></i> Contact Us</a></li>
+                    <li><a href="<?php echo SITE_ROOT; ?>index.php"
+                            class="hover:text-yellow-500 transition-colors flex items-center gap-2"><i
+                                class="fas fa-chevron-right text-xs text-gray-600"></i> Home</a></li>
+                    <li><a href="<?php echo PAGES_PATH; ?>view_rooms.php"
+                            class="hover:text-yellow-500 transition-colors flex items-center gap-2"><i
+                                class="fas fa-chevron-right text-xs text-gray-600"></i> Rooms & Suites</a></li>
+                    <li><a href="<?php echo PAGES_PATH; ?>dining.php"
+                            class="hover:text-yellow-500 transition-colors flex items-center gap-2"><i
+                                class="fas fa-chevron-right text-xs text-gray-600"></i> Dining</a></li>
+                    <li><a href="<?php echo PAGES_PATH; ?>spa.php"
+                            class="hover:text-yellow-500 transition-colors flex items-center gap-2"><i
+                                class="fas fa-chevron-right text-xs text-gray-600"></i> Spa & Wellness</a></li>
+                    <li><a href="#" class="hover:text-yellow-500 transition-colors flex items-center gap-2"><i
+                                class="fas fa-chevron-right text-xs text-gray-600"></i> Contact Us</a></li>
                 </ul>
             </div>
 
@@ -61,19 +76,22 @@ if (!defined('SITE_ROOT')) {
                 <h4 class="footer-headers text-white font-bold mb-6 text-lg">Contact Us</h4>
                 <ul class="space-y-6 text-sm">
                     <li class="flex items-start gap-4">
-                        <div class="w-8 h-8 rounded-lg bg-gray-800 flex-shrink-0 flex items-center justify-center text-yellow-500">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-gray-800 flex-shrink-0 flex items-center justify-center text-yellow-500">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <span class="text-gray-400 leading-relaxed">Roxas Boulevard, Manila,<br>Philippines 1000</span>
+                        <span class="text-gray-400 leading-relaxed">New York City</span>
                     </li>
                     <li class="flex items-start gap-4">
-                        <div class="w-8 h-8 rounded-lg bg-gray-800 flex-shrink-0 flex items-center justify-center text-yellow-500">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-gray-800 flex-shrink-0 flex items-center justify-center text-yellow-500">
                             <i class="fas fa-phone-alt"></i>
                         </div>
                         <span class="text-gray-400">+63 960 467 7200</span>
                     </li>
                     <li class="flex items-start gap-4">
-                        <div class="w-8 h-8 rounded-lg bg-gray-800 flex-shrink-0 flex items-center justify-center text-yellow-500">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-gray-800 flex-shrink-0 flex items-center justify-center text-yellow-500">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <span class="text-gray-400 break-all">CasaAurelia@gmail.com</span>
@@ -87,8 +105,10 @@ if (!defined('SITE_ROOT')) {
                 <p class="text-gray-400 text-sm mb-4">Subscribe to receive exclusive offers and news.</p>
                 <form class="space-y-3">
                     <div class="relative">
-                        <input type="email" placeholder="Your Email Address" class="w-full bg-gray-800 text-white px-4 py-3 rounded-xl border border-gray-700 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition-all placeholder-gray-500 text-sm">
-                        <button type="button" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-lg bg-yellow-600 text-white flex items-center justify-center hover:bg-yellow-500 transition-colors">
+                        <input type="email" placeholder="Your Email Address"
+                            class="w-full bg-gray-800 text-white px-4 py-3 rounded-xl border border-gray-700 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition-all placeholder-gray-500 text-sm">
+                        <button type="button"
+                            class="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-lg bg-yellow-600 text-white flex items-center justify-center hover:bg-yellow-500 transition-colors">
                             <i class="fas fa-paper-plane text-xs"></i>
                         </button>
                     </div>
@@ -97,11 +117,14 @@ if (!defined('SITE_ROOT')) {
             </div>
         </div>
 
-        <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+        <div
+            class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
             <p>&copy; <?php echo date('Y'); ?> Casa Aurelia. All rights reserved.</p>
             <div class="flex gap-6">
-                <a href="<?php echo PAGES_PATH; ?>privacy.php" class="hover:text-white transition-colors">Privacy Policy</a>
-                <a href="<?php echo PAGES_PATH; ?>terms.php" class="hover:text-white transition-colors">Terms of Service</a>
+                <a href="<?php echo PAGES_PATH; ?>privacy.php" class="hover:text-white transition-colors">Privacy
+                    Policy</a>
+                <a href="<?php echo PAGES_PATH; ?>terms.php" class="hover:text-white transition-colors">Terms of
+                    Service</a>
                 <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
             </div>
         </div>
@@ -121,38 +144,49 @@ $modal_prefill_email = isset($prefill_email) ? $prefill_email : '';
         <div class="modal-content border-0 rounded-2xl shadow-2xl overflow-hidden">
             <div class="modal-header bg-gray-900 border-0 p-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-500 flex items-center justify-center">
+                    <div
+                        class="w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-500 flex items-center justify-center">
                         <i class="fas fa-spa text-lg"></i>
                     </div>
                     <h5 class="text-xl font-bold text-white mb-0">Book Treatment</h5>
                 </div>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
 
             <div class="modal-body p-8 bg-gray-50">
-                <form action="<?php echo RESERVATIONS_PATH; ?>process/process_spa_reservation.php" method="POST" id="spaBookingForm" class="space-y-4">
+                <form action="<?php echo RESERVATIONS_PATH; ?>process/process_spa_reservation.php" method="POST"
+                    id="spaBookingForm" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Name</label>
-                            <input type="text" name="name" required value="<?php echo htmlspecialchars($modal_prefill_name); ?>"
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Name</label>
+                            <input type="text" name="name" required
+                                value="<?php echo htmlspecialchars($modal_prefill_name); ?>"
                                 class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all text-gray-800 text-sm">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Email</label>
-                            <input type="email" name="email" required value="<?php echo htmlspecialchars($modal_prefill_email); ?>"
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Email</label>
+                            <input type="email" name="email" required
+                                value="<?php echo htmlspecialchars($modal_prefill_email); ?>"
                                 class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all text-gray-800 text-sm">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Treatment</label>
+                        <label
+                            class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Treatment</label>
                         <select name="treatment" required
                             class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all text-gray-800 text-sm appearance-none">
                             <option value="">Select a treatment</option>
                             <?php if (isset($spa_treatments) && is_array($spa_treatments)): ?>
                                 <optgroup label="Massage">
                                     <?php foreach ($spa_treatments as $treatment): ?>
-                                        <option value="<?php echo htmlspecialchars($treatment['name']); ?>"><?php echo htmlspecialchars($treatment['name']); ?> (<?php echo htmlspecialchars($treatment['duration']); ?>)</option>
+                                        <option value="<?php echo htmlspecialchars($treatment['name']); ?>">
+                                            <?php echo htmlspecialchars($treatment['name']); ?>
+                                            (<?php echo htmlspecialchars($treatment['duration']); ?>)
+                                        </option>
                                     <?php endforeach; ?>
                                 </optgroup>
                             <?php endif; ?>
@@ -166,13 +200,16 @@ $modal_prefill_email = isset($prefill_email) ? $prefill_email : '';
 
                     <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Date</label>
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Date</label>
                             <input type="date" name="date" required
                                 class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all text-gray-800 text-sm hover:cursor-pointer">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Time</label>
-                            <select name="time" required class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all text-gray-800 text-sm">
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Time</label>
+                            <select name="time" required
+                                class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all text-gray-800 text-sm">
                                 <option value="">Select</option>
                                 <option>09:00</option>
                                 <option>10:00</option>
@@ -186,8 +223,10 @@ $modal_prefill_email = isset($prefill_email) ? $prefill_email : '';
                             </select>
                         </div>
                         <div class="col-span-2 lg:col-span-1">
-                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Guests</label>
-                            <select name="guests" required class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all text-gray-800 text-sm">
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Guests</label>
+                            <select name="guests" required
+                                class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all text-gray-800 text-sm">
                                 <option value="1">1 Person</option>
                                 <option value="2">2 People</option>
                                 <option value="3">3 People</option>
@@ -196,15 +235,20 @@ $modal_prefill_email = isset($prefill_email) ? $prefill_email : '';
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Special Requests</label>
-                        <textarea name="special_requests" rows="2" placeholder="Any preferences?" class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all text-gray-800 text-sm"></textarea>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Special
+                            Requests</label>
+                        <textarea name="special_requests" rows="2" placeholder="Any preferences?"
+                            class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all text-gray-800 text-sm"></textarea>
                     </div>
                 </form>
             </div>
 
             <div class="modal-footer bg-gray-50 border-t border-gray-100 p-6 flex justify-between">
-                <button type="button" class="px-6 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-medium hover:bg-gray-100 transition-colors" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" form="spaBookingForm" class="px-8 py-2.5 rounded-xl bg-gray-900 text-white font-bold hover:bg-yellow-600 transition-colors shadow-lg hover:shadow-yellow-500/30">
+                <button type="button"
+                    class="px-6 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-medium hover:bg-gray-100 transition-colors"
+                    data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" form="spaBookingForm"
+                    class="px-8 py-2.5 rounded-xl bg-gray-900 text-white font-bold hover:bg-yellow-600 transition-colors shadow-lg hover:shadow-yellow-500/30">
                     Confirm Booking
                 </button>
             </div>
@@ -260,11 +304,11 @@ $modal_prefill_email = isset($prefill_email) ? $prefill_email : '';
     }
 </style>
 <!-- Chat Widget -->
-<?php 
+<?php
 $current_section = get_current_section();
 if ($current_section !== 'admin') {
     include __DIR__ . '/chat_widget.php';
-} 
+}
 ?>
 
 </body>

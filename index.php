@@ -105,7 +105,7 @@
     <div class="autoblur italic reveal">NUMBER 1</div>
     <div class="autoblur reveal">5-STAR LUXURY</div>
     <div class="autoblur reveal">HOTEL IN THE</div>
-    <div class="autoblur reveal">PHILIPPINES</div>
+    <div class="autoblur reveal">NEW YORK CITY</div>
     <div class="autoblur reveal">
         <h6>© Forbes Asia Metropolitan Awards [2025].</h6>
     </div>
@@ -211,7 +211,7 @@
                 <div class="relative h-72 overflow-hidden">
                     <div
                         class="room_price absolute top-4 right-4 z-10  font-bold px-4 py-2 rounded-full shadow-lg group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
-                        ₱1,500<span
+                        $1,500<span
                             class="room_price text-sm font-normal text-gray-600 group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">/night</span>
                     </div>
                     <img src="images/penthouse.jpg" alt="Penthouse"
@@ -245,7 +245,7 @@
                 <div class="relative h-72 overflow-hidden">
                     <div
                         class="room_price absolute top-4 right-4 z-10  font-bold px-4 py-2 rounded-full shadow-lg group-hover:bg-gray-900 group-hover:text-white transition-all duration-300 group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
-                        ₱350<span
+                        $350<span
                             class="room_price text-sm font-normal text-gray-600 group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">/night</span>
                     </div>
                     <img src="images/bridal.jpg" alt="Bridal Suite"
@@ -280,7 +280,7 @@
                 <div class="relative h-72 overflow-hidden">
                     <div
                         class="room_price absolute top-4 right-4 z-10  font-bold px-4 py-2 rounded-full shadow-lg group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
-                        ₱400<span
+                        $400<span
                             class="room_price text-sm font-normal text-gray-600 group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">/night</span>
                     </div>
                     <img src="images/honeymoon.jpg" alt="Honeymoon Suite"
@@ -684,7 +684,6 @@
         opacity: 1;
         transform: translateY(0);
     }
-
 </style>
 
 <script>
