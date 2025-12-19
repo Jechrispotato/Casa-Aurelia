@@ -218,10 +218,10 @@ unset($_SESSION['error']); // Clear the message after getting it
 
                     <div class="booking-body">
                         <?php if ($error_message): ?>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <?php echo htmlspecialchars($error_message); ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <?php echo htmlspecialchars($error_message); ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
                         <?php endif; ?>
 
                         <form action="process/process_booking.php" method="POST" id="bookingForm">
