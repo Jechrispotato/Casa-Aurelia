@@ -138,25 +138,101 @@ erDiagram
 ![Room Management](file:///C:/Users/Lawrence/.gemini/antigravity/brain/6afefa33-2570-48ad-83d8-0a86ca02d8b1/room_management_1766155613251.png)
 ````
 
-### 3.3 Core Code Explanations
+### 3.3 PHP Code Structure and Explanation
 
-#### 3.3.1 Secure Database Connectivity
-The system uses a centralized `db.php` to manage connections, ensuring that any changes to credentials only need to be made in one place.
+#### 3.3.1 Database Connection
+The system centralizes its database connection in `includes/db.php`.
+
 ```php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "ecommerce_booking";
+
+// Connection creation
 $conn = new mysqli($servername, $username, $password, $dbname);
-$conn->set_charset("utf8"); // Ensures UTF-8 encoding for multi-language support
-```
 
-#### 3.3.2 Prepared Statements (SQL Injection Prevention)
-To prevent SQL injection, the system never interpolates user input directly into queries. Instead, it uses prepared statements:
+// Error Handling
+if ($conn->connect_error) {
+    die("Database Connection failed: " . $conn->connect_error);
+}
+$conn->set_charset("utf8");
+```
+*   **Logic**: Uses the `mysqli` object to establish a bridge between the PHP server and the MySQL database.
+*   **Error Handling**: The `connect_error` property is checked immediately after instantiation. If a connection fails, the `die()` function terminates the script execution and displays a descriptive error message to prevent cascading failures.
+
+#### 3.3.2 Authentication Module
+Located in `auth/process/process_login.php`.
+
+*   **Login Process**: The system captures the username/email and password via POST. It then queries the database for the user record.
 ```php
-$stmt = $conn->prepare("SELECT password FROM users WHERE email = ?");
-$stmt->bind_param("s", $email); // "s" denotes the parameter type is a string
+$stmt = $conn->prepare("SELECT id, password, role FROM users WHERE username = ? OR email = ?");
+$stmt->bind_param("ss", $username, $username);
 $stmt->execute();
+$result = $stmt->get_result();
+```
+*   **Session Handling**: Upon successful verification via `password_verify()`, the system initializes the `$_SESSION` superglobal with user identity data.
+```php
+$_SESSION['user_id'] = $user['id'];
+$_SESSION['username'] = $user['username'];
+$_SESSION['role'] = $user['role'];
+session_regenerate_id(true); // Prevents session fixation attacks
+```
+*   **Access Restrictions**: Pages are protected by role checks.
+```php
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header('Location: ../auth/login.php');
+    exit;
+}
 ```
 
-#### 3.3.3 Frontend Logic (Availability Checking)
-JavaScript is used to provide a responsive experience. For example, `api/check_availability.php` is called via Fetch API to check room status without a page reload.
+#### 3.3.3 CRUD Operations (Room Module)
+The Room Module demonstrates full Create, Read, Update, and Delete capabilities.
+
+*   **Create (Insert)**: `admin/add_room.php`
+```sql
+INSERT INTO rooms (room_name, price, description, room_image) 
+VALUES ('$room_name', $price, '$description', '$room_image')
+```
+*   **Read (Select)**: `admin/rooms.php` fetches all rooms to display them in a management grid.
+```sql
+SELECT * FROM rooms ORDER BY id DESC
+```
+*   **Update**: `admin/update_room.php` modifies existing records based on the room ID.
+*   **Delete**: `admin/delete_room.php` removes a room from the database after confirmation.
+
+#### 3.3.4 Form Validation
+Validation is implemented in two layers to ensure both speed (client-side) and reliability (server-side).
+
+*   **Client-side Validation (JavaScript)**:
+Handles immediate feedback on the Login form without a page reload.
+```javascript
+form.addEventListener('submit', function (e) {
+    if (!input.value.trim()) {
+        isValid = false;
+        showError(input, 'This field is required');
+    }
+});
+```
+*   **Server-side Validation (PHP)**:
+Implemented in `includes/security.php` to perform deep checks on data types, lengths, and malicious patterns.
+```php
+function validate_username($username) {
+    if (strlen($username) < 3) {
+        return ['valid' => false, 'error' => 'Username too short'];
+    }
+}
+```
+
+#### 3.3.5 Security Implementations
+*   **SQL Injection Prevention**: The system strictly uses **Prepared Statements**.
+```php
+$stmt = $conn->prepare("SELECT * FROM bookings WHERE user_id = ?");
+$stmt->bind_param("i", $user_id);
+```
+*   **XSS Protection**: All user-generated content is escaped using `htmlspecialchars()` before being rendered in the browser.
+*   **Password Security**: The system utilizes `password_hash()` with the `PASSWORD_DEFAULT` algorithm for storage and `password_verify()` for login.
+*   **Input Sanitization**: Global helper functions like `sanitize_input()` (using `trim`, `stripslashes`, and `htmlspecialchars`) are used on all incoming POST/GET data.
 
 ---
 
