@@ -74,12 +74,12 @@ $total_spa = mysqli_fetch_assoc($total_spa_result)['total'] ?? 0;
 
 <!-- Header -->
 <div class="mb-8">
-    <h2 class="text-3xl font-bold font-serif text-gray-900 mb-2">Admin Dashboard</h2>
-    <p class="text-gray-500">Welcome back, Admin. Here's what's happening today.</p>
+    <h2 class="text-3xl font-bold font-serif text-white mb-2">Admin Dashboard</h2>
+    <p class="text-gray-400">Welcome back, Admin. Here's what's happening today.</p>
 </div>
 
 <?php if (isset($error_message)): ?>
-    <div class="bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 flex items-center mb-6">
+    <div class="bg-red-900/20 text-red-400 p-4 rounded-xl border border-red-900/50 flex items-center mb-6">
         <i class="fas fa-exclamation-circle mr-3"></i>
         <?php echo htmlspecialchars($error_message); ?>
     </div>
@@ -88,126 +88,138 @@ $total_spa = mysqli_fetch_assoc($total_spa_result)['total'] ?? 0;
 <!-- Stats Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <!-- Total Rooms -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
+    <div
+        class="bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-800 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
         <div class="flex items-center justify-between mb-4">
-            <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary" style="width: 3rem; height: 3rem;">
+            <div class="d-flex align-items-center justify-content-center rounded-circle bg-blue-900/20 text-blue-400"
+                style="width: 3rem; height: 3rem;">
                 <i class="fas fa-door-open text-xl"></i>
             </div>
-            <!-- <span class="text-green-500 text-sm font-bold">+2.5%</span> -->
         </div>
-        <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Total Rooms</h3>
+        <h3 class="text-gray-400 text-sm font-medium uppercase tracking-wide">Total Rooms</h3>
         <div class="flex items-baseline mt-1">
-            <p class="text-3xl font-bold text-gray-900"><?php echo $total_rooms; ?></p>
+            <p class="text-3xl font-bold text-white"><?php echo $total_rooms; ?></p>
         </div>
-        <a href="rooms.php" class="text-sm font-medium text-blue-600 mt-3 inline-block hover:text-blue-700">Manage Rooms &rarr;</a>
+        <a href="rooms.php" class="text-sm font-medium text-blue-400 mt-3 inline-block hover:text-blue-300">Manage Rooms
+            &rarr;</a>
     </div>
 
     <!-- Available Rooms -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
+    <div
+        class="bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-800 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
         <div class="flex items-center justify-between mb-4">
-            <div class="d-flex align-items-center justify-content-center rounded-circle bg-success-subtle text-success" style="width: 3rem; height: 3rem;">
+            <div class="d-flex align-items-center justify-content-center rounded-circle bg-green-900/20 text-green-400"
+                style="width: 3rem; height: 3rem;">
                 <i class="fas fa-check-circle text-xl"></i>
             </div>
         </div>
-        <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Available Rooms</h3>
+        <h3 class="text-gray-400 text-sm font-medium uppercase tracking-wide">Available Rooms</h3>
         <div class="flex items-baseline mt-1">
-            <p class="text-3xl font-bold text-gray-900"><?php echo $available_rooms; ?></p>
-            <span class="ml-2 text-sm text-gray-400">/ <?php echo $total_rooms; ?></span>
+            <p class="text-3xl font-bold text-white"><?php echo $available_rooms; ?></p>
+            <span class="ml-2 text-sm text-gray-500">/ <?php echo $total_rooms; ?></span>
         </div>
-        <p class="text-sm text-gray-400 mt-3"><?php echo $booked_rooms; ?> currently booked</p>
+        <p class="text-sm text-gray-500 mt-3"><?php echo $booked_rooms; ?> currently booked</p>
     </div>
 
     <!-- Pending Bookings -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
+    <div
+        class="bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-800 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
         <div class="flex items-center justify-between mb-4">
-            <div class="d-flex align-items-center justify-content-center rounded-circle bg-warning-subtle text-warning" style="width: 3rem; height: 3rem;">
+            <div class="d-flex align-items-center justify-content-center rounded-circle bg-yellow-900/20 text-yellow-500"
+                style="width: 3rem; height: 3rem;">
                 <i class="fas fa-clock text-xl"></i>
             </div>
             <?php if ($pending_count > 0): ?>
-                <span class="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded-full animate-pulse">Action Needed</span>
+                <span class="bg-red-900/20 text-red-400 text-xs font-bold px-2 py-1 rounded-full animate-pulse">Action
+                    Needed</span>
             <?php endif; ?>
         </div>
-        <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Pending Bookings</h3>
+        <h3 class="text-gray-400 text-sm font-medium uppercase tracking-wide">Pending Bookings</h3>
         <div class="flex items-baseline mt-1">
-            <p class="text-3xl font-bold text-gray-900"><?php echo $pending_count; ?></p>
+            <p class="text-3xl font-bold text-white"><?php echo $pending_count; ?></p>
         </div>
-        <a href="bookings.php?status=pending" class="text-sm font-medium text-yellow-600 mt-3 inline-block hover:text-yellow-700">Review Now &rarr;</a>
+        <a href="bookings.php?status=pending"
+            class="text-sm font-medium text-yellow-500 mt-3 inline-block hover:text-yellow-400">Review Now &rarr;</a>
     </div>
 
     <!-- Recent Activity -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
+    <div
+        class="bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-800 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
         <div class="flex items-center justify-between mb-4">
-            <div class="d-flex align-items-center justify-content-center rounded-circle bg-info-subtle text-info" style="width: 3rem; height: 3rem;">
+            <div class="d-flex align-items-center justify-content-center rounded-circle bg-cyan-900/20 text-cyan-400"
+                style="width: 3rem; height: 3rem;">
                 <i class="fas fa-chart-line text-xl"></i>
             </div>
         </div>
-        <h3 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Recent Bookings</h3>
+        <h3 class="text-gray-400 text-sm font-medium uppercase tracking-wide">Recent Bookings</h3>
         <div class="flex items-baseline mt-1">
-            <p class="text-3xl font-bold text-gray-900"><?php echo $recent_bookings; ?></p>
+            <p class="text-3xl font-bold text-white"><?php echo $recent_bookings; ?></p>
         </div>
-        <p class="text-sm text-gray-400 mt-3">In the last 7 days</p>
+        <p class="text-sm text-gray-500 mt-3">In the last 7 days</p>
     </div>
 </div>
 
 <!-- Secondary Stats (Dining & Spa) -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <div class="bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-800 hover:shadow-md transition-shadow">
         <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
+            <div
+                class="w-10 h-10 rounded-full bg-orange-900/20 text-orange-500 flex items-center justify-center shrink-0">
                 <i class="fas fa-utensils"></i>
             </div>
             <div>
                 <h4 class="text-gray-500 text-xs font-bold uppercase">Total Dining</h4>
-                <p class="text-xl font-bold text-gray-900"><?php echo $total_dining; ?></p>
+                <p class="text-xl font-bold text-white"><?php echo $total_dining; ?></p>
             </div>
         </div>
     </div>
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <div class="bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-800 hover:shadow-md transition-shadow">
         <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0">
+            <div class="w-10 h-10 rounded-full bg-red-900/20 text-red-400 flex items-center justify-center shrink-0">
                 <i class="fas fa-exclamation"></i>
             </div>
             <div>
                 <h4 class="text-gray-500 text-xs font-bold uppercase">Pending Dining</h4>
-                <p class="text-xl font-bold text-gray-900"><?php echo $pending_dining; ?></p>
+                <p class="text-xl font-bold text-white"><?php echo $pending_dining; ?></p>
             </div>
         </div>
     </div>
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <div class="bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-800 hover:shadow-md transition-shadow">
         <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center shrink-0">
+            <div class="w-10 h-10 rounded-full bg-teal-900/20 text-teal-400 flex items-center justify-center shrink-0">
                 <i class="fas fa-spa"></i>
             </div>
             <div>
                 <h4 class="text-gray-500 text-xs font-bold uppercase">Total Spa</h4>
-                <p class="text-xl font-bold text-gray-900"><?php echo $total_spa; ?></p>
+                <p class="text-xl font-bold text-white"><?php echo $total_spa; ?></p>
             </div>
         </div>
     </div>
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <div class="bg-gray-900 rounded-2xl p-6 shadow-sm border border-gray-800 hover:shadow-md transition-shadow">
         <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0">
+            <div class="w-10 h-10 rounded-full bg-red-900/20 text-red-400 flex items-center justify-center shrink-0">
                 <i class="fas fa-exclamation"></i>
             </div>
             <div>
                 <h4 class="text-gray-500 text-xs font-bold uppercase">Pending Spa</h4>
-                <p class="text-xl font-bold text-gray-900"><?php echo $pending_spa; ?></p>
+                <p class="text-xl font-bold text-white"><?php echo $pending_spa; ?></p>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Pending Bookings Table -->
-<div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-8">
-    <div class="p-6 bg-white border-b border-gray-100 flex justify-between items-center">
-        <h3 class="font-bold font-serif text-xl text-gray-900">Pending Approvals</h3>
-        <a href="bookings.php?status=pending" class="text-sm font-bold text-yellow-600 hover:text-yellow-700">View All</a>
+<div class="bg-gray-900 rounded-2xl shadow-lg border border-gray-800 overflow-hidden mb-8">
+    <div class="p-6 bg-gray-900 border-b border-gray-800 flex justify-between items-center">
+        <h3 class="font-bold font-serif text-xl text-white">Pending Approvals</h3>
+        <a href="bookings.php?status=pending" class="text-sm font-bold text-yellow-500 hover:text-yellow-400">View
+            All</a>
     </div>
     <div class="overflow-x-auto">
         <?php if ($pending_bookings && mysqli_num_rows($pending_bookings) > 0): ?>
             <table class="w-full text-left border-collapse">
                 <thead>
-                    <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
+                    <tr class="bg-gray-800 text-gray-400 text-xs uppercase tracking-wider">
                         <th class="p-4 font-bold">User</th>
                         <th class="p-4 font-bold">Room</th>
                         <th class="p-4 font-bold">Check-in / Check-out</th>
@@ -215,35 +227,37 @@ $total_spa = mysqli_fetch_assoc($total_spa_result)['total'] ?? 0;
                         <th class="p-4 font-bold text-right">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100">
+                <tbody class="divide-y divide-gray-800">
                     <?php while ($booking = mysqli_fetch_assoc($pending_bookings)): ?>
-                        <tr class="hover:bg-gray-50 transition-colors">
+                        <tr class="hover:bg-gray-800/50 transition-colors">
                             <td class="p-4">
-                                <span class="font-bold text-gray-900"><?php echo htmlspecialchars($booking['username']); ?></span>
+                                <span class="font-bold text-white"><?php echo htmlspecialchars($booking['username']); ?></span>
                             </td>
                             <td class="p-4">
-                                <span class="text-gray-600"><?php echo htmlspecialchars($booking['room_name']); ?></span>
+                                <span class="text-gray-400"><?php echo htmlspecialchars($booking['room_name']); ?></span>
                             </td>
                             <td class="p-4">
-                                <div class="text-sm text-gray-900">
+                                <div class="text-sm text-white">
                                     <span class="text-xs font-bold text-gray-500 uppercase mr-1">In:</span>
                                     <?php echo !empty($booking['check_in_date']) ? date('M j, g:i A', strtotime($booking['check_in_date'])) : 'N/A'; ?>
                                 </div>
-                                <div class="text-xs text-gray-500 mt-1">
-                                    <span class="text-xs font-bold text-gray-400 uppercase mr-1">Out:</span>
+                                <div class="text-xs text-gray-400 mt-1">
+                                    <span class="text-xs font-bold text-gray-500 uppercase mr-1">Out:</span>
                                     <?php echo !empty($booking['check_out_date']) ? date('M j, Y g:i A', strtotime($booking['check_out_date'])) : 'N/A'; ?>
                                 </div>
                             </td>
                             <td class="p-4">
-                                <span class="text-gray-900"><?php echo htmlspecialchars($booking['customer_name']); ?></span>
+                                <span class="text-white"><?php echo htmlspecialchars($booking['customer_name']); ?></span>
                             </td>
                             <td class="p-4 text-right">
                                 <div class="flex justify-end gap-2">
-                                    <button class="approve-booking px-3 py-1.5 bg-green-100 text-green-700 rounded-lg text-xs font-bold hover:bg-green-200 transition-colors"
+                                    <button
+                                        class="approve-booking px-3 py-1.5 bg-green-900/30 text-green-400 rounded-lg text-xs font-bold hover:bg-green-900/50 transition-colors"
                                         data-booking-id="<?php echo $booking['id']; ?>">
                                         Approve
                                     </button>
-                                    <button class="reject-booking px-3 py-1.5 bg-red-100 text-red-700 rounded-lg text-xs font-bold hover:bg-red-200 transition-colors"
+                                    <button
+                                        class="reject-booking px-3 py-1.5 bg-red-900/30 text-red-400 rounded-lg text-xs font-bold hover:bg-red-900/50 transition-colors"
                                         data-booking-id="<?php echo $booking['id']; ?>">
                                         Reject
                                     </button>
@@ -254,8 +268,8 @@ $total_spa = mysqli_fetch_assoc($total_spa_result)['total'] ?? 0;
                 </tbody>
             </table>
         <?php else: ?>
-            <div class="p-12 text-center text-gray-400">
-                <i class="fas fa-check-circle text-4xl mb-4 text-gray-200"></i>
+            <div class="p-12 text-center text-gray-500">
+                <i class="fas fa-check-circle text-4xl mb-4 text-gray-800"></i>
                 <p>All caught up! No pending bookings.</p>
             </div>
         <?php endif; ?>
@@ -263,10 +277,10 @@ $total_spa = mysqli_fetch_assoc($total_spa_result)['total'] ?? 0;
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Approve booking
         document.querySelectorAll('.approve-booking').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const bookingId = this.dataset.bookingId;
                 if (confirm('Are you sure you want to approve this booking?')) {
                     updateBookingStatus(bookingId, 'approved');
@@ -276,7 +290,7 @@ $total_spa = mysqli_fetch_assoc($total_spa_result)['total'] ?? 0;
 
         // Reject booking
         document.querySelectorAll('.reject-booking').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const bookingId = this.dataset.bookingId;
                 if (confirm('Are you sure you want to reject this booking?')) {
                     updateBookingStatus(bookingId, 'rejected');

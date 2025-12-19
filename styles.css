@@ -662,3 +662,61 @@ footer {
     margin: 0.5rem 0;
   }
 }
+
+.availabity_available{
+  font-size: 12px;
+  color: #f8f9fa;
+  background: #1d772b;
+
+}
+.availabity_unavailable{
+  font-size: 12px;
+  color: #f8f9fa;
+  background: #dc2626;
+}
+
+.book_now{
+  border-radius: 50px;
+  color: #ffffff;
+  background: #101725;
+  padding: 8px;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid #ffffff;
+}
+
+.book_now:hover{
+  color: #101725;
+  background: #ca8a04;
+  transform: translateY(-5px);
+  border: .9px solid #ca8a04;
+}
+
+.details{
+  border-radius: 50px;
+  color: #1a1a1a;
+  background: #ffffff;
+  text-align: center;
+  align-items: center;
+  padding: 7px ;
+  transition: all 0.3s ease;
+}
+
+.details:hover{
+  background: #ca8a04;
+  color: #f8f9fa;
+  transform: translateY(-5px);
+}
+
+.room_card{
+    border-radius: 50px;
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      transition: all 0.3s ease;
+}
+.room_card:hover{
+  transform: translateY(-5px);
+}

@@ -102,43 +102,53 @@ function getStatusBadge($status)
 <style>
     .bookings-section {
         padding: 80px 0;
-        background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+        background: #030712;
+        /* gray-950 */
+        min-h-screen: 100vh;
     }
 
     .bookings-card {
-        border: none;
-        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        background-color: #111827;
+        /* gray-900 */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         transition: all 0.3s ease;
     }
 
     .bookings-card:hover {
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        border-color: rgba(255, 255, 255, 0.1);
     }
 
     .bookings-header {
-        background-color: #1a1a1a;
+        background-color: #030712;
+        /* gray-950 */
         color: white;
-        padding: 25px;
+        padding: 30px;
         text-align: center;
         position: relative;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .bookings-header h2 {
         margin: 0;
         font-weight: 700;
         font-size: 2.2rem;
+        font-family: serif;
         position: relative;
     }
 
     .bookings-header:after {
         content: "";
         display: block;
-        width: 50px;
-        height: 4px;
-        background-color: #ffd700;
+        width: 60px;
+        height: 3px;
+        background-color: #d97706;
+        /* yellow-600 */
         margin: 15px auto 0;
+        border-radius: 2px;
     }
 
     .bookings-body {
@@ -149,21 +159,30 @@ function getStatusBadge($status)
         border-collapse: separate;
         border-spacing: 0;
         width: 100%;
+        color: #d1d5db;
+        /* gray-300 */
     }
 
     .bookings-table th {
-        background-color: #f8f9fa;
-        color: #333;
+        background-color: #1f2937;
+        /* gray-800 */
+        color: #f9fafb;
+        /* gray-50 */
         font-weight: 600;
-        padding: 15px;
+        padding: 18px 15px;
         text-align: left;
-        border-bottom: 2px solid #dee2e6;
+        border-bottom: 2px solid #374151;
+        /* gray-700 */
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
     }
 
     .bookings-table td {
-        padding: 15px;
+        padding: 20px 15px;
         vertical-align: middle;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #1f2937;
+        /* gray-800 */
     }
 
     .bookings-table tbody tr {
@@ -171,112 +190,184 @@ function getStatusBadge($status)
     }
 
     .bookings-table tbody tr:hover {
-        background-color: #f8f9fa;
+        background-color: #1f2937;
+        /* gray-800 */
     }
 
     .booking-badge {
-        padding: 8px 12px;
+        padding: 6px 12px;
         border-radius: 30px;
-        font-size: 0.8rem;
-        font-weight: 600;
+        font-size: 0.7rem;
+        font-weight: 700;
         display: inline-block;
         text-align: center;
-        min-width: 100px;
+        min-width: 110px;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+        border: 1px solid transparent;
     }
 
     .booking-pending {
-        background-color: #fff8e1;
-        color: #f57c00;
+        background-color: rgba(217, 119, 6, 0.15);
+        /* yellow-600 */
+        color: #fbbf24;
+        /* yellow-400 */
+        border-color: rgba(217, 119, 6, 0.3);
     }
 
     .booking-approved {
-        background-color: #e8f5e9;
-        color: #2e7d32;
+        background-color: rgba(16, 185, 129, 0.15);
+        /* emerald-500 */
+        color: #34d399;
+        /* emerald-400 */
+        border-color: rgba(16, 185, 129, 0.3);
     }
 
     .booking-rejected {
-        background-color: #ffebee;
-        color: #c62828;
+        background-color: rgba(239, 68, 68, 0.15);
+        /* red-500 */
+        color: #f87171;
+        /* red-400 */
+        border-color: rgba(239, 68, 68, 0.3);
     }
 
     .booking-cancelled {
-        background-color: #f5f5f5;
-        color: #616161;
+        background-color: rgba(107, 114, 128, 0.15);
+        /* gray-500 */
+        color: #9ca3af;
+        /* gray-400 */
+        border-color: rgba(107, 114, 128, 0.3);
     }
 
     .booking-unknown {
-        background-color: #e0e0e0;
-        color: #424242;
+        background-color: rgba(107, 114, 128, 0.15);
+        /* gray-500 */
+        color: #9ca3af;
+        /* gray-400 */
     }
 
     .booking-info {
         font-weight: 600;
+        color: #ffffff;
     }
 
     .booking-date {
-        color: #555;
+        color: #9ca3af;
+        /* gray-400 */
+        font-size: 0.9rem;
     }
 
     .booking-price {
         font-weight: 700;
-        color: #1a1a1a;
+        color: #ffffff;
     }
 
     .action-btn {
-        padding: 8px 12px;
-        border-radius: 8px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        transition: all 0.3s;
+        padding: 8px 16px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
     }
 
     .btn-edit {
         background-color: #1a76d2;
-        border-color: #1a76d2;
+        color: white;
+        border: none;
     }
 
     .btn-edit:hover {
         background-color: #1565c0;
         transform: translateY(-2px);
-        box-shadow: 0 3px 8px rgba(21, 101, 192, 0.3);
+        box-shadow: 0 4px 12px rgba(26, 118, 210, 0.3);
+        color: white;
     }
 
     .btn-cancel {
-        background-color: #e53935;
-        border-color: #e53935;
+        background-color: rgba(220, 38, 38, 0.8);
+        color: white;
+        border: none;
     }
 
     .btn-cancel:hover {
-        background-color: #d32f2f;
+        background-color: #dc2626;
         transform: translateY(-2px);
-        box-shadow: 0 3px 8px rgba(211, 47, 47, 0.3);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        color: white;
     }
 
     .empty-bookings {
-        padding: 60px 30px;
+        padding: 60px 40px;
         text-align: center;
+        background: #1f2937;
+        border-radius: 20px;
+        border: 1px dashed #374151;
     }
 
     .empty-icon {
-        font-size: 5rem;
-        color: #bdbdbd;
-        margin-bottom: 20px;
+        font-size: 4rem;
+        color: #374151;
+        margin-bottom: 24px;
+        opacity: 0.8;
     }
 
     .btn-browse {
-        background-color: #1a1a1a;
+        background-color: #d97706;
+        /* yellow-600 */
+        color: white;
         border: none;
-        padding: 12px 24px;
-        border-radius: 10px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
+        padding: 14px 28px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
         transition: all 0.3s;
+        box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
     }
 
     .btn-browse:hover {
-        background-color: #333;
+        background-color: #b45309;
+        /* yellow-700 */
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+        color: white;
+    }
+
+    .alert {
+        border-radius: 16px;
+        border: none;
+        padding: 16px 24px;
+        font-weight: 600;
+    }
+
+    .alert-success {
+        background-color: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+    }
+
+    .alert-danger {
+        background-color: rgba(239, 68, 68, 0.15);
+        color: #f87171;
+    }
+
+    .table-responsive {
+        scrollbar-width: thin;
+        scrollbar-color: #374151 transparent;
+    }
+
+    .table-responsive::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .table-responsive::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .table-responsive::-webkit-scrollbar-thumb {
+        background-color: #374151;
+        border-radius: 20px;
     }
 </style>
 
@@ -374,9 +465,11 @@ function getStatusBadge($status)
                                                     <?php if ($type === 'room'): ?>
                                                         <span class="badge bg-primary"><i class="fas fa-hotel me-1"></i>Room</span>
                                                     <?php elseif ($type === 'dining'): ?>
-                                                        <span class="badge bg-warning text-dark"><i class="fas fa-utensils me-1"></i>Dining</span>
+                                                        <span class="badge bg-warning text-dark"><i
+                                                                class="fas fa-utensils me-1"></i>Dining</span>
                                                     <?php elseif ($type === 'spa'): ?>
-                                                        <span class="badge bg-info text-dark"><i class="fas fa-spa me-1"></i>Spa</span>
+                                                        <span class="badge bg-info text-dark"><i
+                                                                class="fas fa-spa me-1"></i>Spa</span>
                                                     <?php else: ?>
                                                         <span class="badge bg-secondary">Other</span>
                                                     <?php endif; ?>
@@ -407,7 +500,8 @@ function getStatusBadge($status)
                                                     <?php if ($type === 'room'): ?>
                                                         <?php echo $nights; ?> night<?php echo $nights != 1 ? 's' : ''; ?>
                                                     <?php else: ?>
-                                                        <?php echo $booking['number_of_guests']; ?> guest<?php echo $booking['number_of_guests'] != 1 ? 's' : ''; ?>
+                                                        <?php echo $booking['number_of_guests']; ?>
+                                                        guest<?php echo $booking['number_of_guests'] != 1 ? 's' : ''; ?>
                                                     <?php endif; ?>
                                                 </td>
                                                 <td class="booking-price">
@@ -422,17 +516,17 @@ function getStatusBadge($status)
                                                     <?php elseif ($type === 'spa'): ?>
                                                         <?php
                                                         $treatmentKey = strtolower(trim($booking['venue']));
-                                                        $guests = isset($booking['number_of_guests']) ? max(1, (int)$booking['number_of_guests']) : 1;
+                                                        $guests = isset($booking['number_of_guests']) ? max(1, (int) $booking['number_of_guests']) : 1;
                                                         if (isset($spa_price_map[$treatmentKey])) {
                                                             $pricePer = $spa_price_map[$treatmentKey];
                                                             $total = $pricePer * $guests;
-                                                            echo '$' . number_format($total, 2) . ' <br><small class="text-muted">($' . number_format($pricePer, 2) . ' each)</small>';
+                                                            echo '$' . number_format($total, 2) . ' <br><small class="text-gray-500">($' . number_format($pricePer, 2) . ' each)</small>';
                                                         } else {
-                                                            echo '<span class="text-muted">N/A</span>';
+                                                            echo '<span class="text-gray-600">N/A</span>';
                                                         }
                                                         ?>
                                                     <?php else: ?>
-                                                        <span class="text-muted">N/A</span>
+                                                        <span class="text-gray-600">N/A</span>
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
@@ -449,11 +543,11 @@ function getStatusBadge($status)
                                                     <?php if ($type === 'room'): ?>
                                                         <?php if ($status === 'pending'): ?>
                                                             <div class="d-flex gap-2">
-                                                                <a href="edit_booking.php?id=<?php echo $booking['id']; ?>" class="btn btn-sm action-btn btn-edit">
+                                                                <a href="edit_booking.php?id=<?php echo $booking['id']; ?>"
+                                                                    class="btn btn-sm action-btn btn-edit">
                                                                     <i class="fas fa-edit"></i> Edit
                                                                 </a>
-                                                                <button type="button"
-                                                                    class="btn btn-sm action-btn btn-cancel"
+                                                                <button type="button" class="btn btn-sm action-btn btn-cancel"
                                                                     onclick="confirmCancel(<?php echo $booking['id']; ?>)">
                                                                     <i class="fas fa-times"></i> Cancel
                                                                 </button>
@@ -467,31 +561,35 @@ function getStatusBadge($status)
                                                         <?php elseif (!$is_future_booking): ?>
                                                             <span class="badge booking-badge booking-cancelled">Past Booking</span>
                                                         <?php else: ?>
-                                                            <span class="badge booking-badge booking-unknown">Status: <?php echo ucfirst($status); ?></span>
+                                                            <span class="badge booking-badge booking-unknown">Status:
+                                                                <?php echo ucfirst($status); ?></span>
                                                         <?php endif; ?>
                                                     <?php elseif ($type === 'dining' || $type === 'spa'): ?>
                                                         <?php if ($status === 'pending'): ?>
                                                             <div class="d-flex gap-2">
-                                                                <a href="edit_reservation.php?id=<?php echo $booking['id']; ?>&type=<?php echo $type; ?>" class="btn btn-sm action-btn btn-edit">
+                                                                <a href="edit_reservation.php?id=<?php echo $booking['id']; ?>&type=<?php echo $type; ?>"
+                                                                    class="btn btn-sm action-btn btn-edit">
                                                                     <i class="fas fa-edit"></i> Edit
                                                                 </a>
-                                                                <button type="button"
-                                                                    class="btn btn-sm action-btn btn-cancel"
+                                                                <button type="button" class="btn btn-sm action-btn btn-cancel"
                                                                     onclick="confirmCancelReservation(<?php echo $booking['id']; ?>, '<?php echo $type; ?>')">
                                                                     <i class="fas fa-times"></i> Cancel
                                                                 </button>
                                                             </div>
                                                         <?php elseif ($status === 'confirmed' && $is_future_booking): ?>
-                                                            <span class="badge booking-badge booking-approved"><i class="fas fa-check me-1"></i>Confirmed</span>
+                                                            <span class="badge booking-badge booking-approved"><i
+                                                                    class="fas fa-check me-1"></i>Confirmed</span>
                                                         <?php elseif ($status === 'cancelled'): ?>
                                                             <span class="badge booking-badge booking-cancelled">Cancelled</span>
                                                         <?php elseif (!$is_future_booking): ?>
                                                             <span class="badge booking-badge booking-cancelled">Past Reservation</span>
                                                         <?php else: ?>
-                                                            <span class="badge booking-badge booking-unknown">Status: <?php echo ucfirst($status); ?></span>
+                                                            <span class="badge booking-badge booking-unknown">Status:
+                                                                <?php echo ucfirst($status); ?></span>
                                                         <?php endif; ?>
                                                     <?php else: ?>
-                                                        <span class="badge booking-badge booking-unknown">Status: <?php echo ucfirst($status); ?></span>
+                                                        <span class="badge booking-badge booking-unknown">Status:
+                                                            <?php echo ucfirst($status); ?></span>
                                                     <?php endif; ?>
                                                 </td>
                                             </tr>
@@ -502,8 +600,9 @@ function getStatusBadge($status)
                         <?php else: ?>
                             <div class="empty-bookings">
                                 <i class="fas fa-calendar-times empty-icon"></i>
-                                <h3 class="mt-3 mb-2">No Bookings or Reservations Found</h3>
-                                <p class="text-muted mb-4">You don't have any room bookings or dining reservations yet.</p>
+                                <h3 class="mt-3 mb-2 text-white">No Bookings or Reservations Found</h3>
+                                <p class="text-gray-400 mb-4">You don't have any room bookings or dining reservations yet.
+                                </p>
                                 <div class="d-flex gap-3 justify-content-center">
                                     <a href="view_rooms.php" class="btn btn-primary btn-browse">
                                         <i class="fas fa-hotel me-2"></i>Browse Rooms
@@ -535,4 +634,4 @@ function getStatusBadge($status)
             window.location.href = 'cancel_reservation.php?id=' + id + '&type=' + encodeURIComponent(type);
         }
     }
-</script> 
+</script>

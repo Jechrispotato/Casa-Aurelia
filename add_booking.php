@@ -4,7 +4,7 @@ include('header.php');
 include('db.php');
 
 // Get the room_id from URL if available
-$selected_room_id = isset($_GET['room_id']) ? (int)$_GET['room_id'] : '';
+$selected_room_id = isset($_GET['room_id']) ? (int) $_GET['room_id'] : '';
 
 // Get today's date and time for minimum booking date
 $today = date('Y-m-d H:i');
@@ -22,19 +22,23 @@ unset($_SESSION['error']); // Clear the message after getting it
 <style>
     .booking-section {
         padding: 80px 0;
-        background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+        background: #030712;
+        /* gray-950 */
     }
 
     .booking-card {
-        border: none;
+        border: 1px solid #1f2937;
+        /* gray-800 */
         border-radius: 15px;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        background-color: #111827;
+        /* gray-900 */
         transition: all 0.3s ease;
     }
 
     .booking-card:hover {
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     }
 
     .booking-header {
@@ -72,7 +76,8 @@ unset($_SESSION['error']); // Clear the message after getting it
 
     .form-label {
         font-weight: 600;
-        color: #333;
+        color: #9ca3af;
+        /* gray-400 */
         margin-bottom: 8px;
     }
 
@@ -80,15 +85,22 @@ unset($_SESSION['error']); // Clear the message after getting it
     .form-select {
         padding: 12px 20px;
         border-radius: 10px;
-        border: 1px solid #ddd;
+        border: 1px solid #374151;
+        /* gray-700 */
         font-size: 1rem;
+        background-color: #1f2937;
+        /* gray-800 */
+        color: white;
         transition: all 0.3s;
     }
 
     .form-control:focus,
     .form-select:focus {
-        border-color: #1a1a1a;
-        box-shadow: 0 0 0 0.25rem rgba(26, 26, 26, 0.15);
+        background-color: #1f2937;
+        color: white;
+        border-color: #ca8a04;
+        /* yellow-600 */
+        box-shadow: 0 0 0 0.25rem rgba(202, 138, 4, 0.15);
     }
 
     .date-field {
@@ -100,35 +112,42 @@ unset($_SESSION['error']); // Clear the message after getting it
         right: 15px;
         top: 50%;
         transform: translateY(-50%);
-        color: #666;
+        color: #9ca3af;
+        /* gray-400 */
         pointer-events: none;
     }
 
     .btn-book {
-        background-color: #1a1a1a;
+        background-color: #ca8a04;
+        /* yellow-600 */
         border: none;
         padding: 16px 24px;
         border-radius: 10px;
         font-weight: 600;
+        color: white;
         letter-spacing: 0.5px;
         transition: all 0.3s;
     }
 
     .btn-book:hover {
-        background-color: #333;
+        background-color: #a16207;
+        /* yellow-700 */
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 15px rgba(202, 138, 4, 0.3);
     }
 
     .booking-info {
         margin-top: 30px;
-        border-top: 1px solid #eee;
+        border-top: 1px solid #374151;
+        /* gray-700 */
         padding-top: 30px;
     }
 
     #total-price {
-        background-color: #f8f9fa;
-        border-left: 4px solid #1a1a1a;
+        background-color: #1f2937;
+        /* gray-800 */
+        border-left: 4px solid #ca8a04;
+        /* yellow-600 */
         border-radius: 8px;
         padding: 20px;
     }
@@ -136,7 +155,7 @@ unset($_SESSION['error']); // Clear the message after getting it
     #price-value {
         font-size: 1.5rem;
         font-weight: 700;
-        color: #1a1a1a;
+        color: white;
     }
 
     .flatpickr-day.flatpickr-disabled,
@@ -204,12 +223,8 @@ unset($_SESSION['error']); // Clear the message after getting it
                         <form action="process_booking.php" method="POST" id="bookingForm">
                             <div class="mb-4">
                                 <label for="customer_name" class="form-label">Your Name</label>
-                                <input type="text"
-                                    name="customer_name"
-                                    id="customer_name"
-                                    class="form-control"
-                                    placeholder="Enter your full name"
-                                    required>
+                                <input type="text" name="customer_name" id="customer_name" class="form-control"
+                                    placeholder="Enter your full name" required>
                             </div>
 
                             <div class="mb-4">
@@ -235,36 +250,29 @@ unset($_SESSION['error']); // Clear the message after getting it
                             </div>
 
                             <div id="unavailable-dates-container" class="mb-4 d-none">
-                                <label class="form-label text-danger" style="color: #dc3545;">Unavailable Dates (Currently Booked)</label>
-                                <div id="unavailable-dates-list" class="small text-muted" style="background-color: #f8f9fa; padding: 10px; border-radius: 8px; border-left: 4px solid #dc3545;"></div>
+                                <label class="form-label text-danger" style="color: #dc3545;">Unavailable Dates
+                                    (Currently Booked)</label>
+                                <div id="unavailable-dates-list" class="small text-muted"
+                                    style="background-color: #f8f9fa; padding: 10px; border-radius: 8px; border-left: 4px solid #dc3545;">
+                                </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label for="check_in_date" class="form-label">Check-in Date</label>
                                     <div class="date-field">
-                                        <input type="text"
-                                            name="check_in_date"
-                                            id="check_in_date"
-                                            class="form-control"
-                                            placeholder="Select check-in date"
-                                            data-min-date="<?php echo $today; ?>"
-                                            data-enable-time="true"
-                                            required>
+                                        <input type="text" name="check_in_date" id="check_in_date" class="form-control"
+                                            placeholder="Select check-in date" data-min-date="<?php echo $today; ?>"
+                                            data-enable-time="true" required>
                                         <i class="fas fa-calendar-alt"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <label for="check_out_date" class="form-label">Check-out Date</label>
                                     <div class="date-field">
-                                        <input type="text"
-                                            name="check_out_date"
-                                            id="check_out_date"
-                                            class="form-control"
-                                            placeholder="Select check-out date"
-                                            data-min-date="<?php echo $today; ?>"
-                                            data-enable-time="true"
-                                            required>
+                                        <input type="text" name="check_out_date" id="check_out_date"
+                                            class="form-control" placeholder="Select check-out date"
+                                            data-min-date="<?php echo $today; ?>" data-enable-time="true" required>
                                         <i class="fas fa-calendar-alt"></i>
                                     </div>
                                 </div>
@@ -302,7 +310,7 @@ unset($_SESSION['error']); // Clear the message after getting it
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('bookingForm');
         const roomSelect = document.getElementById('room_id');
         const checkInDateInput = document.getElementById('check_in_date');
@@ -343,7 +351,7 @@ unset($_SESSION['error']); // Clear the message after getting it
                 disable: disabledDates,
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
-                onChange: function(selectedDates, dateStr) {
+                onChange: function (selectedDates, dateStr) {
                     checkOutPicker.set('minDate', dateStr);
                     calculateTotalPrice();
                     checkAvailability();
@@ -356,7 +364,7 @@ unset($_SESSION['error']); // Clear the message after getting it
                 disable: disabledDates,
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
-                onChange: function() {
+                onChange: function () {
                     calculateTotalPrice();
                     checkAvailability();
                 }
@@ -390,10 +398,10 @@ unset($_SESSION['error']); // Clear the message after getting it
                         // Using simplistic formatting; can be improved or use local format
                         const startStr = startDate.toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
                         const endStr = endDate.toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-                        
+
                         listHtml += `<div class="mb-1"><i class="fas fa-calendar-times me-2"></i> ${startStr} — ${endStr}</div>`;
                     });
-                    
+
                     listDiv.innerHTML = listHtml;
                     listContainer.classList.remove('d-none');
                 } else {
@@ -424,8 +432,8 @@ unset($_SESSION['error']); // Clear the message after getting it
             const diffHours = timeDiff / (1000 * 3600); // exact float hours
 
             if (diffHours <= 0) {
-                 totalPriceDiv.classList.add('d-none');
-                 return;
+                totalPriceDiv.classList.add('d-none');
+                return;
             }
 
             if (roomData[roomId]) {
@@ -434,14 +442,14 @@ unset($_SESSION['error']); // Clear the message after getting it
                 let rateText = ""; // Keep this for now or remove if unused
 
                 // Helper for currency formatting
-                const formatMoney = (amount) => '$' + amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                const formatMoney = (amount) => '$' + amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                 if (diffHours < 24) {
                     // Hourly Pricing Logic (Less than 24 hours)
                     const hoursCharged = Math.max(1, Math.ceil(diffHours));
                     const hourlyRate = roomData[roomId].hourly;
                     totalPrice = hoursCharged * hourlyRate;
-                    
+
                     breakdownHtml = `
                         <div class="d-flex justify-content-between mb-2">
                             <span>Duration (${hoursCharged} hrs)</span>
@@ -460,15 +468,15 @@ unset($_SESSION['error']); // Clear the message after getting it
                     const remainingHours = Math.ceil(diffHours % 24);
                     const nightlyRate = roomData[roomId].nightly;
                     const hourlyRate = roomData[roomId].hourly;
-                    
+
                     if (remainingHours > 0) {
                         const nightPrice = nights * nightlyRate;
                         const hourlyPrice = remainingHours * hourlyRate;
-                        
+
                         // Smart check: if hourly overage costs more than a full night
                         if (hourlyPrice >= nightlyRate) {
-                             totalPrice = (nights + 1) * nightlyRate;
-                             breakdownHtml = `
+                            totalPrice = (nights + 1) * nightlyRate;
+                            breakdownHtml = `
                                 <div class="d-flex justify-content-between mb-2">
                                     <span>Nights (${nights + 1})</span>
                                     <span>${nights + 1} x ${formatMoney(nightlyRate)}</span>
@@ -481,10 +489,10 @@ unset($_SESSION['error']); // Clear the message after getting it
                                     <span>${formatMoney(totalPrice)}</span>
                                 </div>
                              `;
-                             rateText = ` (${nights + 1} nights @ ${formatMoney(nightlyRate)})`;
+                            rateText = ` (${nights + 1} nights @ ${formatMoney(nightlyRate)})`;
                         } else {
-                             totalPrice = nightPrice + hourlyPrice;
-                             breakdownHtml = `
+                            totalPrice = nightPrice + hourlyPrice;
+                            breakdownHtml = `
                                 <div class="d-flex justify-content-between mb-1">
                                     <span>Nights (${nights})</span>
                                     <span>${nights} x ${formatMoney(nightlyRate)}</span>
@@ -498,7 +506,7 @@ unset($_SESSION['error']); // Clear the message after getting it
                                     <span>${formatMoney(totalPrice)}</span>
                                 </div>
                              `;
-                             rateText = ` (${nights} nights + ${remainingHours} hrs)`;
+                            rateText = ` (${nights} nights + ${remainingHours} hrs)`;
                         }
                     } else {
                         // Exact number of nights
@@ -526,13 +534,13 @@ unset($_SESSION['error']); // Clear the message after getting it
                     breakdownContainer.innerHTML = breakdownHtml;
                     priceValueSpan.style.display = 'none'; // Hide the old single line
                 } else {
-                     // Create a container if I removed it or it's not there? 
-                     // Actually let's just use the priceValueSpan to hold the breakdown if we want to be simple, 
-                     // but the user wants structure.
-                     // Better: Retarget the DOM element.
-                     const priceContainer = document.getElementById('total-price');
-                     // Clear previous simple text
-                     priceContainer.innerHTML = `<h5 class="alert-heading mb-3"><i class="fas fa-receipt me-2"></i>Price Breakdown</h5>` + breakdownHtml;
+                    // Create a container if I removed it or it's not there? 
+                    // Actually let's just use the priceValueSpan to hold the breakdown if we want to be simple, 
+                    // but the user wants structure.
+                    // Better: Retarget the DOM element.
+                    const priceContainer = document.getElementById('total-price');
+                    // Clear previous simple text
+                    priceContainer.innerHTML = `<h5 class="alert-heading mb-3"><i class="fas fa-receipt me-2"></i>Price Breakdown</h5>` + breakdownHtml;
                 }
 
                 // priceValueSpan.textContent = '$' + totalPrice.toFixed(2) + rateText; 
@@ -569,7 +577,7 @@ unset($_SESSION['error']); // Clear the message after getting it
             }
         }
 
-        roomSelect.addEventListener('change', function() {
+        roomSelect.addEventListener('change', function () {
             // Reset date inputs
             checkInDateInput.value = '';
             checkOutDateInput.value = '';

@@ -24,7 +24,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
         $q = "SELECT COUNT(*) as count FROM notifications WHERE user_id = $user_id AND seen = 0";
         $res = @mysqli_query($conn, $q);
         if ($res) {
-            $unread_notifications = (int)(mysqli_fetch_assoc($res)['count'] ?? 0);
+            $unread_notifications = (int) (mysqli_fetch_assoc($res)['count'] ?? 0);
         }
     } else {
         // Fall back to legacy per-table counts
@@ -33,21 +33,21 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                    AND notification_seen = 0
                    AND (status = 'approved' OR status = 'rejected')";
         $room_res = @mysqli_query($conn, $room_q);
-        $room_count = ($room_res) ? (int)(mysqli_fetch_assoc($room_res)['count'] ?? 0) : 0;
+        $room_count = ($room_res) ? (int) (mysqli_fetch_assoc($room_res)['count'] ?? 0) : 0;
 
         $dining_q = "SELECT COUNT(*) as count FROM dining_reservations 
                      WHERE user_id = $user_id 
                      AND notification_seen = 0
                      AND (status = 'confirmed' OR status = 'cancelled')";
         $dining_res = @mysqli_query($conn, $dining_q);
-        $dining_count = ($dining_res) ? (int)(mysqli_fetch_assoc($dining_res)['count'] ?? 0) : 0;
+        $dining_count = ($dining_res) ? (int) (mysqli_fetch_assoc($dining_res)['count'] ?? 0) : 0;
 
         $spa_q = "SELECT COUNT(*) as count FROM spa_bookings 
                   WHERE user_id = $user_id 
                   AND notification_seen = 0
                   AND (status = 'confirmed' OR status = 'cancelled')";
         $spa_res = @mysqli_query($conn, $spa_q);
-        $spa_count = ($spa_res) ? (int)(mysqli_fetch_assoc($spa_res)['count'] ?? 0) : 0;
+        $spa_count = ($spa_res) ? (int) (mysqli_fetch_assoc($spa_res)['count'] ?? 0) : 0;
 
         $unread_notifications = $room_count + $dining_count + $spa_count;
     }
@@ -79,10 +79,11 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
         }
     </style>
     <style>
-        body
-        {
-            overflow-x: hidden; /* Hide horizontal scrollbar */
+        body {
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
         }
+
         /* Scrollbar width */
         ::-webkit-scrollbar {
             background: #111827;
@@ -162,13 +163,38 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
             overflow: visible;
         }
 
-        .navbar_button:hover{
+        /* Base navbar button */
+        .navbar_button {
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            text-decoration: none;
+            transition:
+                background 0.3s ease,
+                box-shadow 0.3s ease,
+                transform 0.3s ease,
+                border 0.3s ease;
+        }
+
+        /* Hover effect */
+        .navbar_button:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
             border-radius: 50px;
         }
 
-                .navbar_button:hover{
-            border-radius: 50px;
+        /* Active / current page */
+        .navbar_button.active {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+            transform: none;
         }
+
+
 
         /* Ensure inner container fills the floating navbar */
         .navbar_custom>.container {
@@ -202,8 +228,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between h-14">
                 <!-- Logo and Brand -->
-                <a href="<?php echo $is_admin_page ? '../' : ''; ?>index.php"
-                    class="logoo">
+                <a href="<?php echo $is_admin_page ? '../' : ''; ?>index.php" class="logoo">
                     <img src="<?php echo $is_admin_page ? '../' : ''; ?>aurelia_assets/casaaurelialogo1_white.png"
                         alt="Hotel Logo"
                         class="h-8 w-auto rounded-full object-cover transition-all duration-500 ease-in-out group-hover:scale-110">
@@ -214,21 +239,24 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                         <!-- Admin Navigation -->
                         <a href="<?php echo $admin_prefix; ?>dashboard.php"
-                            class="px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300 flex items-center gap-2 
+                            class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300 flex items-center gap-2 
                                   hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg
-                                  <?php echo ($current_page === 'dashboard.php') ? 'bg-white/15 shadow-md' : ''; ?>">
+                                  <?php echo ($current_page === 'dashboard.php') ? 'border border-white/40 bg-white/10 shadow-lg' : ''; ?>">
                             <i class="fas fa-tachometer-alt text-base"></i>
                             <span>Dashboard</span>
                         </a>
 
                         <!-- Bookings Dropdown -->
                         <div class="relative group">
-                            <button id="bookingsDropdownBtn" class="px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300 flex items-center gap-2 hover:bg-white/10">
+                            <button id="bookingsDropdownBtn"
+                                class="px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300 flex items-center gap-2 hover:bg-white/10">
                                 <i class="fas fa-calendar-check text-base"></i>
                                 <span>Bookings</span>
-                                <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                                <i
+                                    class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
                             </button>
-                            <div id="bookingsDropdownMenu" class="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-1 z-[100]">
+                            <div id="bookingsDropdownMenu"
+                                class="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-1 z-[100]">
                                 <a href="<?php echo $admin_prefix; ?>bookings.php"
                                     class="flex items-center px-5 py-3 text-gray-800 hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50 hover:pl-6 transition-all duration-200 rounded-t-xl">
                                     <i class="fas fa-hotel mr-3 text-blue-600"></i>
@@ -248,9 +276,9 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                         </div>
 
                         <a href="<?php echo $admin_prefix; ?>rooms.php"
-                            class="px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300 flex items-center gap-2 
+                            class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300 flex items-center gap-2 
                                   hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg
-                                  <?php echo ($current_page === 'rooms.php') ? 'bg-white/15 shadow-md' : ''; ?>">
+                                  <?php echo ($current_page === 'rooms.php') ? 'border border-white/40 bg-white/10 shadow-lg' : ''; ?>">
                             <i class="fas fa-door-open text-base"></i>
                             <span>Rooms</span>
                         </a>
@@ -259,25 +287,25 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                         <a href="<?php echo $is_admin_page ? '../' : ''; ?>index.php"
                             class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
                                   hover:bg-white/10 hover:-translate-y-0.5 
-                                  <?php echo ($current_page === 'index.php') ?  : ''; ?>">
+                                  <?php echo ($current_page === 'index.php') ? 'active' : ''; ?>">
                             HOME
                         </a>
                         <a href="<?php echo $is_admin_page ? '../' : ''; ?>view_rooms.php"
-                            class="navbar_button px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300
+                            class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
                                   hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg
-                                  <?php echo ($current_page === 'view_rooms.php') ? 'bg-white/15 shadow-md' : ''; ?>">
+                                  <?php echo ($current_page === 'view_rooms.php') ? 'active' : ''; ?>">
                             ROOM & SUITES
                         </a>
                         <a href="<?php echo $is_admin_page ? '../' : ''; ?>dining.php"
-                            class="navbar_button px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300
+                            class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
                                   hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg
-                                  <?php echo ($current_page === 'dining.php') ? 'bg-white/15 shadow-md' : ''; ?>">
+                                  <?php echo ($current_page === 'dining.php') ? 'active' : ''; ?>">
                             DINING
                         </a>
                         <a href="<?php echo $is_admin_page ? '../' : ''; ?>spa.php"
-                            class="navbar_button px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300
+                            class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
                                   hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg
-                                  <?php echo ($current_page === 'spa.php') ? 'bg-white/15 shadow-md' : ''; ?>">
+                                  <?php echo ($current_page === 'spa.php') ? 'active' : ''; ?>">
                             SPA & WELLNESS
                         </a>
 
@@ -289,7 +317,8 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <!-- User Dropdown -->
                         <div class="relative group">
-                            <button id="userDropdownBtn" class="relative flex items-center gap-2 px-3 py-2 border-2 border-white/30 rounded-full font-semibold text-sm tracking-wide
+                            <button id="userDropdownBtn"
+                                class="relative flex items-center gap-2 px-3 py-2 border-2 border-white/30 rounded-full font-semibold text-sm tracking-wide
                                          transition-all duration-300 hover:bg-white/10 hover:border-white/50 hover:-translate-y-0.5 hover:shadow-xl focus:outline-none pl-2">
 
                                 <?php
@@ -299,30 +328,37 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                                 ?>
 
                                 <?php if ($has_header_img): ?>
-                                    <img src="<?php echo $header_profile_img . '?' . time(); ?>" alt="Profile" class="w-8 h-8 rounded-full object-cover border border-white/50">
+                                    <img src="<?php echo $header_profile_img . '?' . time(); ?>" alt="Profile"
+                                        class="w-8 h-8 rounded-full object-cover border border-white/50">
                                 <?php else: ?>
-                                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-white font-bold border border-white/50 shadow-sm">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-white font-bold border border-white/50 shadow-sm">
                                         <?php echo $user_initial; ?>
                                     </div>
                                 <?php endif; ?>
 
                                 <span class="pl-1"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
                                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                                    <span class="bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-md ml-1">Admin</span>
+                                    <span
+                                        class="bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-md ml-1">Admin</span>
                                 <?php endif; ?>
                                 <?php if (isset($unread_notifications) && $unread_notifications > 0): ?>
-                                    <span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-lg animate-pulse border border-white">
+                                    <span
+                                        class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-lg animate-pulse border border-white">
                                         <?php echo $unread_notifications; ?>
                                     </span>
                                 <?php endif; ?>
-                                <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180 ml-1"></i>
+                                <i
+                                    class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180 ml-1"></i>
                             </button>
-                            <div id="userDropdownMenu" class="absolute right-0 mt-2 w-64 bg-gray-900 text-white rounded-xl shadow-2xl opacity-0 invisible 
+                            <div id="userDropdownMenu"
+                                class="absolute right-0 mt-2 w-64 bg-gray-900 text-white rounded-xl shadow-2xl opacity-0 invisible 
                                         transition-all duration-300 transform translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-50 border border-gray-700 overflow-hidden">
                                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                                     <a href="<?php echo $admin_prefix; ?>dashboard.php"
                                         class="flex items-center px-5 py-3.5 hover:bg-white/10 transition-all duration-200">
-                                        <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mr-3 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300 transition-colors">
+                                        <div
+                                            class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mr-3 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300 transition-colors">
                                             <i class="fas fa-tachometer-alt"></i>
                                         </div>
                                         <div>
@@ -336,36 +372,40 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                                     </div>
                                     <a href="<?php echo $is_admin_page ? '../' : ''; ?>profile.php"
                                         class="flex items-center px-5 py-3.5 hover:bg-white/10 transition-all duration-200 group/item">
-                                        <i class="fas fa-user-circle mr-3 text-purple-400 group-hover/item:text-purple-300 transition-colors w-5 text-center"></i>
+                                        <i
+                                            class="fas fa-user-circle mr-3 text-purple-400 group-hover/item:text-purple-300 transition-colors w-5 text-center"></i>
                                         <span class="font-medium text-sm">My Profile</span>
                                     </a>
                                     <a href="<?php echo $is_admin_page ? '../' : ''; ?>view_bookings.php"
                                         class="flex items-center px-5 py-3.5 hover:bg-white/10 transition-all duration-200 group/item">
-                                        <i class="fas fa-list mr-3 text-blue-400 group-hover/item:text-blue-300 transition-colors w-5 text-center"></i>
+                                        <i
+                                            class="fas fa-list mr-3 text-blue-400 group-hover/item:text-blue-300 transition-colors w-5 text-center"></i>
                                         <span class="font-medium text-sm">My Bookings</span>
                                     </a>
                                     <a href="<?php echo $is_admin_page ? '../' : ''; ?>notifications.php"
                                         class="flex items-center justify-between px-5 py-3.5 hover:bg-white/10 transition-all duration-200 group/item">
                                         <div class="flex items-center">
-                                            <i class="fas fa-bell mr-3 text-yellow-400 group-hover/item:text-yellow-300 transition-colors w-5 text-center"></i>
+                                            <i
+                                                class="fas fa-bell mr-3 text-yellow-400 group-hover/item:text-yellow-300 transition-colors w-5 text-center"></i>
                                             <span class="font-medium text-sm">Notifications</span>
                                         </div>
                                         <?php if ($unread_notifications > 0): ?>
-                                            <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg"><?php echo $unread_notifications; ?></span>
+                                            <span
+                                                class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg"><?php echo $unread_notifications; ?></span>
                                         <?php endif; ?>
                                     </a>
                                 <?php endif; ?>
                                 <div class="border-t border-gray-700 my-1"></div>
                                 <a href="<?php echo $is_admin_page ? '../' : ''; ?>logout.php"
                                     class="flex items-center px-5 py-3.5 hover:bg-red-500/10 hover:text-red-400 text-red-500 transition-all duration-200 group/logout">
-                                    <i class="fas fa-sign-out-alt mr-3 w-5 text-center group-hover/logout:transform group-hover/logout:translate-x-1 transition-transform"></i>
+                                    <i
+                                        class="fas fa-sign-out-alt mr-3 w-5 text-center group-hover/logout:transform group-hover/logout:translate-x-1 transition-transform"></i>
                                     <span class="font-medium text-sm">Logout</span>
                                 </a>
                             </div>
                         </div>
                     <?php else: ?>
-                        <a href="<?php echo $is_admin_page ? '../' : ''; ?>login.php"
-                            class="px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300
+                        <a href="<?php echo $is_admin_page ? '../' : ''; ?>login.php" class="navbar_button px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300
                                   hover:bg-white/10 hover:-translate-y-0.5">
                             <i class="fas fa-sign-in-alt"></i>
                             <span>Login</span>
@@ -373,8 +413,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                     <?php endif; ?>
 
                     <?php if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin'): ?>
-                        <a href="<?php echo $is_admin_page ? '../' : ''; ?>add_booking.php"
-                            class="px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300
+                        <a href="<?php echo $is_admin_page ? '../' : ''; ?>add_booking.php" class="navbar_button px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300
                                   hover:bg-white/10 hover:-translate-y-0.5 ">
                             <i class="fas fa-calendar-check"></i>
                             <span>Book Now</span>
@@ -383,7 +422,8 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobileMenuBtn" class="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <button id="mobileMenuBtn"
+                    class="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-all duration-300">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
@@ -416,17 +456,20 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                         <a href="<?php echo $is_admin_page ? '../' : ''; ?>index.php"
                             class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Home</a>
                         <a href="<?php echo $is_admin_page ? '../' : ''; ?>view_rooms.php"
-                            class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Rooms & Suites</a>
+                            class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Rooms &
+                            Suites</a>
                         <a href="<?php echo $is_admin_page ? '../' : ''; ?>dining.php"
                             class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Dining</a>
                         <a href="<?php echo $is_admin_page ? '../' : ''; ?>spa.php"
-                            class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Spa & Wellness</a>
+                            class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Spa &
+                            Wellness</a>
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <a href="<?php echo $is_admin_page ? '../' : ''; ?>notifications.php"
                                 class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 flex items-center justify-between font-medium">
                                 <span><i class="fas fa-bell mr-2"></i>Notifications</span>
                                 <?php if ($unread_notifications > 0): ?>
-                                    <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full"><?php echo $unread_notifications; ?></span>
+                                    <span
+                                        class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full"><?php echo $unread_notifications; ?></span>
                                 <?php endif; ?>
                             </a>
                         <?php endif; ?>
@@ -473,7 +516,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
 
     <script>
         // Mobile menu toggle
-        document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', function () {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('hidden');
         });
@@ -483,7 +526,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
         const userDropdownMenu = document.getElementById('userDropdownMenu');
 
         if (userDropdownBtn && userDropdownMenu) {
-            userDropdownBtn.addEventListener('click', function(e) {
+            userDropdownBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 userDropdownMenu.classList.toggle('invisible');
                 userDropdownMenu.classList.toggle('opacity-0');
@@ -492,7 +535,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
             });
 
             // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (!userDropdownBtn.contains(e.target) && !userDropdownMenu.contains(e.target)) {
                     userDropdownMenu.classList.add('invisible', 'opacity-0', 'translate-y-2');
                     userDropdownMenu.classList.remove('translate-y-0');
@@ -505,14 +548,14 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
         const bookingsDropdownMenu = document.getElementById('bookingsDropdownMenu');
 
         if (bookingsDropdownBtn && bookingsDropdownMenu) {
-            bookingsDropdownBtn.addEventListener('click', function(e) {
+            bookingsDropdownBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 bookingsDropdownMenu.classList.toggle('invisible');
                 bookingsDropdownMenu.classList.toggle('opacity-0');
             });
 
             // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (!bookingsDropdownBtn.contains(e.target) && !bookingsDropdownMenu.contains(e.target)) {
                     bookingsDropdownMenu.classList.add('invisible', 'opacity-0');
                 }
@@ -521,4 +564,4 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
     </script>
 
     <!-- Main content wrapper -->
-    <main class="flex-grow-1 page-fade">
+    <main class="flex-grow-1 page-fade" <?php echo ($current_page !== 'index.php') ? 'style="padding-top: 80px;"' : ''; ?>>

@@ -9,7 +9,7 @@ $prefill_name = '';
 $prefill_email = '';
 if (isset($_SESSION['user_id'])) {
     include_once('db.php');
-    $uid = (int)$_SESSION['user_id'];
+    $uid = (int) $_SESSION['user_id'];
     $uqr = mysqli_query($conn, "SELECT username, email FROM users WHERE id = $uid LIMIT 1");
     if ($uqr && mysqli_num_rows($uqr) > 0) {
         $urow = mysqli_fetch_assoc($uqr);
@@ -30,7 +30,7 @@ unset($_SESSION['success']);
 <!-- Custom Styles for specific animations and premium effects -->
 <style>
     .parallax-hero {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('images/dining.jpg');
+        background-image: url('images/dining.jpg');
         background-attachment: fixed;
         background-position: center;
         background-repeat: no-repeat;
@@ -81,16 +81,18 @@ unset($_SESSION['success']);
 
 <!-- Hero Section -->
 <section class="parallax-hero h-[80vh] flex items-center justify-center relative overflow-hidden">
-    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-gray-900"></div>
     <div class="text-center relative z-10 p-6 reveal active delay-100">
         <span class="block text-yellow-500 tracking-[0.3em] uppercase text-sm font-bold mb-4">Culinary Excellence</span>
-        <h1 class="text-6xl md:text-8xl font-serif text-white font-bold mb-6 drop-shadow-2xl">
-            A Taste of <span class="italic text-gold">Luxury</span>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight">
+            A Taste of <span class=" italic text-yellow-500">Luxury</span> <br>
         </h1>
         <p class="text-gray-200 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-10">
-            Experience a symphony of flavors in an atmosphere of refined elegance. From casual dining to exquisite banquets.
+            Experience a symphony of flavors in an atmosphere of refined elegance. From casual dining to exquisite
+            banquets.
         </p>
-        <a href="#reservation" class="inline-block px-8 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full font-semibold tracking-wide transition-all duration-300 shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-1">
+        <a href="#reservation"
+            class="inline-block px-8 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full font-semibold tracking-wide transition-all duration-300 shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-1">
             Reserve Your Table
         </a>
     </div>
@@ -103,38 +105,112 @@ unset($_SESSION['success']);
     </div>
 </section>
 
+<!-- Features Section -->
+<section class="py-20 bg-gray-900 text-white relative overflow-visible">
+    <div class="fixed top-32 left-0 w-96 h-96 bg-yellow-500/10 
+            rounded-full blur-3xl pointer-events-none z-0"></div>
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center mb-16 space-y-4">
+            <h3 class="text-yellow-500 font-medium tracking-widest text-sm uppercase reveal ">Why Choose Us</h3>
+            <h2 class="text-3xl md:text-7xl font-bold reveal">World Class Amenities</h2>
+
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            <!-- Feature 1 -->
+            <div
+                class="ameneties_box group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-800 hover:border-yellow-500/30 transition-all duration-300 hover:-translate-y-2 reveal">
+                <div
+                    class="w-14 h-14 rounded-full bg-gray-700/50 flex items-center justify-center mb-6 group-hover:bg-yellow-500/20 group-hover:text-yellow-500 transition-colors duration-300">
+                    <i class="fas fa-wifi text-2xl"></i>
+                </div>
+                <h3 class="ameneties text-xl font-semibold mb-3">High-Speed Wi-Fi</h3>
+                <p class="ameneties_description text-gray-400 text-sm leading-relaxed">Stay seamlessly connected with
+                    our complimentary premium internet access throughout the property.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div
+                class="ameneties_box group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-800 hover:border-yellow-500/30 transition-all duration-300 hover:-translate-y-2 reveal">
+                <div
+                    class="w-14 h-14 rounded-full bg-gray-700/50 flex items-center justify-center mb-6 group-hover:bg-yellow-500/20 group-hover:text-yellow-500 transition-colors duration-300">
+                    <i class="fas fa-parking text-2xl"></i>
+                </div>
+                <h3 class="ameneties text-xl font-semibold mb-3">Valet Parking</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Secure and convenient parking services available 24/7
+                    for all our valued guests.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div
+                class="ameneties_box group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-800 hover:border-yellow-500/30 transition-all duration-300 hover:-translate-y-2 reveal">
+                <div
+                    class="w-14 h-14 rounded-full bg-gray-700/50 flex items-center justify-center mb-6 group-hover:bg-yellow-500/20 group-hover:text-yellow-500 transition-colors duration-300">
+                    <i class="fas fa-utensils text-2xl"></i>
+                </div>
+                <h3 class="ameneties text-xl font-semibold mb-3">Gourmet Dining</h3>
+                <p class="ameneties_description text-gray-400 text-sm leading-relaxed">Indulge in exquisite culinary
+                    masterpieces at our award-winning fine dining restaurants.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div
+                class="ameneties_box group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-800 hover:border-yellow-500/30 transition-all duration-300 hover:-translate-y-2 reveal">
+                <div
+                    class="w-14 h-14 rounded-full bg-gray-700/50 flex items-center justify-center mb-6 group-hover:bg-yellow-500/20 group-hover:text-yellow-500 transition-colors duration-300">
+                    <i class="fas fa-spa text-2xl"></i>
+                </div>
+                <h3 class="ameneties text-xl font-semibold mb-3">Luxury Spa</h3>
+                <p class="ameneties_description text-gray-400 text-sm leading-relaxed">Rejuvenate your senses with our
+                    world-class treatments and wellness facilities.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Dining Options / Intro -->
-<section id="dining-options" class="py-24 bg-white">
+<section id="dining-options" class="py-24 bg-gray-900">
     <div class="container mx-auto px-4 max-w-6xl">
         <div class="text-center mb-20 reveal">
             <span class="text-yellow-600 font-bold tracking-widest uppercase text-sm">Our Venues</span>
-            <h2 class="text-4xl md:text-5xl font-serif mt-3 mb-6 text-gray-900">Exquisite Settings</h2>
+            <h2 class="text-4xl md:text-5xl font-serif mt-3 mb-6 text-white">Exquisite Settings</h2>
             <div class="w-24 h-1 bg-yellow-500 mx-auto"></div>
         </div>
 
         <!-- Restaurant Feature -->
         <div class="flex flex-col md:flex-row items-center gap-12 mb-24 reveal">
             <div class="w-full md:w-1/2 relative group">
-                <div class="absolute inset-0 bg-yellow-500 transform translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-500"></div>
-                <img src="images/dining.jpg" alt="Aurelia Restaurant" class="relative z-10 w-full h-[500px] object-cover shadow-lg grayscale group-hover:grayscale-0 transition-all duration-700">
+                <div
+                    class="absolute inset-0 bg-yellow-500 transform translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-500">
+                </div>
+                <img src="images/dining.jpg" alt="Aurelia Restaurant"
+                    class="relative z-10 w-full h-[500px] object-cover shadow-lg grayscale group-hover:grayscale-0 transition-all duration-700">
             </div>
             <div class="w-full md:w-1/2 md:pl-10">
-                <h3 class="text-3xl font-serif mb-4 text-gray-900">The Aurelia Restaurant</h3>
-                <p class="text-gray-600 leading-relaxed mb-6 font-light text-lg">
-                    Our signature restaurant offers a blend of international cuisines made with locally-sourced, seasonal ingredients.
+                <h3 class="text-3xl font-serif mb-4 text-white">The Aurelia Restaurant</h3>
+                <p class="text-gray-400 leading-relaxed mb-6 font-light text-lg">
+                    Our signature restaurant offers a blend of international cuisines made with locally-sourced,
+                    seasonal ingredients.
                     Enjoy panoramic city views in a sophisticated setting suitable for any occasion.
                 </p>
-                <div class="bg-gray-50 p-6 border-l-4 border-yellow-500 mb-6 italic text-gray-500 font-serif">
-                    "We believe in creating memorable dining experiences through a perfect blend of flavors, presentation, and atmosphere."
-                    <div class="text-right mt-2 text-sm not-italic font-bold text-gray-900">- Executive Chef Michael Laurent</div>
+                <div class="bg-gray-800 p-6 border-l-4 border-yellow-500 mb-6 italic text-gray-400 font-serif">
+                    "We believe in creating memorable dining experiences through a perfect blend of flavors,
+                    presentation, and atmosphere."
+                    <div class="text-right mt-2 text-sm not-italic font-bold text-white">- Executive Chef Michael
+                        Laurent</div>
                 </div>
-                <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-8">
-                    <span class="flex items-center gap-2"><i class="fas fa-clock text-yellow-500"></i> B: 6:30-10:30am</span>
-                    <span class="flex items-center gap-2"><i class="fas fa-clock text-yellow-500"></i> L: 12:00-2:30pm</span>
-                    <span class="flex items-center gap-2"><i class="fas fa-clock text-yellow-500"></i> D: 6:00-10:30pm</span>
+                <div class="flex flex-wrap gap-4 text-sm text-gray-400 mb-8">
+                    <span class="flex items-center gap-2"><i class="fas fa-clock text-yellow-500"></i> B:
+                        6:30-10:30am</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-clock text-yellow-500"></i> L:
+                        12:00-2:30pm</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-clock text-yellow-500"></i> D:
+                        6:00-10:30pm</span>
                 </div>
                 <!-- Trigger Modal -->
-                <button type="button" class="px-8 py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-full hover:bg-gray-900 hover:text-white transition-all duration-300 transform hover:-translate-y-1" data-bs-toggle="modal" data-bs-target="#fullMenuModal">
+                <button type="button"
+                    class="px-8 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:-translate-y-1"
+                    data-bs-toggle="modal" data-bs-target="#fullMenuModal">
                     View Full Menu
                 </button>
             </div>
@@ -143,25 +219,31 @@ unset($_SESSION['success']);
         <!-- Lounge Feature (Reversed) -->
         <div class="flex flex-col md:flex-row-reverse items-center gap-12 reveal">
             <div class="w-full md:w-1/2 relative group">
-                <div class="absolute inset-0 bg-gray-900 transform -translate-x-4 translate-y-4 group-hover:-translate-x-2 group-hover:translate-y-2 transition-transform duration-500"></div>
-                <img src="images/sky.jpg" alt="Skyline Lounge" class="relative z-10 w-full h-[500px] object-cover shadow-lg grayscale group-hover:grayscale-0 transition-all duration-700">
+                <div
+                    class="absolute inset-0 bg-gray-900 transform -translate-x-4 translate-y-4 group-hover:-translate-x-2 group-hover:translate-y-2 transition-transform duration-500">
+                </div>
+                <img src="images/sky.jpg" alt="Skyline Lounge"
+                    class="relative z-10 w-full h-[500px] object-cover shadow-lg grayscale group-hover:grayscale-0 transition-all duration-700">
             </div>
             <div class="w-full md:w-1/2 md:pr-10 text-right md:text-left">
                 <div class="md:text-right">
-                    <h3 class="text-3xl font-serif mb-4 text-gray-900">The Skyline Lounge</h3>
-                    <p class="text-gray-600 leading-relaxed mb-6 font-light text-lg">
-                        Unwind in our sophisticated lounge with breathtaking views. Expert mixologists craft signature cocktails,
+                    <h3 class="text-3xl font-serif mb-4 text-white">The Skyline Lounge</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6 font-light text-lg">
+                        Unwind in our sophisticated lounge with breathtaking views. Expert mixologists craft signature
+                        cocktails,
                         complemented by an extensive wine list and artisanal light bites.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 mb-8">
-                    <div class="bg-gray-900 text-white p-4 text-center hover:bg-yellow-600 transition-colors cursor-default">
+                    <div
+                        class="bg-gray-900 text-white p-4 text-center hover:bg-yellow-600 transition-colors cursor-default">
                         <i class="fas fa-wine-glass-alt mb-2 text-2xl text-yellow-500"></i>
                         <h4 class="font-bold">Fine Wines</h4>
                         <p class="text-xs opacity-70">Curated global selection</p>
                     </div>
-                    <div class="bg-gray-900 text-white p-4 text-center hover:bg-yellow-600 transition-colors cursor-default">
+                    <div
+                        class="bg-gray-900 text-white p-4 text-center hover:bg-yellow-600 transition-colors cursor-default">
                         <i class="fas fa-cocktail mb-2 text-2xl text-yellow-500"></i>
                         <h4 class="font-bold">Craft Cocktails</h4>
                         <p class="text-xs opacity-70">Signature mixes</p>
@@ -169,7 +251,9 @@ unset($_SESSION['success']);
                 </div>
 
                 <div class="md:text-right">
-                    <button type="button" class="px-8 py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-full hover:bg-gray-900 hover:text-white transition-all duration-300 transform hover:-translate-y-1" data-bs-toggle="modal" data-bs-target="#cocktailMenuModal">
+                    <button type="button"
+                        class="px-8 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:-translate-y-1"
+                        data-bs-toggle="modal" data-bs-target="#cocktailMenuModal">
                         View Drink Menu
                     </button>
                 </div>
@@ -179,45 +263,50 @@ unset($_SESSION['success']);
 </section>
 
 <!-- Menu Preview Section -->
-<section class="py-20 bg-gray-50 relative overflow-hidden">
+<section class="py-20 bg-gray-900 relative overflow-hidden text-white">
     <div class="absolute top-0 right-0 opacity-5 pointer-events-none">
         <i class="fas fa-utensils text-[300px]"></i>
     </div>
     <div class="container mx-auto px-4 max-w-6xl relative z-10">
         <div class="text-center mb-16 reveal">
-            <h2 class="text-4xl font-serif text-gray-900">Chef's Highlights</h2>
-            <p class="text-gray-500 mt-2 font-light">Selections from our current seasonal menu</p>
+            <h2 class="text-4xl font-serif text-white">Chef's Highlights</h2>
+            <p class="text-gray-400 mt-2 font-light">Selections from our current seasonal menu</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Item 1 -->
-            <div class="bg-white p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300 reveal">
+            <div class="bg-gray-800 p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300 reveal text-white">
                 <div class="flex justify-between items-start mb-4">
-                    <h4 class="text-xl font-serif font-bold text-gray-900">Pan-Seared Scallops</h4>
+                    <h4 class="text-xl font-serif font-bold text-white">Pan-Seared Scallops</h4>
                     <span class="text-yellow-600 font-bold text-lg">$18</span>
                 </div>
-                <p class="text-gray-600 text-sm leading-relaxed mb-4">With cauliflower purée, crispy pancetta, and truffle oil foam.</p>
-                <div class="text-xs uppercase tracking-wider text-gray-400 font-bold">Appetizer</div>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">With cauliflower purée, crispy pancetta, and
+                    truffle oil foam.</p>
+                <div class="text-xs uppercase tracking-wider text-gray-500 font-bold">Appetizer</div>
             </div>
 
             <!-- Item 2 -->
-            <div class="bg-white p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300 transform md:-translate-y-4 reveal delay-100">
+            <div
+                class="bg-gray-800 p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300 transform md:-translate-y-4 reveal delay-100 text-white">
                 <div class="flex justify-between items-start mb-4">
-                    <h4 class="text-xl font-serif font-bold text-gray-900">Filet Mignon</h4>
+                    <h4 class="text-xl font-serif font-bold text-white">Filet Mignon</h4>
                     <span class="text-yellow-600 font-bold text-lg">$42</span>
                 </div>
-                <p class="text-gray-600 text-sm leading-relaxed mb-4">8oz prime beef paired with roasted root vegetables and a rich red wine reduction.</p>
-                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-bold">Signature</span>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">8oz prime beef paired with roasted root vegetables
+                    and a rich red wine reduction.</p>
+                <span class="bg-yellow-900/50 text-yellow-400 text-xs px-2 py-1 rounded-full font-bold">Signature</span>
             </div>
 
             <!-- Item 3 -->
-            <div class="bg-white p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300 reveal delay-200">
+            <div
+                class="bg-gray-800 p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300 reveal delay-200 text-white">
                 <div class="flex justify-between items-start mb-4">
-                    <h4 class="text-xl font-serif font-bold text-gray-900">Chocolate Fondant</h4>
+                    <h4 class="text-xl font-serif font-bold text-white">Chocolate Fondant</h4>
                     <span class="text-yellow-600 font-bold text-lg">$12</span>
                 </div>
-                <p class="text-gray-600 text-sm leading-relaxed mb-4">Warm molten chocolate cake served with Madagascar vanilla bean gelato.</p>
-                <div class="text-xs uppercase tracking-wider text-gray-400 font-bold">Dessert</div>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">Warm molten chocolate cake served with Madagascar
+                    vanilla bean gelato.</p>
+                <div class="text-xs uppercase tracking-wider text-gray-500 font-bold">Dessert</div>
             </div>
         </div>
     </div>
@@ -233,12 +322,14 @@ unset($_SESSION['success']);
             Bespoke menus and dedicated service ensure an unforgettable experience.
         </p>
         <div class="flex justify-center gap-6">
-            <div class="text-center p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
+            <div
+                class="text-center p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
                 <i class="fas fa-users text-3xl text-yellow-500 mb-3"></i>
                 <h4 class="font-bold">The Grand Room</h4>
                 <p class="text-sm opacity-70">Up to 20 Guests</p>
             </div>
-            <div class="text-center p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
+            <div
+                class="text-center p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
                 <i class="fas fa-wine-bottle text-3xl text-yellow-500 mb-3"></i>
                 <h4 class="font-bold">The Wine Cellar</h4>
                 <p class="text-sm opacity-70">Up to 12 Guests</p>
@@ -248,12 +339,12 @@ unset($_SESSION['success']);
 </section>
 
 <!-- Reservation Section -->
-<section id="reservation" class="py-24 bg-gray-100">
+<section id="reservation" class="py-24 bg-gray-900">
     <div class="container mx-auto px-4 max-w-4xl">
-        <div class="glass-panel p-8 md:p-12 rounded-3xl shadow-2xl reveal">
+        <div class="dark-glass p-8 md:p-12 rounded-3xl shadow-2xl reveal">
             <div class="text-center mb-10">
-                <h2 class="text-3xl font-serif text-gray-900 font-bold">Make a Reservation</h2>
-                <p class="text-gray-500 mt-2">Secure your table at The Aurelia</p>
+                <h2 class="text-3xl font-serif text-white font-bold">Make a Reservation</h2>
+                <p class="text-gray-400 mt-2">Secure your table at The Aurelia</p>
             </div>
 
             <?php if ($error_message): ?>
@@ -275,45 +366,56 @@ unset($_SESSION['success']);
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Personal Info -->
                     <div class="space-y-2">
-                        <label for="name" class="text-xs font-bold text-gray-500 uppercase tracking-wide ml-1">Full Name</label>
+                        <label for="name" class="text-xs font-bold text-gray-400 uppercase tracking-wide ml-1">Full
+                            Name</label>
                         <div class="relative">
-                            <i class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <input type="text" id="name" name="name" required value="<?php echo htmlspecialchars($prefill_name); ?>"
-                                class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all">
+                            <i class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                            <input type="text" id="name" name="name" required
+                                value="<?php echo htmlspecialchars($prefill_name); ?>"
+                                class="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 text-white rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 outline-none transition-all">
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label for="email" class="text-xs font-bold text-gray-500 uppercase tracking-wide ml-1">Email Address</label>
+                        <label for="email" class="text-xs font-bold text-gray-400 uppercase tracking-wide ml-1">Email
+                            Address</label>
                         <div class="relative">
-                            <i class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($prefill_email); ?>"
-                                class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all">
+                            <i
+                                class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                            <input type="email" id="email" name="email" required
+                                value="<?php echo htmlspecialchars($prefill_email); ?>"
+                                class="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 text-white rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 outline-none transition-all">
                         </div>
                     </div>
 
                     <!-- Booking Details -->
                     <div class="space-y-2">
-                        <label for="date" class="text-xs font-bold text-gray-500 uppercase tracking-wide ml-1">Date</label>
+                        <label for="date"
+                            class="text-xs font-bold text-gray-400 uppercase tracking-wide ml-1">Date</label>
                         <input type="date" id="date" name="date" required min="<?php echo date('Y-m-d'); ?>"
-                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all cursor-pointer">
+                            class="w-full px-4 py-3 bg-gray-800 border border-gray-700 text-white rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 outline-none transition-all cursor-pointer">
                     </div>
                     <div class="space-y-2">
-                        <label for="time" class="text-xs font-bold text-gray-500 uppercase tracking-wide ml-1">Time</label>
+                        <label for="time"
+                            class="text-xs font-bold text-gray-400 uppercase tracking-wide ml-1">Time</label>
                         <div class="relative">
-                            <i class="fas fa-clock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <i
+                                class="fas fa-clock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
                             <input type="time" id="time" name="time" required
-                                class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all cursor-pointer">
+                                class="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 text-white rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 outline-none transition-all cursor-pointer">
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-2">
-                        <label for="guests" class="text-xs font-bold text-gray-500 uppercase tracking-wide ml-1">Number of Guests</label>
-                        <select id="guests" name="guests" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all appearance-none">
+                        <label for="guests" class="text-xs font-bold text-gray-400 uppercase tracking-wide ml-1">Number
+                            of Guests</label>
+                        <select id="guests" name="guests" required
+                            class="w-full px-4 py-3 bg-gray-800 border border-gray-700 text-white rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 outline-none transition-all appearance-none">
                             <option value="">Select Guests</option>
                             <?php for ($i = 1; $i <= 10; $i++): ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?> Person<?php echo $i > 1 ? 's' : ''; ?></option>
+                                <option value="<?php echo $i; ?>"><?php echo $i; ?> Person<?php echo $i > 1 ? 's' : ''; ?>
+                                </option>
                             <?php endfor; ?>
                             <option value="12">12 People</option>
                             <option value="15">15 People</option>
@@ -321,8 +423,10 @@ unset($_SESSION['success']);
                         </select>
                     </div>
                     <div class="space-y-2">
-                        <label for="venue" class="text-xs font-bold text-gray-500 uppercase tracking-wide ml-1">Venue Preference</label>
-                        <select id="venue" name="venue" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all appearance-none">
+                        <label for="venue" class="text-xs font-bold text-gray-400 uppercase tracking-wide ml-1">Venue
+                            Preference</label>
+                        <select id="venue" name="venue" required
+                            class="w-full px-4 py-3 bg-gray-800 border border-gray-700 text-white rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 outline-none transition-all appearance-none">
                             <option value="">Select Venue</option>
                             <option value="restaurant">The Aurelia Restaurant</option>
                             <option value="lounge">The Skyline Lounge</option>
@@ -333,21 +437,25 @@ unset($_SESSION['success']);
                 </div>
 
                 <div class="space-y-2">
-                    <label for="special-requests" class="text-xs font-bold text-gray-500 uppercase tracking-wide ml-1">Special Requests</label>
-                    <textarea id="special-requests" name="special-requests" rows="3" placeholder="Dietary restrictions, allergies, or special occasion notes..."
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 outline-none transition-all"></textarea>
+                    <label for="special-requests"
+                        class="text-xs font-bold text-gray-400 uppercase tracking-wide ml-1">Special Requests</label>
+                    <textarea id="special-requests" name="special-requests" rows="3"
+                        placeholder="Dietary restrictions, allergies, or special occasion notes..."
+                        class="w-full px-4 py-3 bg-gray-800 border border-gray-700 text-white rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 outline-none transition-all"></textarea>
                 </div>
 
                 <div class="pt-4 text-center">
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <button type="submit" class="w-full md:w-auto px-10 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-yellow-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                        <button type="submit"
+                            class="w-full md:w-auto px-10 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-yellow-500/50 transition-all duration-300 transform hover:-translate-y-1">
                             Confirm Reservation
                         </button>
                     <?php else: ?>
-                        <a href="login.php?redirect=dining.php&notify=please_login" class="inline-block w-full md:w-auto px-10 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-yellow-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                        <a href="login.php?redirect=dining.php&notify=please_login"
+                            class="inline-block w-full md:w-auto px-10 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-yellow-500/50 transition-all duration-300 transform hover:-translate-y-1">
                             Login to Reserve
                         </a>
-                        <p class="mt-4 text-sm text-gray-500">You must be logged in to make a reservation.</p>
+                        <p class="mt-4 text-sm text-gray-400">You must be logged in to make a reservation.</p>
                     <?php endif; ?>
                 </div>
 
@@ -359,12 +467,13 @@ unset($_SESSION['success']);
 <!-- Full Menu Modal (Inline) -->
 <div class="modal fade" id="fullMenuModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content rounded-none border-0">
-            <div class="modal-header bg-white border-b border-gray-100 py-6">
-                <h5 class="modal-title font-serif text-3xl text-gray-900 w-full text-center">Full Menu</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content rounded-none border-0 bg-gray-900 text-white">
+            <div class="modal-header border-b border-gray-800 py-6">
+                <h5 class="modal-title font-serif text-3xl text-gold w-full text-center">Full Menu</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
-            <div class="modal-body p-0 bg-gray-50">
+            <div class="modal-body p-0 bg-gray-900">
                 <div class="container mx-auto p-8">
                     <!-- Sections -->
                     <div class="mb-12">
@@ -378,16 +487,16 @@ unset($_SESSION['success']);
                             ];
                             foreach ($appetizers as $item) {
                                 echo '
-                                <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
-                                    <div class="h-48 bg-gray-200 overflow-hidden relative">
+                                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-700">
+                                    <div class="h-48 bg-gray-700 overflow-hidden relative">
                                         <img src="' . $item['img'] . '" alt="' . $item['name'] . '" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
                                     </div>
                                     <div class="p-5">
                                         <div class="flex justify-between items-baseline mb-2">
-                                            <h4 class="font-serif font-bold text-gray-900">' . $item['name'] . '</h4>
+                                            <h4 class="font-serif font-bold text-white">' . $item['name'] . '</h4>
                                             <span class="text-yellow-600 font-bold">$' . $item['price'] . '</span>
                                         </div>
-                                        <p class="text-sm text-gray-500">' . $item['desc'] . '</p>
+                                        <p class="text-sm text-gray-400">' . $item['desc'] . '</p>
                                     </div>
                                 </div>';
                             }
@@ -406,16 +515,16 @@ unset($_SESSION['success']);
                             ];
                             foreach ($mains as $item) {
                                 echo '
-                                <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
-                                    <div class="h-48 bg-gray-200 overflow-hidden relative">
+                                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-700">
+                                    <div class="h-48 bg-gray-700 overflow-hidden relative">
                                         <img src="' . $item['img'] . '" alt="' . $item['name'] . '" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
                                     </div>
                                     <div class="p-5">
                                         <div class="flex justify-between items-baseline mb-2">
-                                            <h4 class="font-serif font-bold text-gray-900">' . $item['name'] . '</h4>
+                                            <h4 class="font-serif font-bold text-white">' . $item['name'] . '</h4>
                                             <span class="text-yellow-600 font-bold">$' . $item['price'] . '</span>
                                         </div>
-                                        <p class="text-sm text-gray-500">' . $item['desc'] . '</p>
+                                        <p class="text-sm text-gray-400">' . $item['desc'] . '</p>
                                     </div>
                                 </div>';
                             }
@@ -433,16 +542,16 @@ unset($_SESSION['success']);
                             ];
                             foreach ($desserts as $item) {
                                 echo '
-                                <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
-                                    <div class="h-48 bg-gray-200 overflow-hidden relative">
+                                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-700">
+                                    <div class="h-48 bg-gray-700 overflow-hidden relative">
                                         <img src="' . $item['img'] . '" alt="' . $item['name'] . '" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
                                     </div>
                                     <div class="p-5">
                                         <div class="flex justify-between items-baseline mb-2">
-                                            <h4 class="font-serif font-bold text-gray-900">' . $item['name'] . '</h4>
+                                            <h4 class="font-serif font-bold text-white">' . $item['name'] . '</h4>
                                             <span class="text-yellow-600 font-bold">$' . $item['price'] . '</span>
                                         </div>
-                                        <p class="text-sm text-gray-500">' . $item['desc'] . '</p>
+                                        <p class="text-sm text-gray-400">' . $item['desc'] . '</p>
                                     </div>
                                 </div>';
                             }
@@ -451,8 +560,8 @@ unset($_SESSION['success']);
                     </div>
                 </div>
             </div>
-            <div class="modal-footer bg-white">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close Menu</button>
+            <div class="modal-footer bg-gray-900 border-t border-gray-800">
+                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close Menu</button>
             </div>
         </div>
     </div>
@@ -464,7 +573,8 @@ unset($_SESSION['success']);
         <div class="modal-content rounded-none border-0 bg-gray-900 text-white">
             <div class="modal-header border-b border-gray-800 py-6">
                 <h5 class="modal-title font-serif text-3xl text-gold w-full text-center">Cocktail Collection</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body p-0 bg-gray-900">
                 <div class="container mx-auto p-8">
@@ -507,7 +617,7 @@ unset($_SESSION['success']);
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Move modals to body to ensure they display correctly (Bootstrap fixed position vs parent transform)
         const modals = document.querySelectorAll('.modal');
         modals.forEach(modal => document.body.appendChild(modal));

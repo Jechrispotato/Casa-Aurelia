@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 include('db.php');
 include('header.php');
 
-$user_id = (int)$_SESSION['user_id'];
+$user_id = (int) $_SESSION['user_id'];
 
 if (!isset($_GET['id']) || !isset($_GET['type'])) {
     $_SESSION['error'] = 'Invalid request.';
@@ -19,7 +19,7 @@ if (!isset($_GET['id']) || !isset($_GET['type'])) {
     exit;
 }
 
-$id = (int)$_GET['id'];
+$id = (int) $_GET['id'];
 $type = $_GET['type'];
 
 $editable = false;
@@ -62,18 +62,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $customer_name = mysqli_real_escape_string($conn, trim($_POST['customer_name']));
         $reservation_date = mysqli_real_escape_string($conn, $_POST['reservation_date']);
         $reservation_time = mysqli_real_escape_string($conn, $_POST['reservation_time']);
-        $number_of_guests = (int)$_POST['number_of_guests'];
+        $number_of_guests = (int) $_POST['number_of_guests'];
         $venue = mysqli_real_escape_string($conn, trim($_POST['venue']));
         $special_requests = mysqli_real_escape_string($conn, trim($_POST['special_requests']));
 
         // Basic validation
         $errors = [];
-        if (empty($customer_name)) $errors[] = 'Name is required.';
-        if (empty($reservation_date)) $errors[] = 'Date is required.';
-        if (empty($reservation_time)) $errors[] = 'Time is required.';
-        if ($number_of_guests < 1 || $number_of_guests > 50) $errors[] = 'Guests must be between 1 and 50.';
+        if (empty($customer_name))
+            $errors[] = 'Name is required.';
+        if (empty($reservation_date))
+            $errors[] = 'Date is required.';
+        if (empty($reservation_time))
+            $errors[] = 'Time is required.';
+        if ($number_of_guests < 1 || $number_of_guests > 50)
+            $errors[] = 'Guests must be between 1 and 50.';
 
-        if (!empty($reservation_date) && $reservation_date < date('Y-m-d')) $errors[] = 'Date cannot be in the past.';
+        if (!empty($reservation_date) && $reservation_date < date('Y-m-d'))
+            $errors[] = 'Date cannot be in the past.';
 
         if (count($errors) > 0) {
             $_SESSION['error'] = implode(' ', $errors);
@@ -100,17 +105,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $treatment = mysqli_real_escape_string($conn, trim($_POST['treatment']));
         $spa_date = mysqli_real_escape_string($conn, $_POST['spa_date']);
         $spa_time = mysqli_real_escape_string($conn, $_POST['spa_time']);
-        $guests = (int)$_POST['guests'];
+        $guests = (int) $_POST['guests'];
         $special_requests = mysqli_real_escape_string($conn, trim($_POST['special_requests']));
 
         $errors = [];
-        if (empty($customer_name)) $errors[] = 'Name is required.';
-        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Valid email is required.';
-        if (empty($treatment)) $errors[] = 'Please select a treatment.';
-        if (empty($spa_date)) $errors[] = 'Date is required.';
-        if (empty($spa_time)) $errors[] = 'Time is required.';
-        if ($guests < 1 || $guests > 10) $errors[] = 'Guests must be between 1 and 10.';
-        if (!empty($spa_date) && $spa_date < date('Y-m-d')) $errors[] = 'Date cannot be in the past.';
+        if (empty($customer_name))
+            $errors[] = 'Name is required.';
+        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL))
+            $errors[] = 'Valid email is required.';
+        if (empty($treatment))
+            $errors[] = 'Please select a treatment.';
+        if (empty($spa_date))
+            $errors[] = 'Date is required.';
+        if (empty($spa_time))
+            $errors[] = 'Time is required.';
+        if ($guests < 1 || $guests > 10)
+            $errors[] = 'Guests must be between 1 and 10.';
+        if (!empty($spa_date) && $spa_date < date('Y-m-d'))
+            $errors[] = 'Date cannot be in the past.';
 
         if (count($errors) > 0) {
             $_SESSION['error'] = implode(' ', $errors);
@@ -134,94 +146,154 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Render form
 ?>
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h3 class="mb-4">Edit Reservation</h3>
-                    <?php if (isset($_SESSION['error'])): ?>
-                        <div class="alert alert-danger"><?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?></div>
-                    <?php endif; ?>
-                    <?php if ($type === 'dining'): ?>
-                        <form method="POST" action="edit_reservation.php?id=<?php echo $id; ?>&type=dining">
-                            <div class="mb-3">
-                                <label class="form-label">Your Name</label>
-                                <input type="text" name="customer_name" class="form-control" value="<?php echo htmlspecialchars($record['customer_name']); ?>" required>
+<div class="min-h-screen bg-gray-950 py-12">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <div class="row justify-content-center">
+            <div class="col-md-10 lg:col-md-8">
+                <div class="bg-gray-900 rounded-3xl shadow-2xl border border-gray-800 overflow-hidden">
+                    <div class="p-8">
+                        <h3 class="text-3xl font-bold font-serif text-white text-center mb-8">Edit Reservation</h3>
+                        <?php if (isset($_SESSION['error'])): ?>
+                            <div
+                                class="bg-red-900/20 border border-red-900/50 text-red-500 px-6 py-4 rounded-2xl flex items-center gap-3 mb-6">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <?php echo htmlspecialchars($_SESSION['error']);
+                                unset($_SESSION['error']); ?>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Date</label>
-                                    <input type="date" name="reservation_date" class="form-control" value="<?php echo htmlspecialchars($record['reservation_date']); ?>" required>
+                        <?php endif; ?>
+                        <?php if ($type === 'dining'): ?>
+                            <form method="POST" action="edit_reservation.php?id=<?php echo $id; ?>&type=dining"
+                                class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Your
+                                        Name</label>
+                                    <input type="text" name="customer_name"
+                                        class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all"
+                                        value="<?php echo htmlspecialchars($record['customer_name']); ?>" required>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Time</label>
-                                    <input type="time" name="reservation_time" class="form-control" value="<?php echo htmlspecialchars($record['reservation_time']); ?>" required>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label
+                                            class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Date</label>
+                                        <input type="date" name="reservation_date"
+                                            class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all cursor-pointer"
+                                            value="<?php echo htmlspecialchars($record['reservation_date']); ?>" required>
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Time</label>
+                                        <input type="time" name="reservation_time"
+                                            class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all cursor-pointer"
+                                            value="<?php echo htmlspecialchars($record['reservation_time']); ?>" required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Guests</label>
-                                <input type="number" name="number_of_guests" class="form-control" min="1" max="50" value="<?php echo htmlspecialchars($record['number_of_guests']); ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Venue</label>
-                                <input type="text" name="venue" class="form-control" value="<?php echo htmlspecialchars($record['venue']); ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Special Requests</label>
-                                <textarea name="special_requests" class="form-control"><?php echo htmlspecialchars($record['special_requests']); ?></textarea>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <a href="view_bookings.php" class="btn btn-secondary">Back</a>
-                                <button class="btn btn-primary" type="submit">Update Reservation</button>
-                            </div>
-                        </form>
-                    <?php else: /* spa */ ?>
-                        <form method="POST" action="edit_reservation.php?id=<?php echo $id; ?>&type=spa">
-                            <div class="mb-3">
-                                <label class="form-label">Your Name</label>
-                                <input type="text" name="customer_name" class="form-control" value="<?php echo htmlspecialchars($record['customer_name']); ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($record['email']); ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Phone</label>
-                                <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($record['phone']); ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Treatment</label>
-                                <input type="text" name="treatment" class="form-control" value="<?php echo htmlspecialchars($record['treatment']); ?>" required>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Date</label>
-                                    <input type="date" name="spa_date" class="form-control" value="<?php echo htmlspecialchars($record['spa_date']); ?>" required>
+                                <div>
+                                    <label
+                                        class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Guests</label>
+                                    <input type="number" name="number_of_guests"
+                                        class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all"
+                                        min="1" max="50"
+                                        value="<?php echo htmlspecialchars($record['number_of_guests']); ?>" required>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Time</label>
-                                    <input type="time" name="spa_time" class="form-control" value="<?php echo htmlspecialchars($record['spa_time']); ?>" required>
+                                <div>
+                                    <label
+                                        class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Venue</label>
+                                    <input type="text" name="venue"
+                                        class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all"
+                                        value="<?php echo htmlspecialchars($record['venue']); ?>">
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Guests</label>
-                                <input type="number" name="guests" class="form-control" min="1" max="10" value="<?php echo htmlspecialchars($record['guests']); ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Special Requests</label>
-                                <textarea name="special_requests" class="form-control"><?php echo htmlspecialchars($record['special_requests']); ?></textarea>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <a href="view_bookings.php" class="btn btn-secondary">Back</a>
-                                <button class="btn btn-primary" type="submit">Update Booking</button>
-                            </div>
-                        </form>
-                    <?php endif; ?>
+                                <div>
+                                    <label
+                                        class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Special
+                                        Requests</label>
+                                    <textarea name="special_requests"
+                                        class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all min-h-[120px]"><?php echo htmlspecialchars($record['special_requests']); ?></textarea>
+                                </div>
+                                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                                    <a href="view_bookings.php"
+                                        class="flex-1 px-8 py-4 bg-gray-800 text-white font-bold rounded-2xl border border-gray-700 hover:bg-gray-700 transition-all text-center">Back</a>
+                                    <button
+                                        class="flex-1 px-8 py-4 bg-yellow-600 text-white font-bold rounded-2xl hover:bg-yellow-700 transition-all shadow-lg hover:shadow-yellow-600/30 transform hover:-translate-y-1"
+                                        type="submit">Update Reservation</button>
+                                </div>
+                            </form>
+                        <?php else: /* spa */ ?>
+                            <form method="POST" action="edit_reservation.php?id=<?php echo $id; ?>&type=spa"
+                                class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Your
+                                        Name</label>
+                                    <input type="text" name="customer_name"
+                                        class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all"
+                                        value="<?php echo htmlspecialchars($record['customer_name']); ?>" required>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label
+                                            class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Email</label>
+                                        <input type="email" name="email"
+                                            class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all"
+                                            value="<?php echo htmlspecialchars($record['email']); ?>" required>
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Phone</label>
+                                        <input type="text" name="phone"
+                                            class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all"
+                                            value="<?php echo htmlspecialchars($record['phone']); ?>">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Treatment</label>
+                                    <input type="text" name="treatment"
+                                        class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all"
+                                        value="<?php echo htmlspecialchars($record['treatment']); ?>" required>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label
+                                            class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Date</label>
+                                        <input type="date" name="spa_date"
+                                            class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all cursor-pointer"
+                                            value="<?php echo htmlspecialchars($record['spa_date']); ?>" required>
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Time</label>
+                                        <input type="time" name="spa_time"
+                                            class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all cursor-pointer"
+                                            value="<?php echo htmlspecialchars($record['spa_time']); ?>" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Guests</label>
+                                    <input type="number" name="guests"
+                                        class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all"
+                                        min="1" max="10" value="<?php echo htmlspecialchars($record['guests']); ?>"
+                                        required>
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Special
+                                        Requests</label>
+                                    <textarea name="special_requests"
+                                        class="w-full px-6 py-4 bg-gray-800 border border-gray-700 text-white rounded-2xl focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-all min-h-[120px]"><?php echo htmlspecialchars($record['special_requests']); ?></textarea>
+                                </div>
+                                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                                    <a href="view_bookings.php"
+                                        class="flex-1 px-8 py-4 bg-gray-800 text-white font-bold rounded-2xl border border-gray-700 hover:bg-gray-700 transition-all text-center">Back</a>
+                                    <button
+                                        class="flex-1 px-8 py-4 bg-yellow-600 text-white font-bold rounded-2xl hover:bg-yellow-700 transition-all shadow-lg hover:shadow-yellow-600/30 transform hover:-translate-y-1"
+                                        type="submit">Update Booking</button>
+                                </div>
+                            </form>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<?php include('footer.php'); ?>
+    <?php include('footer.php'); ?>

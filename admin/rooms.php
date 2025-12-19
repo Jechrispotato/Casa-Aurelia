@@ -38,10 +38,12 @@ function formatPrice($price)
 <!-- Header -->
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
     <div>
-        <h2 class="text-3xl font-bold font-serif text-gray-900 mb-2">Room Management</h2>
-        <p class="text-gray-500">Manage your hotel rooms, prices, and availability.</p>
+        <h2 class="text-3xl font-bold font-serif text-white mb-2">Room Management</h2>
+        <p class="text-gray-400">Manage your hotel rooms, prices, and availability.</p>
     </div>
-    <button class="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold rounded-xl shadow-lg shadow-yellow-500/30 transition-all transform hover:-translate-y-1 flex items-center gap-2" data-bs-toggle="modal" data-bs-target="#addRoomModal">
+    <button
+        class="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold rounded-xl shadow-lg shadow-yellow-500/30 transition-all transform hover:-translate-y-1 flex items-center gap-2"
+        data-bs-toggle="modal" data-bs-target="#addRoomModal">
         <i class="fas fa-plus"></i> Add New Room
     </button>
 </div>
@@ -50,13 +52,15 @@ function formatPrice($price)
 <?php if ($rooms && mysqli_num_rows($rooms) > 0): ?>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 mb-8">
         <?php while ($room = mysqli_fetch_assoc($rooms)): ?>
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+            <div
+                class="bg-gray-900 rounded-2xl shadow-sm border border-gray-800 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
                 <!-- Image Area -->
                 <div class="relative h-64 overflow-hidden bg-gray-100">
                     <?php if (!empty($room['room_image'])): ?>
                         <div id="admin-carousel-<?php echo $room['id']; ?>" class="carousel slide h-full" data-bs-ride="carousel">
                             <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#admin-carousel-<?php echo $room['id']; ?>" data-bs-slide-to="0" class="active"></button>
+                                <button type="button" data-bs-target="#admin-carousel-<?php echo $room['id']; ?>"
+                                    data-bs-slide-to="0" class="active"></button>
                                 <?php
                                 $roomType = strtolower(explode(' ', $room['room_name'])[0]);
                                 $additionalImages = glob("../images/{$roomType}*.jpg");
@@ -83,21 +87,24 @@ function formatPrice($price)
                                 }
                                 ?>
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#admin-carousel-<?php echo $room['id']; ?>" data-bs-slide="prev">
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#admin-carousel-<?php echo $room['id']; ?>" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon bg-black/50 rounded-full p-2"></span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#admin-carousel-<?php echo $room['id']; ?>" data-bs-slide="next">
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#admin-carousel-<?php echo $room['id']; ?>" data-bs-slide="next">
                                 <span class="carousel-control-next-icon bg-black/50 rounded-full p-2"></span>
                             </button>
                         </div>
                     <?php else: ?>
-                        <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
+                        <div class="w-full h-full flex items-center justify-center bg-gray-800 text-gray-600">
                             <i class="fas fa-image text-4xl"></i>
                         </div>
                     <?php endif; ?>
 
                     <!-- Price Tag -->
-                    <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-xl border border-orange-500 transition-all hover:scale-105" style="box-shadow: 0 0 15px rgba(249, 115, 22, 0.6);">
+                    <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-xl border border-orange-500 transition-all hover:scale-105"
+                        style="box-shadow: 0 0 15px rgba(249, 115, 22, 0.6);">
                         <span class="font-bold text-lg text-orange-400" style="text-shadow: 0 0 8px rgba(249, 115, 22, 0.8);">
                             $<?php echo formatPrice($room['price']); ?>
                         </span>
@@ -108,55 +115,61 @@ function formatPrice($price)
                 <!-- Content -->
                 <div class="p-6 flex flex-col flex-grow">
                     <div class="mb-4">
-                        <h3 class="text-xl font-bold font-serif text-gray-900 mb-2 truncate"><?php echo htmlspecialchars($room['room_name']); ?></h3>
-                        <div class="h-1 w-12 bg-yellow-500 rounded-full mb-3"></div>
+                        <h3 class="text-xl font-bold font-serif text-white mb-2 truncate">
+                            <?php echo htmlspecialchars($room['room_name']); ?></h3>
+                        <div class="h-1 w-12 bg-yellow-600 rounded-full mb-3"></div>
 
                         <?php if (!empty($room['description'])): ?>
-                            <p class="text-gray-500 text-sm line-clamp-3 mb-4"><?php echo htmlspecialchars($room['description']); ?></p>
+                            <p class="text-gray-400 text-sm line-clamp-3 mb-4"><?php echo htmlspecialchars($room['description']); ?>
+                            </p>
                         <?php else: ?>
-                            <p class="text-gray-400 text-sm italic mb-4">No description available</p>
+                            <p class="text-gray-500 text-sm italic mb-4">No description available</p>
                         <?php endif; ?>
 
                         <!-- Features -->
-                        <div class="flex flex-wrap gap-2 text-xs font-medium text-gray-600 mb-4">
+                        <div class="flex flex-wrap gap-2 text-xs font-medium text-gray-400 mb-4">
                             <?php
                             switch ($room['room_name']) {
                                 case 'Penthouse Suite':
-                                    echo '<span class="px-2 py-1 bg-gray-50 rounded-md border border-gray-100"><i class="fas fa-mountain mr-1 text-yellow-600"></i> City View</span>';
-                                    echo '<span class="px-2 py-1 bg-gray-50 rounded-md border border-gray-100"><i class="fas fa-couch mr-1 text-yellow-600"></i> Living Area</span>';
+                                    echo '<span class="px-2 py-1 bg-gray-800 rounded-md border border-gray-700"><i class="fas fa-mountain mr-1 text-yellow-600"></i> City View</span>';
+                                    echo '<span class="px-2 py-1 bg-gray-800 rounded-md border border-gray-700"><i class="fas fa-couch mr-1 text-yellow-600"></i> Living Area</span>';
                                     break;
                                 case 'Bridal Suite':
-                                    echo '<span class="px-2 py-1 bg-gray-50 rounded-md border border-gray-100"><i class="fas fa-bed mr-1 text-yellow-600"></i> King Bed</span>';
-                                    echo '<span class="px-2 py-1 bg-gray-50 rounded-md border border-gray-100"><i class="fas fa-bath mr-1 text-yellow-600"></i> Luxury Bath</span>';
+                                    echo '<span class="px-2 py-1 bg-gray-800 rounded-md border border-gray-700"><i class="fas fa-bed mr-1 text-yellow-600"></i> King Bed</span>';
+                                    echo '<span class="px-2 py-1 bg-gray-800 rounded-md border border-gray-700"><i class="fas fa-bath mr-1 text-yellow-600"></i> Luxury Bath</span>';
                                     break;
                                 default:
-                                    echo '<span class="px-2 py-1 bg-gray-50 rounded-md border border-gray-100"><i class="fas fa-wifi mr-1 text-yellow-600"></i> WiFi</span>';
-                                    echo '<span class="px-2 py-1 bg-gray-50 rounded-md border border-gray-100"><i class="fas fa-tv mr-1 text-yellow-600"></i> TV</span>';
+                                    echo '<span class="px-2 py-1 bg-gray-800 rounded-md border border-gray-700"><i class="fas fa-wifi mr-1 text-yellow-600"></i> WiFi</span>';
+                                    echo '<span class="px-2 py-1 bg-gray-800 rounded-md border border-gray-700"><i class="fas fa-tv mr-1 text-yellow-600"></i> TV</span>';
                             }
                             ?>
                         </div>
                     </div>
 
-                    <div class="mt-auto pt-4 border-t border-gray-100">
+                    <div class="mt-auto pt-4 border-t border-gray-800">
                         <div class="flex items-center justify-between mb-4">
                             <?php if ($room['is_booked'] > 0): ?>
                                 <div class="flex flex-col">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-800">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-900/30 text-red-400">
                                         Unavailable
                                     </span>
                                     <?php if (!empty($room['next_available_date'])): ?>
-                                        <span class="text-[10px] text-gray-500 mt-1">Free: <?php echo date('M j', strtotime($room['next_available_date'])); ?></span>
+                                        <span class="text-[10px] text-gray-500 mt-1">Free:
+                                            <?php echo date('M j', strtotime($room['next_available_date'])); ?></span>
                                     <?php endif; ?>
                                 </div>
                             <?php else: ?>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-900/30 text-green-400">
                                     Available Now
                                 </span>
                             <?php endif; ?>
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
-                            <button class="edit-room w-full py-2.5 bg-gray-50 text-gray-700 font-bold rounded-xl hover:bg-gray-100 border border-gray-200 transition-colors flex items-center justify-center gap-2"
+                            <button
+                                class="edit-room w-full py-2.5 bg-gray-800 text-white font-bold rounded-xl hover:bg-gray-700 border border-gray-700 transition-colors flex items-center justify-center gap-2"
                                 data-room-id="<?php echo $room['id']; ?>"
                                 data-room-name="<?php echo htmlspecialchars($room['room_name']); ?>"
                                 data-room-price="<?php echo $room['price']; ?>"
@@ -164,7 +177,8 @@ function formatPrice($price)
                                 data-room-image="<?php echo htmlspecialchars($room['room_image'] ?? ''); ?>">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
-                            <button class="delete-room w-full py-2.5 bg-white text-red-600 font-bold rounded-xl hover:bg-red-50 border border-red-100 transition-colors flex items-center justify-center gap-2"
+                            <button
+                                class="delete-room w-full py-2.5 bg-transparent text-red-400 font-bold rounded-xl hover:bg-red-900/20 border border-red-900/50 transition-colors flex items-center justify-center gap-2"
                                 data-room-id="<?php echo $room['id']; ?>">
                                 <i class="fas fa-trash-alt"></i> Delete
                             </button>
@@ -175,13 +189,14 @@ function formatPrice($price)
         <?php endwhile; ?>
     </div>
 <?php else: ?>
-    <div class="text-center py-20 bg-white rounded-3xl shadow-sm border border-dashed border-gray-200">
-        <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
+    <div class="text-center py-20 bg-gray-900 rounded-3xl shadow-sm border border-dashed border-gray-800">
+        <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-600">
             <i class="fas fa-door-closed text-2xl"></i>
         </div>
-        <h3 class="text-lg font-bold text-gray-900 mb-2">No Rooms Found</h3>
-        <p class="text-gray-500 mb-6">Get started by adding your first room to the system.</p>
-        <button class="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold rounded-xl transition-colors" data-bs-toggle="modal" data-bs-target="#addRoomModal">
+        <h3 class="text-lg font-bold text-white mb-2">No Rooms Found</h3>
+        <p class="text-gray-400 mb-6">Get started by adding your first room to the system.</p>
+        <button class="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold rounded-xl transition-colors"
+            data-bs-toggle="modal" data-bs-target="#addRoomModal">
             Create Room
         </button>
     </div>
@@ -192,38 +207,56 @@ function formatPrice($price)
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden">
             <div class="modal-header bg-gray-900 text-white border-0 px-6 py-4">
-                <h5 class="modal-title font-serif font-bold text-xl"><i class="fas fa-plus-circle mr-2 text-yellow-500"></i>Add New Room</h5>
+                <h5 class="modal-title font-serif font-bold text-xl"><i
+                        class="fas fa-plus-circle mr-2 text-yellow-500"></i>Add New Room</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body p-6 bg-gray-50">
+            <div class="modal-body p-6 bg-gray-900">
                 <form id="addRoomForm">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div>
-                            <label for="roomName" class="block text-xs font-bold text-gray-500 uppercase mb-2">Room Name</label>
-                            <input type="text" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all outline-none" id="roomName" required>
+                            <label for="roomName" class="block text-xs font-bold text-gray-400 uppercase mb-2">Room
+                                Name</label>
+                            <input type="text"
+                                class="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:border-yellow-600 focus:ring-2 focus:ring-yellow-900 transition-all outline-none"
+                                id="roomName" required>
                         </div>
                         <div>
-                            <label for="roomPrice" class="block text-xs font-bold text-gray-500 uppercase mb-2">Price per Night</label>
+                            <label for="roomPrice" class="block text-xs font-bold text-gray-400 uppercase mb-2">Price
+                                per Night</label>
                             <div class="relative">
-                                <span class="absolute left-4 top-3 text-gray-400">$</span>
-                                <input type="number" class="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all outline-none" id="roomPrice" required>
+                                <span class="absolute left-4 top-3 text-gray-500">$</span>
+                                <input type="number"
+                                    class="w-full pl-8 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:border-yellow-600 focus:ring-2 focus:ring-yellow-900 transition-all outline-none"
+                                    id="roomPrice" required>
                             </div>
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label for="roomImage" class="block text-xs font-bold text-gray-500 uppercase mb-2">Image Filename</label>
-                        <input type="text" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all outline-none" id="roomImage" placeholder="e.g. room.jpg">
-                        <small class="text-gray-400 text-xs mt-1 block">Enter the filename from the images folder</small>
+                        <label for="roomImage" class="block text-xs font-bold text-gray-400 uppercase mb-2">Image
+                            Filename</label>
+                        <input type="text"
+                            class="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:border-yellow-600 focus:ring-2 focus:ring-yellow-900 transition-all outline-none"
+                            id="roomImage" placeholder="e.g. room.jpg">
+                        <small class="text-gray-500 text-xs mt-1 block">Enter the filename from the images
+                            folder</small>
                     </div>
                     <div class="mb-4">
-                        <label for="roomDescription" class="block text-xs font-bold text-gray-500 uppercase mb-2">Description</label>
-                        <textarea class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all outline-none" id="roomDescription" rows="4"></textarea>
+                        <label for="roomDescription"
+                            class="block text-xs font-bold text-gray-400 uppercase mb-2">Description</label>
+                        <textarea
+                            class="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:border-yellow-600 focus:ring-2 focus:ring-yellow-900 transition-all outline-none"
+                            id="roomDescription" rows="4"></textarea>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer border-t border-gray-100 bg-white px-6 py-4">
-                <button type="button" class="px-5 py-2.5 rounded-xl text-gray-600 font-bold hover:bg-gray-100 transition-colors" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="px-5 py-2.5 rounded-xl bg-gray-900 text-white font-bold hover:bg-gray-800 transition-colors shadow-lg shadow-gray-900/20" id="saveRoom">Save Room</button>
+            <div class="modal-footer border-t border-gray-800 bg-gray-900 px-6 py-4">
+                <button type="button"
+                    class="px-5 py-2.5 rounded-xl text-gray-400 font-bold hover:bg-gray-800 transition-colors"
+                    data-bs-dismiss="modal">Cancel</button>
+                <button type="button"
+                    class="px-5 py-2.5 rounded-xl bg-yellow-600 text-white font-bold hover:bg-yellow-700 transition-colors shadow-lg shadow-yellow-600/20"
+                    id="saveRoom">Save Room</button>
             </div>
         </div>
     </div>
@@ -234,48 +267,65 @@ function formatPrice($price)
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden">
             <div class="modal-header bg-gray-900 text-white border-0 px-6 py-4">
-                <h5 class="modal-title font-serif font-bold text-xl"><i class="fas fa-edit mr-2 text-yellow-500"></i>Edit Room</h5>
+                <h5 class="modal-title font-serif font-bold text-xl"><i
+                        class="fas fa-edit mr-2 text-yellow-500"></i>Edit Room</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body p-6 bg-gray-50">
+            <div class="modal-body p-6 bg-gray-900">
                 <form id="editRoomForm">
                     <input type="hidden" id="editRoomId">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div>
-                            <label for="editRoomName" class="block text-xs font-bold text-gray-500 uppercase mb-2">Room Name</label>
-                            <input type="text" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all outline-none" id="editRoomName" required>
+                            <label for="editRoomName" class="block text-xs font-bold text-gray-400 uppercase mb-2">Room
+                                Name</label>
+                            <input type="text"
+                                class="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:border-yellow-600 focus:ring-2 focus:ring-yellow-900 transition-all outline-none"
+                                id="editRoomName" required>
                         </div>
                         <div>
-                            <label for="editRoomPrice" class="block text-xs font-bold text-gray-500 uppercase mb-2">Price per Night</label>
+                            <label for="editRoomPrice"
+                                class="block text-xs font-bold text-gray-400 uppercase mb-2">Price per Night</label>
                             <div class="relative">
-                                <span class="absolute left-4 top-3 text-gray-400">$</span>
-                                <input type="number" class="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all outline-none" id="editRoomPrice" required>
+                                <span class="absolute left-4 top-3 text-gray-500">$</span>
+                                <input type="number"
+                                    class="w-full pl-8 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:border-yellow-600 focus:ring-2 focus:ring-yellow-900 transition-all outline-none"
+                                    id="editRoomPrice" required>
                             </div>
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label for="editRoomImage" class="block text-xs font-bold text-gray-500 uppercase mb-2">Image Filename</label>
-                        <input type="text" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all outline-none" id="editRoomImage" placeholder="e.g. room.jpg">
+                        <label for="editRoomImage" class="block text-xs font-bold text-gray-400 uppercase mb-2">Image
+                            Filename</label>
+                        <input type="text"
+                            class="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:border-yellow-600 focus:ring-2 focus:ring-yellow-900 transition-all outline-none"
+                            id="editRoomImage" placeholder="e.g. room.jpg">
                     </div>
                     <div class="mb-4">
-                        <label for="editRoomDescription" class="block text-xs font-bold text-gray-500 uppercase mb-2">Description</label>
-                        <textarea class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all outline-none" id="editRoomDescription" rows="4"></textarea>
+                        <label for="editRoomDescription"
+                            class="block text-xs font-bold text-gray-400 uppercase mb-2">Description</label>
+                        <textarea
+                            class="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:border-yellow-600 focus:ring-2 focus:ring-yellow-900 transition-all outline-none"
+                            id="editRoomDescription" rows="4"></textarea>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer border-t border-gray-100 bg-white px-6 py-4">
-                <button type="button" class="px-5 py-2.5 rounded-xl text-gray-600 font-bold hover:bg-gray-100 transition-colors" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="px-5 py-2.5 rounded-xl bg-gray-900 text-white font-bold hover:bg-gray-800 transition-colors shadow-lg shadow-gray-900/20" id="updateRoom">Update Room</button>
+            <div class="modal-footer border-t border-gray-800 bg-gray-900 px-6 py-4">
+                <button type="button"
+                    class="px-5 py-2.5 rounded-xl text-gray-400 font-bold hover:bg-gray-800 transition-colors"
+                    data-bs-dismiss="modal">Cancel</button>
+                <button type="button"
+                    class="px-5 py-2.5 rounded-xl bg-yellow-600 text-white font-bold hover:bg-yellow-700 transition-colors shadow-lg shadow-yellow-600/20"
+                    id="updateRoom">Update Room</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Edit room
         document.querySelectorAll('.edit-room').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const roomId = this.dataset.roomId;
                 const roomName = this.dataset.roomName;
                 const roomPrice = this.dataset.roomPrice;
@@ -294,7 +344,7 @@ function formatPrice($price)
 
         // Delete room
         document.querySelectorAll('.delete-room').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const roomId = this.dataset.roomId;
                 if (confirm('Are you sure you want to delete this room?')) {
                     deleteRoom(roomId);
@@ -303,7 +353,7 @@ function formatPrice($price)
         });
 
         // Save new room
-        document.getElementById('saveRoom').addEventListener('click', function() {
+        document.getElementById('saveRoom').addEventListener('click', function () {
             const roomName = document.getElementById('roomName').value;
             const roomPrice = document.getElementById('roomPrice').value;
             const roomDescription = document.getElementById('roomDescription').value;
@@ -315,7 +365,7 @@ function formatPrice($price)
         });
 
         // Update room
-        document.getElementById('updateRoom').addEventListener('click', function() {
+        document.getElementById('updateRoom').addEventListener('click', function () {
             const roomId = document.getElementById('editRoomId').value;
             const roomName = document.getElementById('editRoomName').value;
             const roomPrice = document.getElementById('editRoomPrice').value;
@@ -394,14 +444,14 @@ function formatPrice($price)
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        ['addRoomModal', 'editRoomModal'].forEach(function(id) {
+    document.addEventListener('DOMContentLoaded', function () {
+        ['addRoomModal', 'editRoomModal'].forEach(function (id) {
             const modalEl = document.getElementById(id);
             if (modalEl && modalEl.parentElement !== document.body) {
                 document.body.appendChild(modalEl);
             }
             if (modalEl) {
-                modalEl.addEventListener('hidden.bs.modal', function() {
+                modalEl.addEventListener('hidden.bs.modal', function () {
                     const video = modalEl.querySelector('video');
                     if (video) {
                         video.pause();
@@ -413,7 +463,7 @@ function formatPrice($price)
                     try {
                         modalEl.setAttribute('aria-hidden', 'true');
                         modalEl.removeAttribute('aria-modal');
-                    } catch (e) {}
+                    } catch (e) { }
                 });
             }
         });

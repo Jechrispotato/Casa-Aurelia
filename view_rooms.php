@@ -23,9 +23,9 @@ $result = mysqli_query($conn, $query);
 $rooms_data = [];
 while ($room = mysqli_fetch_assoc($result)) {
     // Ensure hourly price is available (fallback if 0)
-    $room['hourly_price'] = (isset($room['price_per_hour']) && $room['price_per_hour'] > 0) 
-                            ? $room['price_per_hour'] 
-                            : ceil($room['price'] * 0.15);
+    $room['hourly_price'] = (isset($room['price_per_hour']) && $room['price_per_hour'] > 0)
+        ? $room['price_per_hour']
+        : ceil($room['price'] * 0.15);
     $rooms_data[] = $room;
 }
 
@@ -37,14 +37,18 @@ function formatPrice($price)
 ?>
 
 <!-- Main Content -->
-<div class="bg-gray-50 min-h-screen py-16">
+<div class="bg-gray-900 min-h-screen py-16">
     <div class="container mx-auto px-4 max-w-7xl">
         <!-- Header Section -->
         <div class="text-center mb-16 space-y-4">
             <h3 class="text-yellow-600 font-medium tracking-[0.2em] text-sm uppercase">Accommodations</h3>
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 font-serif">Our Luxury Collection</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto text-lg font-light">
-                Immerse yourself in sophisticated elegance. Each room is designed to provide an unparalleled experience of comfort and style.
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight">
+                Our Luxury <br> <span class=" italic text-yellow-500">Collection</span> <br>
+            </h1>
+
+            <p class="text-white/70 max-w-2xl mx-auto text-lg font-light">
+                Immerse yourself in sophisticated elegance. Each room is designed to provide an unparalleled experience
+                of comfort and style.
             </p>
             <div class="w-24 h-1 bg-yellow-500 mx-auto mt-6 rounded-full"></div>
         </div>
@@ -52,18 +56,20 @@ function formatPrice($price)
         <!-- Rooms Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             <?php foreach ($rooms_data as $room): ?>
-                <div class="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col h-full transform hover:-translate-y-2 room-clickable"
+                <div class="room_card group bg-gray-800/50 backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2 room-clickable"
                     data-room-id="<?php echo $room['id']; ?>">
 
                     <!-- Image Carousel Area -->
                     <div class="relative h-72 bg-gray-200 overflow-hidden">
                         <!-- Status Badge -->
                         <?php if ($room['is_booked'] > 0): ?>
-                            <div class="absolute top-4 right-4 z-20 bg-red-500/90 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
+                            <div
+                                class="availabity_unavailable absolute top-4 right-4 z-20 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
                                 Unavailable
                             </div>
                         <?php else: ?>
-                            <div class="absolute top-4 right-4 z-20 bg-emerald-500/90 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
+                            <div
+                                class="availabity_available absolute top-4 right-4 z-20 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
                                 Available
                             </div>
                         <?php endif; ?>
@@ -71,7 +77,8 @@ function formatPrice($price)
                         <?php if (!empty($room['room_image'])): ?>
                             <div id="carousel-<?php echo $room['id']; ?>" class="carousel slide h-full" data-bs-ride="carousel">
                                 <div class="carousel-indicators mb-2">
-                                    <button type="button" data-bs-target="#carousel-<?php echo $room['id']; ?>" data-bs-slide-to="0" class="active"></button>
+                                    <button type="button" data-bs-target="#carousel-<?php echo $room['id']; ?>"
+                                        data-bs-slide-to="0" class="active"></button>
                                     <?php
                                     // -------- IMAGE SEARCH LOGIC MATCHING ORIGINAL --------
                                     $roomType = strtolower(preg_replace('/\s+/', '', $room['room_name']));
@@ -160,22 +167,29 @@ function formatPrice($price)
                                 </div>
                                 <div class="carousel-inner h-full">
                                     <div class="carousel-item active h-full">
-                                        <img src="images/<?php echo htmlspecialchars($room['room_image']); ?>" class="d-block w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" alt="Main View">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                        <img src="images/<?php echo htmlspecialchars($room['room_image']); ?>"
+                                            class="d-block w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                            alt="Main View">
+                                        <div class="absolute inset-0 bg-gradient-to-t    from-black/50 to-transparent"></div>
                                     </div>
-                                    <?php foreach ($additionalImages as $index => $image): if ($index < 3): ?>
+                                    <?php foreach ($additionalImages as $index => $image):
+                                        if ($index < 3): ?>
                                             <div class="carousel-item h-full">
-                                                <img src="<?php echo $image; ?>" class="d-block w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" alt="Room View">
+                                                <img src="<?php echo $image; ?>"
+                                                    class="d-block w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                                    alt="Room View">
                                                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                                             </div>
-                                    <?php endif;
+                                        <?php endif;
                                     endforeach; ?>
                                 </div>
-                                <button class="carousel-control-prev z-20" type="button" data-bs-target="#carousel-<?php echo $room['id']; ?>" data-bs-slide="prev">
+                                <button class="carousel-control-prev z-20" type="button"
+                                    data-bs-target="#carousel-<?php echo $room['id']; ?>" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon transform scale-75" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
-                                <button class="carousel-control-next z-20" type="button" data-bs-target="#carousel-<?php echo $room['id']; ?>" data-bs-slide="next">
+                                <button class="carousel-control-next z-20" type="button"
+                                    data-bs-target="#carousel-<?php echo $room['id']; ?>" data-bs-slide="next">
                                     <span class="carousel-control-next-icon transform scale-75" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </button>
@@ -188,17 +202,19 @@ function formatPrice($price)
                     <!-- Card Body -->
                     <div class="p-8 flex flex-col flex-grow">
                         <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-2xl font-bold font-serif text-gray-900 group-hover:text-yellow-600 transition-colors">
+                            <h3 class="text-2xl font-bold text-white group-hover:text-yellow-600 transition-colors uppercase tracking-wide"
+                                style="font-family: 'Velista';">
                                 <?php echo htmlspecialchars($room['room_name']); ?>
                             </h3>
                             <div class="text-right">
-                                <span class="block text-2xl font-bold text-yellow-600">$<?php echo formatPrice($room['price']); ?></span>
+                                <span
+                                    class="block text-2xl font-bold text-yellow-600">$<?php echo formatPrice($room['price']); ?></span>
                                 <span class="text-xs text-gray-400">/ night</span>
                             </div>
                         </div>
 
                         <!-- Features Summary -->
-                        <div class="flex flex-wrap gap-4 mb-6 text-sm text-gray-500 border-b border-gray-100 pb-6">
+                        <div class="flex flex-wrap gap-4 mb-6 text-sm text-gray-400 border-b border-gray-700 pb-6">
                             <?php
                             switch ($room['room_name']) {
                                 case 'Penthouse Suite':
@@ -218,7 +234,7 @@ function formatPrice($price)
 
                         <!-- Description -->
                         <div class="mb-6 relative">
-                            <p class="text-gray-500 line-clamp-3 leading-relaxed text-sm">
+                            <p class="text-gray-400 line-clamp-3 leading-relaxed text-sm">
                                 <?php echo htmlspecialchars($room['description']); ?>
                             </p>
                         </div>
@@ -231,12 +247,11 @@ function formatPrice($price)
                                 </p>
                             <?php endif; ?>
                             <a href="add_booking.php?room_id=<?php echo $room['id']; ?>"
-                                class="btn-book block w-full py-4 bg-gray-900 text-white text-center rounded-xl font-bold tracking-wide hover:bg-yellow-600 transition-all duration-300 shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-1"
-                                onclick="event.stopPropagation();">
+                                class="book_now btn-book block w-full" onclick="event.stopPropagation();">
                                 Book Now
                             </a>
 
-                            <button class="btn-view-details w-full py-2 text-sm text-gray-500 hover:text-gray-900 transition-colors font-medium border border-transparent hover:border-gray-200 rounded-lg">
+                            <button class="details btn-view-details w-full">
                                 Click to view details
                             </button>
                         </div>
@@ -249,15 +264,18 @@ function formatPrice($price)
 
 <!-- Modal Logic (Hidden) -->
 <div class="modal fade" id="roomDetailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable mt-24 mb-12 mx-auto px-4">
         <div class="modal-content overflow-hidden border-0 rounded-3xl shadow-2xl">
             <!-- Header with Image Background -->
             <div class="modal-header border-0 p-0 relative h-64 bg-gray-900">
-                <button type="button" class="btn-close absolute top-4 right-4 z-50 bg-white opacity-100 rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button"
+                    class="btn-close absolute top-4 right-4 z-50 bg-white opacity-100 rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="absolute inset-0 z-0" id="modalHeroImageContainer">
                     <!-- Hero Video/Image injected here -->
                 </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10 pointer-events-none"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10 pointer-events-none">
+                </div>
                 <div class="absolute bottom-0 left-0 p-8 z-20 text-white w-full flex justify-between items-end">
                     <div>
                         <h2 class="text-3xl font-bold font-serif mb-1" id="modalRoomTitle">Room Name</h2>
@@ -270,26 +288,29 @@ function formatPrice($price)
                             <span class="text-white/70 text-sm">/ hour</span>
                         </div>
                     </div>
-                    <button id="modalLikeBtn" onclick="toggleLike()" class="group flex flex-col items-center gap-1 transition-all">
-                        <div class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all">
-                            <i class="far fa-heart text-2xl text-white transition-all transform group-hover:scale-110" id="likeIcon"></i>
+                    <button id="modalLikeBtn" onclick="toggleLike()"
+                        class="group flex flex-col items-center gap-1 transition-all">
+                        <div
+                            class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all">
+                            <i class="far fa-heart text-2xl text-white transition-all transform group-hover:scale-110"
+                                id="likeIcon"></i>
                         </div>
                         <span class="text-xs font-bold text-white tracking-wide" id="likeCount">0 Likes</span>
                     </button>
                 </div>
             </div>
 
-            <div class="modal-body p-8 bg-white">
+            <div class="modal-body p-8 bg-gray-900">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <!-- Main Info -->
                     <div class="lg:col-span-2 space-y-6">
                         <div>
-                            <h4 class="text-gray-900 font-bold mb-3 uppercase tracking-wider text-xs">Description</h4>
-                            <p class="text-gray-600 leading-relaxed" id="modalRoomDesc">Description goes here...</p>
+                            <h4 class="text-white font-bold mb-3 uppercase tracking-wider text-xs">Description</h4>
+                            <p class="text-gray-400 leading-relaxed" id="modalRoomDesc">Description goes here...</p>
                         </div>
 
                         <div>
-                            <h4 class="text-gray-900 font-bold mb-4 uppercase tracking-wider text-xs">Room Amenities</h4>
+                            <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-xs">Room Amenities</h4>
                             <div class="grid grid-cols-2 gap-4" id="modalRoomFeatures">
                                 <!-- Features injected here -->
                             </div>
@@ -298,16 +319,18 @@ function formatPrice($price)
 
                     <!-- Sidebar / Booking Status -->
                     <div class="lg:col-span-1">
-                        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 h-full flex flex-col justify-center text-center space-y-4" id="modalBookingStatus">
+                        <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 h-full flex flex-col justify-center text-center space-y-6 shadow-inner"
+                            id="modalBookingStatus">
                             <!-- Status injected here -->
                         </div>
                     </div>
                 </div>
 
                 <!-- Reviews Section -->
-                <div class="mt-10 pt-10 border-t border-gray-100">
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs flex items-center gap-2">
-                        Guest Reviews <span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full text-[10px]" id="reviewCountBadge">0</span>
+                <div class="mt-10 pt-10 border-t border-gray-700">
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs flex items-center gap-2">
+                        Guest Reviews <span class="bg-gray-800 text-gray-400 px-2 py-0.5 rounded-full text-[10px]"
+                            id="reviewCountBadge">0</span>
                     </h4>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -318,24 +341,31 @@ function formatPrice($price)
                         </div>
 
                         <!-- Add Review Form -->
-                        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 h-fit">
-                            <h5 class="font-bold text-gray-900 mb-4">Write a Review</h5>
+                        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 h-fit">
+                            <h5 class="font-bold text-white mb-4">Write a Review</h5>
                             <form id="reviewForm" onsubmit="submitReview(event)">
                                 <input type="hidden" id="reviewRoomId" name="room_id">
                                 <div class="mb-4">
                                     <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Rating</label>
                                     <div class="flex gap-2 text-2xl text-gray-300">
-                                        <i class="fas fa-star cursor-pointer hover:text-yellow-400 transition-colors star-rating" data-value="1" onclick="setRating(1)"></i>
-                                        <i class="fas fa-star cursor-pointer hover:text-yellow-400 transition-colors star-rating" data-value="2" onclick="setRating(2)"></i>
-                                        <i class="fas fa-star cursor-pointer hover:text-yellow-400 transition-colors star-rating" data-value="3" onclick="setRating(3)"></i>
-                                        <i class="fas fa-star cursor-pointer hover:text-yellow-400 transition-colors star-rating" data-value="4" onclick="setRating(4)"></i>
-                                        <i class="fas fa-star cursor-pointer hover:text-yellow-400 transition-colors star-rating" data-value="5" onclick="setRating(5)"></i>
+                                        <i class="fas fa-star cursor-pointer hover:text-yellow-400 transition-colors star-rating"
+                                            data-value="1" onclick="setRating(1)"></i>
+                                        <i class="fas fa-star cursor-pointer hover:text-yellow-400 transition-colors star-rating"
+                                            data-value="2" onclick="setRating(2)"></i>
+                                        <i class="fas fa-star cursor-pointer hover:text-yellow-400 transition-colors star-rating"
+                                            data-value="3" onclick="setRating(3)"></i>
+                                        <i class="fas fa-star cursor-pointer hover:text-yellow-400 transition-colors star-rating"
+                                            data-value="4" onclick="setRating(4)"></i>
+                                        <i class="fas fa-star cursor-pointer hover:text-yellow-400 transition-colors star-rating"
+                                            data-value="5" onclick="setRating(5)"></i>
                                     </div>
                                     <input type="hidden" name="rating" id="ratingInput" value="5">
                                 </div>
                                 <div class="mb-4">
-                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Comment</label>
-                                    <textarea name="comment" rows="3" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none text-sm" placeholder="Share your experience..."></textarea>
+                                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Comment</label>
+                                    <textarea name="comment" rows="3" required
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-700 bg-gray-900 text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none text-sm"
+                                        placeholder="Share your experience..."></textarea>
                                 </div>
                                 <div id="reviewFormActions">
                                     <!-- Button or Login Prompt injected via JS -->
@@ -545,9 +575,9 @@ function formatPrice($price)
         formData.append('action', 'post_review');
 
         fetch('api_room_interactions.php', {
-                method: 'POST',
-                body: formData
-            })
+            method: 'POST',
+            body: formData
+        })
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
@@ -675,7 +705,7 @@ function formatPrice($price)
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const waitForBS = setInterval(() => {
             if (typeof bootstrap !== 'undefined') {
                 clearInterval(waitForBS);
@@ -691,7 +721,7 @@ function formatPrice($price)
         const modalBS = new bootstrap.Modal(modalEl);
 
         document.querySelectorAll('.room-clickable').forEach(card => {
-            card.addEventListener('click', function(e) {
+            card.addEventListener('click', function (e) {
                 // Ignore matching specific interactive elements, but ALLOW view-details button
                 if (e.target.closest('a') || (e.target.closest('button') && !e.target.closest('.btn-view-details'))) return;
 
