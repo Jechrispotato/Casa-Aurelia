@@ -35,7 +35,7 @@ $bookings = mysqli_query($conn, $query);
 
 <!-- Header -->
 <div class="mb-8">
-    <h2 class="text-3xl font-bold font-serif text-white mb-2">Room Bookings</h2>
+    <h2 class="text-3xl font-bold text-white mb-2" style="font-family: 'AureliaLight';">Room Bookings</h2>
     <p class="text-gray-400">View and manage all room reservations.</p>
 </div>
 
@@ -107,13 +107,16 @@ $bookings = mysqli_query($conn, $query);
                             <td class="p-4 font-mono text-xs text-gray-500">#<?php echo $booking['id']; ?></td>
                             <td class="p-4">
                                 <div class="font-bold text-white">
-                                    <?php echo htmlspecialchars($booking['username'] ?? 'Unknown'); ?></div>
+                                    <?php echo htmlspecialchars($booking['username'] ?? 'Unknown'); ?>
+                                </div>
                                 <div class="text-xs text-gray-400">
-                                    <?php echo htmlspecialchars($booking['email'] ?? 'No email'); ?></div>
+                                    <?php echo htmlspecialchars($booking['email'] ?? 'No email'); ?>
+                                </div>
                             </td>
                             <td class="p-4">
                                 <div class="font-bold text-gray-300">
-                                    <?php echo htmlspecialchars($booking['room_name'] ?? 'Unknown Room'); ?></div>
+                                    <?php echo htmlspecialchars($booking['room_name'] ?? 'Unknown Room'); ?>
+                                </div>
                                 <?php if ($total_price): ?>
                                     <div class="text-xs text-gray-500"><?php echo $total_price; ?></div>
                                 <?php endif; ?>

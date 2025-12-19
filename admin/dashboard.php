@@ -74,7 +74,7 @@ $total_spa = mysqli_fetch_assoc($total_spa_result)['total'] ?? 0;
 
 <!-- Header -->
 <div class="mb-8">
-    <h2 class="text-3xl font-bold font-serif text-white mb-2">Admin Dashboard</h2>
+    <h2 class="text-3xl font-bold text-white mb-2" style="font-family: 'AureliaLight';">Admin Dashboard</h2>
     <p class="text-gray-400">Welcome back, Admin. Here's what's happening today.</p>
 </div>
 
@@ -211,7 +211,7 @@ $total_spa = mysqli_fetch_assoc($total_spa_result)['total'] ?? 0;
 <!-- Pending Bookings Table -->
 <div class="bg-gray-900 rounded-2xl shadow-lg border border-gray-800 overflow-hidden mb-8">
     <div class="p-6 bg-gray-900 border-b border-gray-800 flex justify-between items-center">
-        <h3 class="font-bold font-serif text-xl text-white">Pending Approvals</h3>
+        <h3 class="font-bold text-xl text-white" style="font-family: 'AureliaLight';">Pending Approvals</h3>
         <a href="bookings.php?status=pending" class="text-sm font-bold text-yellow-500 hover:text-yellow-400">View
             All</a>
     </div>

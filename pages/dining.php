@@ -81,6 +81,80 @@ unset($_SESSION['success']);
         opacity: 1;
         transform: translateY(0);
     }
+
+    /* Modal Layout Sync from view_rooms.php */
+    #fullMenuModal .modal-dialog,
+    #cocktailMenuModal .modal-dialog {
+        max-width: calc(90vw - 100px);
+        max-height: calc(110vh - 200px);
+        margin: 90px auto;
+        transition: all 0.3s ease;
+    }
+
+    #fullMenuModal .modal-content,
+    #cocktailMenuModal .modal-content {
+        height: 100%;
+        max-height: calc(130vh - 200px);
+    }
+
+    /* Tablet Responsiveness */
+    @media (max-width: 1024px) {
+
+        #fullMenuModal .modal-dialog,
+        #cocktailMenuModal .modal-dialog {
+            max-width: calc(100vw - 60px);
+            max-height: calc(100vh - 170px);
+            margin: 80px auto;
+        }
+
+        #fullMenuModal .modal-content,
+        #cocktailMenuModal .modal-content {
+            max-height: calc(120vh - 170px);
+        }
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+
+        #fullMenuModal .modal-dialog,
+        #cocktailMenuModal .modal-dialog {
+            max-width: calc(90vw - 20px);
+            max-height: calc(107vh - 180px);
+            margin: 90px auto;
+        }
+
+        #fullMenuModal .modal-content,
+        #cocktailMenuModal .modal-content {
+            max-height: calc(120vh - 170px);
+        }
+
+        .modal-header {
+            height: auto !important;
+            padding: 1.5rem !important;
+        }
+
+        .modal-body {
+            padding: 1.5rem !important;
+        }
+    }
+
+    /* Custom Scrollbar for Modal Body */
+    .modal-body::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .modal-body::-webkit-scrollbar-track {
+        background: #111827;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb {
+        background: #ca8a04;
+        border-radius: 10px;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb:hover {
+        background: #facc15;
+    }
 </style>
 
 <!-- Hero Section -->
@@ -365,7 +439,8 @@ unset($_SESSION['success']);
                 </div>
             <?php endif; ?>
 
-            <form action="../reservations/process/process_dining_reservation.php" method="POST" id="reservationForm" class="space-y-6">
+            <form action="../reservations/process/process_dining_reservation.php" method="POST" id="reservationForm"
+                class="space-y-6">
                 <!-- CSRF Token -->
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
 
@@ -473,7 +548,7 @@ unset($_SESSION['success']);
 <!-- Full Menu Modal (Inline) -->
 <div class="modal fade" id="fullMenuModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content rounded-none border-0 bg-gray-900 text-white">
+        <div class="modal-content overflow-hidden border-0 rounded-3xl shadow-2xl bg-gray-900 text-white">
             <div class="modal-header border-b border-gray-800 py-6">
                 <h5 class="modal-title font-serif text-3xl text-gold w-full text-center">Full Menu</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
@@ -576,7 +651,7 @@ unset($_SESSION['success']);
 <!-- Cocktail Menu Modal (Inline) -->
 <div class="modal fade" id="cocktailMenuModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content rounded-none border-0 bg-gray-900 text-white">
+        <div class="modal-content overflow-hidden border-0 rounded-3xl shadow-2xl bg-gray-900 text-white">
             <div class="modal-header border-b border-gray-800 py-6">
                 <h5 class="modal-title font-serif text-3xl text-gold w-full text-center">Cocktail Collection</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"

@@ -34,7 +34,7 @@ $bookings = mysqli_query($conn, $query);
 
 <!-- Header -->
 <div class="mb-8">
-    <h2 class="text-3xl font-bold font-serif text-white mb-2">Dining Reservations</h2>
+    <h2 class="text-3xl font-bold text-white mb-2" style="font-family: 'AureliaLight';">Dining Reservations</h2>
     <p class="text-gray-400">Manage all dining reservations from guests.</p>
 </div>
 

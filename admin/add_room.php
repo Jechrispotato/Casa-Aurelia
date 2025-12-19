@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Header -->
     <div class="mb-8">
-        <h2 class="text-3xl font-bold font-serif text-white mb-2">Add New Room</h2>
+        <h2 class="text-3xl font-bold text-white mb-2" style="font-family: 'AureliaLight';">Add New Room</h2>
         <div class="flex items-center gap-2 text-sm text-gray-500">
             <a href="dashboard.php" class="hover:text-yellow-600 transition-colors">Dashboard</a>
             <i class="fas fa-chevron-right text-xs"></i>

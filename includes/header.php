@@ -214,6 +214,30 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
             font-weight: normal;
             text-transform: none;
         }
+
+        /* Force AureliaLight for Admin Pages */
+        <?php if ($is_admin_page): ?>
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            nav a,
+            nav button,
+            .navbar_button,
+            span,
+            p,
+            div,
+            a,
+            button,
+            input,
+            select,
+            textarea {
+                font-family: 'AureliaLight' !important;
+            }
+
+        <?php endif; ?>
     </style>
 </head>
 
@@ -225,8 +249,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
             <div class="flex items-center justify-between h-14">
                 <!-- Logo and Brand -->
                 <a href="<?php echo SITE_ROOT; ?>index.php" class="logoo">
-                    <img src="<?php echo AURELIA_ASSETS; ?>casaaurelialogo1_white.png"
-                        alt="Hotel Logo"
+                    <img src="<?php echo AURELIA_ASSETS; ?>casaaurelialogo1_white.png" alt="Hotel Logo"
                         class="h-8 w-auto rounded-full object-cover transition-all duration-500 ease-in-out group-hover:scale-110">
                 </a>
 
@@ -245,27 +268,30 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                         <!-- Bookings Dropdown -->
                         <div class="relative group">
                             <button id="bookingsDropdownBtn"
-                                class="px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300 flex items-center gap-2 hover:bg-white/10">
+                                class="px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300 flex items-center gap-2 text-white hover:bg-white/10"
+                                style="font-family: 'AureliaLight';">
                                 <i class="fas fa-calendar-check text-base"></i>
                                 <span>Bookings</span>
-                                <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                                <i
+                                    class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
                             </button>
                             <div id="bookingsDropdownMenu"
-                                class="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-1 z-[100]">
+                                class="absolute left-0 mt-2 w-56 bg-gray-900 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-1 z-[100] border border-gray-800"
+                                style="font-family: 'AureliaLight';">
                                 <a href="<?php echo ADMIN_PATH; ?>bookings.php"
-                                    class="flex items-center px-5 py-3 text-gray-800 hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50 hover:pl-6 transition-all duration-200 rounded-t-xl">
-                                    <i class="fas fa-hotel mr-3 text-blue-600"></i>
-                                    <span class="font-medium text-gray-800">Room Bookings</span>
+                                    class="flex items-center px-5 py-3 text-white hover:bg-white/10 hover:pl-6 transition-all duration-200 rounded-t-xl">
+                                    <i class="fas fa-hotel mr-3 text-yellow-600"></i>
+                                    <span class="font-medium">Room Bookings</span>
                                 </a>
                                 <a href="<?php echo ADMIN_PATH; ?>dining_bookings.php"
-                                    class="flex items-center px-5 py-3 text-gray-800 hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50 hover:pl-6 transition-all duration-200">
-                                    <i class="fas fa-utensils mr-3 text-blue-600"></i>
-                                    <span class="font-medium text-gray-800">Dining Reservations</span>
+                                    class="flex items-center px-5 py-3 text-white hover:bg-white/10 hover:pl-6 transition-all duration-200">
+                                    <i class="fas fa-utensils mr-3 text-yellow-600"></i>
+                                    <span class="font-medium">Dining Reservations</span>
                                 </a>
                                 <a href="<?php echo ADMIN_PATH; ?>spa_bookings.php"
-                                    class="flex items-center px-5 py-3 text-gray-800 hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50 hover:pl-6 transition-all duration-200 rounded-b-xl">
-                                    <i class="fas fa-spa mr-3 text-blue-600"></i>
-                                    <span class="font-medium text-gray-800">Spa Bookings</span>
+                                    class="flex items-center px-5 py-3 text-white hover:bg-white/10 hover:pl-6 transition-all duration-200 rounded-b-xl">
+                                    <i class="fas fa-spa mr-3 text-yellow-600"></i>
+                                    <span class="font-medium">Spa Bookings</span>
                                 </a>
                             </div>
                         </div>
@@ -279,26 +305,22 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                         </a>
                     <?php else: ?>
                         <!-- Regular User Navigation -->
-                        <a href="<?php echo SITE_ROOT; ?>index.php"
-                            class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
+                        <a href="<?php echo SITE_ROOT; ?>index.php" class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
                                   hover:bg-white/10 hover:-translate-y-0.5 
                                   <?php echo ($current_page === 'index.php') ? 'active' : ''; ?>">
                             HOME
                         </a>
-                        <a href="<?php echo PAGES_PATH; ?>view_rooms.php"
-                            class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
+                        <a href="<?php echo PAGES_PATH; ?>view_rooms.php" class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
                                   hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg
                                   <?php echo ($current_page === 'view_rooms.php') ? 'active' : ''; ?>">
                             ROOM & SUITES
                         </a>
-                        <a href="<?php echo PAGES_PATH; ?>dining.php"
-                            class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
+                        <a href="<?php echo PAGES_PATH; ?>dining.php" class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
                                   hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg
                                   <?php echo ($current_page === 'dining.php') ? 'active' : ''; ?>">
                             DINING
                         </a>
-                        <a href="<?php echo PAGES_PATH; ?>spa.php"
-                            class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
+                        <a href="<?php echo PAGES_PATH; ?>spa.php" class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
                                   hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg
                                   <?php echo ($current_page === 'spa.php') ? 'active' : ''; ?>">
                             SPA & WELLNESS
@@ -313,7 +335,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                         <!-- User Dropdown -->
                         <div class="relative group">
                             <button id="userDropdownBtn"
-                                class="relative flex items-center gap-2 px-3 py-2 border-2 border-white/30 rounded-full font-semibold text-sm tracking-wide
+                                class="relative flex items-center gap-2 px-3 py-2 border-2 border-white/30 rounded-full font-semibold text-sm tracking-wide text-white
                                          transition-all duration-300 hover:bg-white/10 hover:border-white/50 hover:-translate-y-0.5 hover:shadow-xl focus:outline-none pl-2">
 
                                 <?php
@@ -333,7 +355,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                                     </div>
                                 <?php endif; ?>
 
-                                <span class="pl-1"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                                <span class="pl-1 text-white"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
                                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                                     <span
                                         class="bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-md ml-1">Admin</span>
@@ -344,7 +366,8 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                                         <?php echo $unread_notifications; ?>
                                     </span>
                                 <?php endif; ?>
-                                <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180 ml-1"></i>
+                                <i
+                                    class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180 ml-1"></i>
                             </button>
                             <div id="userDropdownMenu"
                                 class="absolute right-0 mt-2 w-64 bg-gray-900 text-white rounded-xl shadow-2xl opacity-0 invisible 
@@ -367,29 +390,34 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                                     </div>
                                     <a href="<?php echo PROFILE_PATH; ?>profile.php"
                                         class="flex items-center px-5 py-3.5 hover:bg-white/10 transition-all duration-200 group/item">
-                                        <i class="fas fa-user-circle mr-3 text-purple-400 group-hover/item:text-purple-300 transition-colors w-5 text-center"></i>
+                                        <i
+                                            class="fas fa-user-circle mr-3 text-purple-400 group-hover/item:text-purple-300 transition-colors w-5 text-center"></i>
                                         <span class="font-medium text-sm">My Profile</span>
                                     </a>
                                     <a href="<?php echo BOOKING_PATH; ?>view_bookings.php"
                                         class="flex items-center px-5 py-3.5 hover:bg-white/10 transition-all duration-200 group/item">
-                                        <i class="fas fa-list mr-3 text-blue-400 group-hover/item:text-blue-300 transition-colors w-5 text-center"></i>
+                                        <i
+                                            class="fas fa-list mr-3 text-blue-400 group-hover/item:text-blue-300 transition-colors w-5 text-center"></i>
                                         <span class="font-medium text-sm">My Bookings</span>
                                     </a>
                                     <a href="<?php echo PROFILE_PATH; ?>notifications.php"
                                         class="flex items-center justify-between px-5 py-3.5 hover:bg-white/10 transition-all duration-200 group/item">
                                         <div class="flex items-center">
-                                            <i class="fas fa-bell mr-3 text-yellow-400 group-hover/item:text-yellow-300 transition-colors w-5 text-center"></i>
+                                            <i
+                                                class="fas fa-bell mr-3 text-yellow-400 group-hover/item:text-yellow-300 transition-colors w-5 text-center"></i>
                                             <span class="font-medium text-sm">Notifications</span>
                                         </div>
                                         <?php if ($unread_notifications > 0): ?>
-                                            <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg"><?php echo $unread_notifications; ?></span>
+                                            <span
+                                                class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg"><?php echo $unread_notifications; ?></span>
                                         <?php endif; ?>
                                     </a>
                                 <?php endif; ?>
                                 <div class="border-t border-gray-700 my-1"></div>
                                 <a href="<?php echo AUTH_PATH; ?>logout.php"
                                     class="flex items-center px-5 py-3.5 hover:bg-red-500/10 hover:text-red-400 text-red-500 transition-all duration-200 group/logout">
-                                    <i class="fas fa-sign-out-alt mr-3 w-5 text-center group-hover/logout:transform group-hover/logout:translate-x-1 transition-transform"></i>
+                                    <i
+                                        class="fas fa-sign-out-alt mr-3 w-5 text-center group-hover/logout:transform group-hover/logout:translate-x-1 transition-transform"></i>
                                     <span class="font-medium text-sm">Logout</span>
                                 </a>
                             </div>
@@ -446,17 +474,20 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                         <a href="<?php echo SITE_ROOT; ?>index.php"
                             class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Home</a>
                         <a href="<?php echo PAGES_PATH; ?>view_rooms.php"
-                            class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Rooms & Suites</a>
+                            class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Rooms &
+                            Suites</a>
                         <a href="<?php echo PAGES_PATH; ?>dining.php"
                             class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Dining</a>
                         <a href="<?php echo PAGES_PATH; ?>spa.php"
-                            class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Spa & Wellness</a>
+                            class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 font-medium">Spa &
+                            Wellness</a>
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <a href="<?php echo PROFILE_PATH; ?>notifications.php"
                                 class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200 flex items-center justify-between font-medium">
                                 <span><i class="fas fa-bell mr-2"></i>Notifications</span>
                                 <?php if ($unread_notifications > 0): ?>
-                                    <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full"><?php echo $unread_notifications; ?></span>
+                                    <span
+                                        class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full"><?php echo $unread_notifications; ?></span>
                                 <?php endif; ?>
                             </a>
                         <?php endif; ?>

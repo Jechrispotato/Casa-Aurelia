@@ -41,7 +41,7 @@ function formatPrice($price)
     <div class="container mx-auto px-4 max-w-7xl">
         <!-- Header Section -->
         <div class="text-center mb-16 space-y-4">
-            <h3 class="text-yellow-600 font-medium tracking-[0.2em] text-sm uppercase">Accommodations</h3>
+            <span class="block text-yellow-500 tracking-[0.3em] uppercase text-sm font-bold mb-4">Accommodations</span>
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight">
                 Our Luxury <br> <span class=" italic text-yellow-500">Collection</span> <br>
             </h1>
@@ -201,12 +201,12 @@ function formatPrice($price)
 
                     <!-- Card Body -->
                     <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-2xl font-bold text-white group-hover:text-yellow-600 transition-colors uppercase tracking-wide"
+                        <div class="flex justify-between items-start mb-4 gap-4">
+                            <h3 class="text-2xl font-bold text-white group-hover:text-yellow-600 transition-colors uppercase tracking-wide flex-1"
                                 style="font-family: 'Velista';">
                                 <?php echo htmlspecialchars($room['room_name']); ?>
                             </h3>
-                            <div class="text-right">
+                            <div class="text-right shrink-0">
                                 <span
                                     class="block text-2xl font-bold text-yellow-600">$<?php echo formatPrice($room['price']); ?></span>
                                 <span class="text-xs text-gray-400">/ night</span>
@@ -264,7 +264,7 @@ function formatPrice($price)
 
 <!-- Modal Logic (Hidden) -->
 <div class="modal fade" id="roomDetailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable mt-24 mb-12 mx-auto px-4">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content overflow-hidden border-0 rounded-3xl shadow-2xl">
             <!-- Header with Image Background -->
             <div class="modal-header border-0 p-0 relative h-64 bg-gray-900">
@@ -396,6 +396,55 @@ function formatPrice($price)
 
     .modal-body::-webkit-scrollbar-thumb:hover {
         background: #94a3b8;
+    }
+
+    #roomDetailModal .modal-dialog {
+        max-width: calc(90vw - 100px);
+        max-height: calc(110vh - 200px);
+        /* 120px top + 120px bottom */
+        margin: 90px auto;
+        transition: all 0.3s ease;
+    }
+
+    #roomDetailModal .modal-content {
+        height: 100%;
+        max-height: calc(130vh - 200px);
+    }
+
+    /* Tablet Responsiveness */
+    @media (max-width: 1024px) {
+        #roomDetailModal .modal-dialog {
+            max-width: calc(100vw - 60px);
+            max-height: calc(100vh - 170px);
+            /* 80px top + 80px bottom */
+            margin: 80px auto;
+        }
+
+        #roomDetailModal .modal-content {
+            max-height: calc(120vh - 170px);
+        }
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        #roomDetailModal .modal-dialog {
+            max-width: calc(90vw - 20px);
+            max-height: calc(107vh - 180px);
+            /* 90px top for mobile navbar space + 90px bottom */
+            margin: 90px auto;
+        }
+
+        #roomDetailModal .modal-content {
+            max-height: calc(120vh - 170px);
+        }
+
+        .modal-header {
+            height: 180px !important;
+        }
+
+        .modal-body {
+            padding: 1.5rem !important;
+        }
     }
 </style>
 

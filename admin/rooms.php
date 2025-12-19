@@ -38,7 +38,7 @@ function formatPrice($price)
 <!-- Header -->
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
     <div>
-        <h2 class="text-3xl font-bold font-serif text-white mb-2">Room Management</h2>
+        <h2 class="text-3xl font-bold text-white mb-2" style="font-family: 'AureliaLight';">Room Management</h2>
         <p class="text-gray-400">Manage your hotel rooms, prices, and availability.</p>
     </div>
     <button
@@ -115,8 +115,9 @@ function formatPrice($price)
                 <!-- Content -->
                 <div class="p-6 flex flex-col flex-grow">
                     <div class="mb-4">
-                        <h3 class="text-xl font-bold font-serif text-white mb-2 truncate">
-                            <?php echo htmlspecialchars($room['room_name']); ?></h3>
+                        <h3 class="text-xl font-bold text-white mb-2 truncate" style="font-family: 'AureliaLight';">
+                            <?php echo htmlspecialchars($room['room_name']); ?>
+                        </h3>
                         <div class="h-1 w-12 bg-yellow-600 rounded-full mb-3"></div>
 
                         <?php if (!empty($room['description'])): ?>
@@ -207,7 +208,7 @@ function formatPrice($price)
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden">
             <div class="modal-header bg-gray-900 text-white border-0 px-6 py-4">
-                <h5 class="modal-title font-serif font-bold text-xl"><i
+                <h5 class="modal-title font-bold text-xl" style="font-family: 'AureliaLight';"><i
                         class="fas fa-plus-circle mr-2 text-yellow-500"></i>Add New Room</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
@@ -267,7 +268,7 @@ function formatPrice($price)
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden">
             <div class="modal-header bg-gray-900 text-white border-0 px-6 py-4">
-                <h5 class="modal-title font-serif font-bold text-xl"><i
+                <h5 class="modal-title font-bold text-xl" style="font-family: 'AureliaLight';"><i
                         class="fas fa-edit mr-2 text-yellow-500"></i>Edit Room</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>

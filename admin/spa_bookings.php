@@ -34,7 +34,7 @@ $bookings = mysqli_query($conn, $query);
 
 <!-- Header -->
 <div class="mb-8">
-    <h2 class="text-3xl font-bold font-serif text-white mb-2">Spa Appointments</h2>
+    <h2 class="text-3xl font-bold text-white mb-2" style="font-family: 'AureliaLight';">Spa Appointments</h2>
     <p class="text-gray-400">Manage spa treatments and appointments.</p>
 </div>
 
@@ -89,7 +89,8 @@ $bookings = mysqli_query($conn, $query);
                                 <div class="font-bold text-white"><?php echo htmlspecialchars($booking['customer_name']); ?>
                                 </div>
                                 <div class="text-xs text-gray-400">
-                                    <?php echo htmlspecialchars($booking['email'] ?? 'No email'); ?></div>
+                                    <?php echo htmlspecialchars($booking['email'] ?? 'No email'); ?>
+                                </div>
                                 <div class="text-xs text-gray-500"><?php echo htmlspecialchars($booking['phone'] ?? ''); ?>
                                 </div>
                             </td>
