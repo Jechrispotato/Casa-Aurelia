@@ -1,13 +1,13 @@
 <?php
 session_start();
 include('../../includes/db.php');
-include('send_email.php');
+include('../../includes/send_email.php');
 include('../../includes/security.php'); // For CSRF validation
 
 // Validate CSRF token
 if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
     $_SESSION['error'] = 'Invalid session. Please try again.';
-    header('Location: forgot_password.php');
+    header('Location: ../forgot_password.php');
     exit;
 }
 
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Basic validation
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['error'] = "Please enter a valid email address.";
-        header("Location: forgot_password.php");
+        header("Location: ../forgot_password.php");
         exit;
     }
 
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Store email in session to pre-fill on reset page
                 $_SESSION['reset_email'] = $email;
 
-                header("Location: reset_password.php");
+                header("Location: ../reset_password.php");
                 exit;
             } else {
                 // Email failed to send - Remove the code ("automatically remove")
@@ -59,12 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $clear_stmt->execute();
 
                 $_SESSION['error'] = "Failed to send reset email. Please try again later. " . $email_result['message'];
-                header("Location: forgot_password.php");
+                header("Location: ../forgot_password.php");
                 exit;
             }
         } else {
             $_SESSION['error'] = "Database error. Please try again.";
-            header("Location: forgot_password.php");
+            header("Location: ../forgot_password.php");
             exit;
         }
     } else {
@@ -75,10 +75,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // I'll show "Email not found" for now as it's friendlier for development, or a generic one.
         // Let's stick to helpful messages.
         $_SESSION['error'] = "No account found with this email address.";
-        header("Location: forgot_password.php");
+        header("Location: ../forgot_password.php");
         exit;
     }
 } else {
-    header("Location: forgot_password.php");
+    header("Location: ../forgot_password.php");
     exit;
 }

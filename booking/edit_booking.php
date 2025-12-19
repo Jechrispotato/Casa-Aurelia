@@ -7,12 +7,12 @@ session_start();
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['error'] = "Please login to edit a booking";
-    header('Location: login.php');
+    header('Location: ../auth/login.php');
     exit;
 }
 
-include('db.php');
-include('header.php');
+include('../includes/db.php');
+include('../includes/header.php');
 
 $user_id = (int) $_SESSION['user_id'];
 
@@ -397,7 +397,7 @@ unset($_SESSION['error']); // Clear error message after getting it
             if (!roomId) return;
 
             try {
-                const response = await fetch(`get_booked_dates.php?room_id=${roomId}`);
+                const response = await fetch(`../api/get_booked_dates.php?room_id=${roomId}`);
                 const data = await response.json();
 
                 disabledDates = [];
@@ -549,7 +549,7 @@ unset($_SESSION['error']); // Clear error message after getting it
             if (!roomSelect.value || !checkInDateInput.value || !checkOutDateInput.value) return;
 
             try {
-                const response = await fetch('check_availability.php', {
+                const response = await fetch('../api/check_availability.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -595,7 +595,7 @@ unset($_SESSION['error']); // Clear error message after getting it
     });
 </script>
 
-<?php include('footer.php'); ?>
+<?php include('../includes/footer.php'); ?>
 
 <?php
 // Flush the output buffer and send the content to the browser

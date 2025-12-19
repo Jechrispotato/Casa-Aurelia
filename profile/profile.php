@@ -9,8 +9,8 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-include('header.php');
-include('db.php');
+include('../includes/header.php');
+include('../includes/db.php');
 
 $user_id = $_SESSION['user_id'];
 
@@ -197,7 +197,7 @@ $recent_activities = array_slice($recent_activities, 0, 5);
                         </div>
                     </div>
                     <div class="pb-2 md:mt-20">
-                        <a href="logout.php"
+                        <a href="../auth/logout.php"
                             class="inline-flex items-center gap-2 px-6 py-2.5 bg-red-900/30 text-red-500 rounded-xl font-bold hover:bg-red-900/50 transition-colors border border-red-900/50">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
@@ -251,7 +251,7 @@ $recent_activities = array_slice($recent_activities, 0, 5);
                 <div class="bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-800">
                     <h3 class="font-bold text-white mb-4 font-serif">Account</h3>
                     <div class="space-y-2">
-                        <a href="view_bookings.php"
+                        <a href="../booking/view_bookings.php"
                             class="block w-full text-left px-4 py-3 rounded-xl hover:bg-gray-800 text-gray-300 font-medium transition-colors flex justify-between items-center group">
                             <span><i class="fas fa-calendar-check mr-3 text-gray-500 group-hover:text-yellow-600"></i>My
                                 Bookings</span>
@@ -273,7 +273,7 @@ $recent_activities = array_slice($recent_activities, 0, 5);
                 <div class="bg-gray-900 rounded-2xl shadow-lg p-8 border border-gray-800 mb-8">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-bold font-serif text-white">Recent Activity</h2>
-                        <a href="view_bookings.php" class="text-sm font-bold text-yellow-600 hover:text-yellow-500">View
+                        <a href="../booking/view_bookings.php" class="text-sm font-bold text-yellow-600 hover:text-yellow-500">View
                             All</a>
                     </div>
 
@@ -352,11 +352,11 @@ $recent_activities = array_slice($recent_activities, 0, 5);
                             <i class="fas fa-ghost text-4xl text-gray-600 mb-4"></i>
                             <p class="text-gray-400 font-medium">No recent activity found.</p>
                             <div class="flex justify-center gap-3 mt-6">
-                                <a href="view_rooms.php"
+                                <a href="../pages/view_rooms.php"
                                     class="px-5 py-2.5 bg-gray-900 border border-gray-700 text-gray-300 font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-sm">
                                     Book
                                 </a>
-                                <a href="dining.php"
+                                <a href="../pages/dining.php"
                                     class="px-5 py-2.5 bg-yellow-600 text-white font-bold rounded-xl hover:bg-yellow-700 transition-colors shadow-lg hover:shadow-yellow-500/30">
                                     Reserve
                                 </a>

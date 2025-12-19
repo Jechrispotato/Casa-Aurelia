@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 // If not using Composer, you'll need to include PHPMailer files manually
 // Download PHPMailer from: https://github.com/PHPMailer/PHPMailer
 
-require 'vendor/autoload.php'; // Comment this out if not using Composer
+require __DIR__ . '/../vendor/autoload.php'; // Use absolute path from project root
 
 /**
  * Send verification email
@@ -23,12 +23,12 @@ function send_verification_email($to_email, $to_name, $verification_code)
     try {
         // Server settings
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'lanceoboza777@gmail.com';
-        $mail->Password   = 'uewb lgrv cwxs egxz'; // App password
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'lanceoboza777@gmail.com';
+        $mail->Password = 'uewb lgrv cwxs egxz'; // App password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->Port = 587;
 
         // Recipients
         $mail->setFrom('lanceoboza777@gmail.com', 'The Grand Aurelia');
@@ -183,12 +183,12 @@ function send_password_reset_email($to_email, $to_name, $reset_code)
     try {
         // Server settings
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'lanceoboza777@gmail.com';
-        $mail->Password   = 'uewb lgrv cwxs egxz'; // App password
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'lanceoboza777@gmail.com';
+        $mail->Password = 'uewb lgrv cwxs egxz'; // App password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->Port = 587;
 
         // Recipients
         $mail->setFrom('lanceoboza777@gmail.com', 'The Grand Aurelia');

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('header.php');
+include('../includes/header.php');
 ?>
 
 <style>
@@ -174,10 +174,10 @@ include('header.php');
                         <?php endif; ?>
 
                         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="spa.php" class="btn btn-confirmation">
+                            <a href="../pages/spa.php" class="btn btn-confirmation">
                                 <i class="fas fa-spa me-2"></i>Back to Spa
                             </a>
-                            <a href="view_bookings.php" class="btn btn-secondary-custom">
+                            <a href="../booking/view_bookings.php" class="btn btn-secondary-custom">
                                 <i class="fas fa-list me-2"></i>My Bookings
                             </a>
                         </div>
@@ -190,5 +190,5 @@ include('header.php');
 
 <?php
 unset($_SESSION['success'], $_SESSION['error']);
-include('footer.php');
+include('../includes/footer.php');
 ?>

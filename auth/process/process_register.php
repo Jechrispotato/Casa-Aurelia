@@ -143,7 +143,7 @@ if ($hashed_password === false) {
 }
 
 // Generate verification code and expiry
-include('send_email.php');
+include('../../includes/send_email.php');
 $verification_code = generate_verification_code();
 $verification_expiry = date('Y-m-d H:i:s', strtotime('+24 hours'));
 

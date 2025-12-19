@@ -604,10 +604,10 @@ function getStatusBadge($status)
                                 <p class="text-gray-400 mb-4">You don't have any room bookings or dining reservations yet.
                                 </p>
                                 <div class="d-flex gap-3 justify-content-center">
-                                    <a href="view_rooms.php" class="btn btn-primary btn-browse">
+                                    <a href="../pages/view_rooms.php" class="btn btn-primary btn-browse">
                                         <i class="fas fa-hotel me-2"></i>Browse Rooms
                                     </a>
-                                    <a href="dining.php" class="btn btn-primary btn-browse">
+                                    <a href="../pages/dining.php" class="btn btn-primary btn-browse">
                                         <i class="fas fa-utensils me-2"></i>Make Dining Reservation
                                     </a>
                                 </div>

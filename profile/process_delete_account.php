@@ -3,11 +3,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: ../auth/login.php');
     exit;
 }
 
-require('db.php');
+require('../includes/db.php');
 
 $user_id = $_SESSION['user_id'];
 $confirmation = $_POST['confirmation'];
@@ -27,8 +27,10 @@ try {
     $profile_img = __DIR__ . '/profileimg/' . $user_id . '.jpg';
     $cover_img = __DIR__ . '/coverimg/' . $user_id . '.jpg';
 
-    if (file_exists($profile_img)) @unlink($profile_img);
-    if (file_exists($cover_img)) @unlink($cover_img);
+    if (file_exists($profile_img))
+        @unlink($profile_img);
+    if (file_exists($cover_img))
+        @unlink($cover_img);
 
     // 2. Delete User Data (Handle Foreign Keys Explicitly)
     // We must delete children records first because FK constraints are RESTRICT (not CASCADE)
@@ -65,7 +67,7 @@ try {
     session_destroy();
     session_start();
     $_SESSION['success'] = 'Your account has been successfully deleted. We are sorry to see you go.';
-    header('Location: login.php?notify=account_deleted');
+    header('Location: ../auth/login.php?notify=account_deleted');
     exit;
 } catch (Exception $e) {
     $conn->rollback();

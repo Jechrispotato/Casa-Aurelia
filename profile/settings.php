@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
-include('header.php');
+include('../includes/header.php');
 
 $user_id = $_SESSION['user_id'];
 ?>

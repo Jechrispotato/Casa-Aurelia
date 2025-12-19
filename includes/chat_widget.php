@@ -1,8 +1,10 @@
 <!-- Chat Widget -->
-<div id="chat-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 2147483647; display: flex; flex-direction: column; align-items: flex-end; font-family: sans-serif;">
+<div id="chat-container"
+    style="position: fixed; bottom: 20px; right: 20px; z-index: 2147483647; display: flex; flex-direction: column; align-items: flex-end; font-family: sans-serif;">
 
     <!-- Chat Window -->
-    <div id="chat-widget" class="hidden bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden mb-4 transition-all duration-300 ease-out transform origin-bottom-right shadow-black/20 opacity-0 translate-y-4"
+    <div id="chat-widget"
+        class="hidden bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden mb-4 transition-all duration-300 ease-out transform origin-bottom-right shadow-black/20 opacity-0 translate-y-4"
         style="width: 380px; max-width: 90vw; display: none; flex-direction: column;">
 
         <!-- Header -->
@@ -10,7 +12,7 @@
             <div class="flex items-center gap-3">
                 <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 <div>
-                    <h3 class="font-bold text-sm">Grand Aurelia Concierge</h3>
+                    <h3 class="font-bold text-sm">Casa Aurelia</h3>
                     <p class="text-xs text-gray-400">Always here to help</p>
                 </div>
             </div>
@@ -29,21 +31,25 @@
             <div class="flex gap-2">
                 <input type="text" id="chat-input" placeholder="Type your message..."
                     class="flex-1 px-4 py-2 bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all text-gray-800 placeholder-gray-400">
-                <button id="chat-send" class="w-10 h-10 rounded-full bg-gray-900 text-white flex items-center justify-center hover:bg-yellow-600 transition-colors shadow-lg">
+                <button id="chat-send"
+                    class="w-10 h-10 rounded-full bg-gray-900 text-white flex items-center justify-center hover:bg-yellow-600 transition-colors shadow-lg">
                     <i class="fas fa-paper-plane text-xs"></i>
                 </button>
             </div>
             <div class="text-center mt-2">
-                <p class="text-[10px] text-gray-400">Powered by Grand Aurelia</p>
+                <p class="text-[10px] text-gray-400">Powered by Casa Aurelia</p>
             </div>
         </div>
     </div>
 
     <!-- Toggle Button -->
-    <button id="chat-toggle" class="group relative w-16 h-16 rounded-full bg-gray-900 text-white flex items-center justify-center shadow-lg hover:bg-yellow-600 transition-all duration-300 hover:scale-110 shadow-black/30 border-2 border-white/10" style="width: 64px; height: 64px; border-radius: 50%;">
+    <button id="chat-toggle"
+        class="group relative w-16 h-16 rounded-full bg-gray-900 text-white flex items-center justify-center shadow-lg hover:bg-yellow-600 transition-all duration-300 hover:scale-110 shadow-black/30 border-2 border-white/10"
+        style="width: 64px; height: 64px; border-radius: 50%;">
         <i class="fas fa-comments text-2xl group-hover:scale-110 transition-transform"></i>
         <!-- Notification Dot -->
-        <span class="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-bounce"></span>
+        <span
+            class="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-bounce"></span>
     </button>
     <!-- Chat Script -->
     <script src="<?php echo ASSETS_PATH; ?>js/widget_script.js?v=<?php echo time(); ?>"></script>
