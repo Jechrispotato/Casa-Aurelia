@@ -582,4 +582,4 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
     </script>
 
     <!-- Main content wrapper -->
-    <main class="flex-grow-1 page-fade" <?php echo ($current_page !== 'index.php') ? 'style="padding-top: 80px;"' : ''; ?>>
+    <main class="flex-grow-1 page-fade" <?php echo (!in_array($current_page, ['index.php', 'dining.php', 'spa.php'])) ? 'style="padding-top: 80px;"' : ''; ?>>

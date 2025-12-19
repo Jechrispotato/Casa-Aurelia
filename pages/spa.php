@@ -133,10 +133,12 @@ $facial_treatments = [
 </style>
 
 <!-- Hero Section -->
-<section class="parallax-hero h-[80vh] flex items-center justify-center relative overflow-hidden">
+<section class="parallax-hero h-screen min-h-[400px] flex items-center justify-center relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-gray-900"></div>
     <div class="text-center relative z-10 p-6 reveal active delay-100">
-        <span class="block text-yellow-500 tracking-[0.3em] uppercase text-sm font-bold mb-4">Serenity & Balance</span>
+        <img src="../aurelia_assets/aurelia_main_logo_only_white.png" alt="Logo" class="w-16 md:w-24 mx-auto mb-1">
+    
+    <span class="block text-yellow-500 tracking-[0.3em] uppercase text-sm font-bold mb-4">Serenity & Balance</span>
         <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight">
             A Sanctuary of <br> <span class=" italic text-yellow-500">Wellness</span> <br>
         </h1>
