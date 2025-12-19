@@ -359,7 +359,8 @@ function formatPrice($price)
                 </div>
                 <div class="absolute bottom-0 left-0 p-8 z-20 text-white w-full flex justify-between items-end">
                     <div>
-                        <h2 class="text-3xl font-bold mb-1" id="modalRoomTitle" style="font-family: 'AureliaLight';">Room Name</h2>
+                        <h2 class="text-3xl font-bold mb-1" id="modalRoomTitle" style="font-family: 'AureliaLight';">
+                            Room Name</h2>
                         <div class="flex items-center gap-2">
                             <span class="text-yellow-400 text-xl font-bold" id="modalRoomPrice">$0</span>
                             <span class="text-white/70 text-sm">/ night</span>
@@ -400,10 +401,22 @@ function formatPrice($price)
 
 <style>
     /* Custom Scrollbar for Modal */
-    .modal-body::-webkit-scrollbar { width: 6px; }
-    .modal-body::-webkit-scrollbar-track { background: #1a202c; }
-    .modal-body::-webkit-scrollbar-thumb { background: #4a5568; border-radius: 10px; }
-    .modal-body::-webkit-scrollbar-thumb:hover { background: #718096; }
+    .modal-body::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .modal-body::-webkit-scrollbar-track {
+        background: #1a202c;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb {
+        background: #4a5568;
+        border-radius: 10px;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb:hover {
+        background: #718096;
+    }
 
     #roomDetailModal .modal-dialog {
         max-width: calc(90vw - 100px);
@@ -411,7 +424,11 @@ function formatPrice($price)
         margin: 90px auto;
         transition: all 0.3s ease;
     }
-    #roomDetailModal .modal-content { height: 100%; max-height: calc(130vh - 200px); }
+
+    #roomDetailModal .modal-content {
+        height: 100%;
+        max-height: calc(130vh - 200px);
+    }
 
     @media (max-width: 1024px) {
         #roomDetailModal .modal-dialog {
@@ -419,7 +436,10 @@ function formatPrice($price)
             max-height: calc(100vh - 170px);
             margin: 80px auto;
         }
-        #roomDetailModal .modal-content { max-height: calc(120vh - 170px); }
+
+        #roomDetailModal .modal-content {
+            max-height: calc(120vh - 170px);
+        }
     }
 
     @media (max-width: 768px) {
@@ -428,9 +448,18 @@ function formatPrice($price)
             max-height: calc(107vh - 180px);
             margin: 90px auto;
         }
-        #roomDetailModal .modal-content { max-height: calc(120vh - 170px); }
-        .modal-header { height: 180px !important; }
-        .modal-body { padding: 1.5rem !important; }
+
+        #roomDetailModal .modal-content {
+            max-height: calc(120vh - 170px);
+        }
+
+        .modal-header {
+            height: 180px !important;
+        }
+
+        .modal-body {
+            padding: 1.5rem !important;
+        }
     }
 </style>
 
@@ -572,7 +601,7 @@ function formatPrice($price)
         const modalEl = document.getElementById('roomDetailModal');
         const modalBS = bootstrap.Modal.getInstance(modalEl);
         if (modalBS) modalBS.hide();
-        
+
         // Find and click the corresponding edit button
         const editBtn = document.querySelector(`.edit-room[data-room-id="${roomId}"]`);
         if (editBtn) editBtn.click();
@@ -606,7 +635,7 @@ function formatPrice($price)
                 document.getElementById('editRoomPrice').value = roomPrice;
                 document.getElementById('editRoomDescription').value = roomDescription;
                 document.getElementById('editRoomImage').value = roomImage;
-                
+
                 // Update Hero Image in Edit Modal
                 const heroImg = document.getElementById('editModalHeroImg');
                 if (heroImg) {
@@ -629,11 +658,11 @@ function formatPrice($price)
         });
 
         document.getElementById('saveRoom').addEventListener('click', () => {
-             const roomName = document.getElementById('roomName').value;
-             const roomPrice = document.getElementById('roomPrice').value;
-             const roomDescription = document.getElementById('roomDescription').value;
-             const roomImage = document.getElementById('roomImage').value;
-             if (roomName && roomPrice) addNewRoom(roomName, roomPrice, roomDescription, roomImage);
+            const roomName = document.getElementById('roomName').value;
+            const roomPrice = document.getElementById('roomPrice').value;
+            const roomDescription = document.getElementById('roomDescription').value;
+            const roomImage = document.getElementById('roomImage').value;
+            if (roomName && roomPrice) addNewRoom(roomName, roomPrice, roomDescription, roomImage);
         });
 
         document.getElementById('updateRoom').addEventListener('click', () => {
@@ -671,7 +700,7 @@ function formatPrice($price)
     async function deleteRoom(roomId) {
         const response = await fetch('delete_room.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `room_id=${roomId}`
         });
         if (response.ok) location.reload(); else alert('Error deleting room');
@@ -680,7 +709,7 @@ function formatPrice($price)
     async function addNewRoom(roomName, roomPrice, roomDescription, roomImage) {
         const response = await fetch('add_room.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `room_name=${encodeURIComponent(roomName)}&price=${roomPrice}&description=${encodeURIComponent(roomDescription)}&room_image=${encodeURIComponent(roomImage)}`
         });
         if (response.ok) location.reload(); else alert('Error adding room');
@@ -689,7 +718,7 @@ function formatPrice($price)
     async function updateRoom(roomId, roomName, roomPrice, roomDescription, roomImage) {
         const response = await fetch('update_room.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `room_id=${roomId}&room_name=${encodeURIComponent(roomName)}&price=${roomPrice}&description=${encodeURIComponent(roomDescription)}&room_image=${encodeURIComponent(roomImage)}`
         });
         if (response.ok) location.reload(); else alert('Error updating room');
