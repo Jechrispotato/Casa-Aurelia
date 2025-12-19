@@ -202,12 +202,94 @@ $csrf_token = generate_csrf_token();
         }
     }
 
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes shake {
+
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+
+        25% {
+            transform: translateX(-10px);
+        }
+
+        75% {
+            transform: translateX(10px);
+        }
+    }
+
     .animate-float {
         animation: float 7s ease-in-out infinite;
     }
 
     .animate-float-delayed {
         animation: float-delayed 9s ease-in-out infinite;
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.8s ease-out;
+    }
+
+    .animate-shake {
+        animation: shake 0.5s ease-in-out;
+    }
+
+    /* Input focus glow effect */
+    input:focus {
+        box-shadow: 0 0 0 3px rgba(202, 138, 4, 0.1);
+    }
+
+    /* Button loading state */
+    .btn-loading {
+        position: relative;
+        color: transparent;
+    }
+
+    .btn-loading::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 50%;
+        left: 50%;
+        margin-left: -8px;
+        margin-top: -8px;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
     }
 </style>
 
@@ -218,6 +300,62 @@ $csrf_token = generate_csrf_token();
         const form = document.getElementById('loginForm');
         const passwordToggle = document.getElementById('passwordToggle');
         const passwordInput = document.getElementById('password');
+        const usernameInput = document.getElementById('username');
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        // Page load animations
+        document.addEventListener('DOMContentLoaded', function () {
+            const formContainer = form.closest('.max-w-\\[1100px\\]');
+            if (formContainer) {
+                formContainer.classList.add('animate-fade-in');
+            }
+        });
+
+        // Input sanitization function
+        function sanitizeInput(value) {
+            // Remove HTML tags and dangerous characters
+            return value
+                .replace(/<[^>]*>/g, '') // Remove HTML tags
+                .replace(/[<>"'`]/g, '') // Remove dangerous chars
+                .replace(/javascript:/gi, '') // Remove javascript: protocol
+                .replace(/on\w+\s*=/gi, '') // Remove event handlers
+                .trim();
+        }
+
+        // Enhanced validation for username
+        function validateUsername(username) {
+            const sanitized = sanitizeInput(username);
+
+            // Check for SQL injection patterns
+            const sqlPatterns = /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|EXECUTE|UNION|OR|AND)\b)/gi;
+            if (sqlPatterns.test(sanitized)) {
+                return { valid: false, message: 'Invalid characters detected' };
+            }
+
+            // Check length
+            if (sanitized.length < 3) {
+                return { valid: false, message: 'Username must be at least 3 characters' };
+            }
+
+            if (sanitized.length > 50) {
+                return { valid: false, message: 'Username is too long' };
+            }
+
+            return { valid: true, value: sanitized };
+        }
+
+        // Enhanced validation for password
+        function validatePassword(password) {
+            if (password.length < 6) {
+                return { valid: false, message: 'Password must be at least 6 characters' };
+            }
+
+            if (password.length > 100) {
+                return { valid: false, message: 'Password is too long' };
+            }
+
+            return { valid: true, value: password };
+        }
 
         // Password toggle functionality
         if (passwordToggle && passwordInput) {
@@ -234,8 +372,13 @@ $csrf_token = generate_csrf_token();
             const errorElement = document.getElementById(input.id + 'Error');
             errorElement.textContent = message;
             errorElement.classList.remove('hidden');
-            input.classList.add('border-red-500', 'focus:border-red-500');
+            input.classList.add('border-red-500', 'focus:border-red-500', 'animate-shake');
             input.classList.remove('border-gray-700', 'focus:border-yellow-600');
+
+            // Remove shake animation after it completes
+            setTimeout(() => {
+                input.classList.remove('animate-shake');
+            }, 500);
         }
 
         function clearError(input) {
@@ -245,23 +388,52 @@ $csrf_token = generate_csrf_token();
             input.classList.add('border-gray-700', 'focus:border-yellow-600');
         }
 
-        form.addEventListener('submit', function (e) {
-            let isValid = true;
-            const inputs = form.querySelectorAll('input[required]');
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    showError(input, 'This field is required');
-                } else {
-                    clearError(input);
-                }
+        // Real-time input sanitization
+        if (usernameInput) {
+            usernameInput.addEventListener('input', function () {
+                this.value = sanitizeInput(this.value);
+                clearError(this);
             });
-            if (!isValid) e.preventDefault();
+        }
+
+        // Form submission with validation and loading state
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Validate username
+            const usernameValidation = validateUsername(usernameInput.value);
+            if (!usernameValidation.valid) {
+                isValid = false;
+                showError(usernameInput, usernameValidation.message);
+            } else {
+                usernameInput.value = usernameValidation.value;
+                clearError(usernameInput);
+            }
+
+            // Validate password
+            const passwordValidation = validatePassword(passwordInput.value);
+            if (!passwordValidation.valid) {
+                isValid = false;
+                showError(passwordInput, passwordValidation.message);
+            } else {
+                clearError(passwordInput);
+            }
+
+            if (isValid) {
+                // Add loading state
+                submitBtn.classList.add('btn-loading');
+                submitBtn.disabled = true;
+
+                // Submit the form after a brief delay for UX
+                setTimeout(() => {
+                    form.submit();
+                }, 300);
+            }
         });
 
-        form.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', () => clearError(input));
-        });
+        // Clear errors on input for password
+        passwordInput.addEventListener('input', () => clearError(passwordInput));
     })();
 </script>
 

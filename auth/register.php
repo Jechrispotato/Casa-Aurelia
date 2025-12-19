@@ -204,12 +204,94 @@ $csrf_token = generate_csrf_token();
         }
     }
 
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes shake {
+
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+
+        25% {
+            transform: translateX(-10px);
+        }
+
+        75% {
+            transform: translateX(10px);
+        }
+    }
+
     .animate-float {
         animation: float 7s ease-in-out infinite;
     }
 
     .animate-float-delayed {
         animation: float-delayed 9s ease-in-out infinite;
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.8s ease-out;
+    }
+
+    .animate-shake {
+        animation: shake 0.5s ease-in-out;
+    }
+
+    /* Input focus glow effect */
+    input:focus {
+        box-shadow: 0 0 0 3px rgba(202, 138, 4, 0.1);
+    }
+
+    /* Button loading state */
+    .btn-loading {
+        position: relative;
+        color: transparent;
+    }
+
+    .btn-loading::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 50%;
+        left: 50%;
+        margin-left: -8px;
+        margin-top: -8px;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
     }
 </style>
 
@@ -223,6 +305,61 @@ $csrf_token = generate_csrf_token();
         const password = document.getElementById('password');
         const confirmPassword = document.getElementById('confirm_password');
         const passwordStrengthBar = document.getElementById('passwordStrengthBar');
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        // Page load animations
+        document.addEventListener('DOMContentLoaded', function () {
+            const formContainer = form.closest('.max-w-\\[1100px\\]');
+            if (formContainer) {
+                formContainer.classList.add('animate-fade-in');
+            }
+        });
+
+        // Input sanitization function
+        function sanitizeInput(value) {
+            return value
+                .replace(/<[^>]*>/g, '') // Remove HTML tags
+                .replace(/[<>"'`]/g, '') // Remove dangerous chars
+                .replace(/javascript:/gi, '') // Remove javascript: protocol
+                .replace(/on\w+\s*=/gi, '') // Remove event handlers
+                .trim();
+        }
+
+        // Enhanced email validation
+        function validateEmail(email) {
+            const sanitized = sanitizeInput(email);
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailRegex.test(sanitized)) {
+                return { valid: false, message: 'Please enter a valid email address' };
+            }
+
+            return { valid: true, value: sanitized };
+        }
+
+        // Enhanced username validation
+        function validateUsername(username) {
+            const sanitized = sanitizeInput(username);
+            const sqlPatterns = /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|EXECUTE|UNION|OR|AND)\b)/gi;
+
+            if (sqlPatterns.test(sanitized)) {
+                return { valid: false, message: 'Invalid characters detected' };
+            }
+
+            if (sanitized.length < 3) {
+                return { valid: false, message: 'Username must be at least 3 characters' };
+            }
+
+            if (sanitized.length > 30) {
+                return { valid: false, message: 'Username is too long' };
+            }
+
+            if (!/^[a-zA-Z0-9_]+$/.test(sanitized)) {
+                return { valid: false, message: 'Username can only contain letters, numbers, and underscores' };
+            }
+
+            return { valid: true, value: sanitized };
+        }
 
         function setupToggle(btnId, inputId) {
             const btn = document.getElementById(btnId);
@@ -243,8 +380,12 @@ $csrf_token = generate_csrf_token();
             const errorElement = document.getElementById(input.id + 'Error');
             errorElement.textContent = message;
             errorElement.classList.remove('hidden');
-            input.classList.add('border-red-500', 'focus:border-red-500');
+            input.classList.add('border-red-500', 'focus:border-red-500', 'animate-shake');
             input.classList.remove('border-gray-700', 'focus:border-yellow-600');
+
+            setTimeout(() => {
+                input.classList.remove('animate-shake');
+            }, 500);
         }
 
         function clearError(input) {
@@ -282,6 +423,17 @@ $csrf_token = generate_csrf_token();
             passwordStrengthBar.style.width = width;
         }
 
+        // Real-time sanitization
+        username.addEventListener('input', function () {
+            this.value = sanitizeInput(this.value);
+            clearError(this);
+        });
+
+        email.addEventListener('input', function () {
+            this.value = sanitizeInput(this.value);
+            clearError(this);
+        });
+
         password.addEventListener('input', function () {
             validatePasswordStrength(this.value);
             if (this.value.length > 0 && this.value.length < 8) {
@@ -305,28 +457,54 @@ $csrf_token = generate_csrf_token();
         });
 
         form.addEventListener('submit', function (e) {
+            e.preventDefault();
             let isValid = true;
 
-            // Basic required check
-            [username, email, password, confirmPassword].forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    showError(input, 'This field is required');
-                }
-            });
+            // Validate username
+            const usernameValidation = validateUsername(username.value);
+            if (!usernameValidation.valid) {
+                isValid = false;
+                showError(username, usernameValidation.message);
+            } else {
+                username.value = usernameValidation.value;
+                clearError(username);
+            }
 
-            if (password.value.length < 8) isValid = false;
-            if (password.value !== confirmPassword.value) isValid = false;
+            // Validate email
+            const emailValidation = validateEmail(email.value);
+            if (!emailValidation.valid) {
+                isValid = false;
+                showError(email, emailValidation.message);
+            } else {
+                email.value = emailValidation.value;
+                clearError(email);
+            }
 
-            if (!isValid) {
-                e.preventDefault();
+            // Validate password
+            if (password.value.length < 8) {
+                isValid = false;
+                showError(password, 'Password must be at least 8 characters');
+            } else {
+                clearError(password);
+            }
+
+            // Validate confirm password
+            if (password.value !== confirmPassword.value) {
+                isValid = false;
+                showError(confirmPassword, 'Passwords do not match');
+            } else {
+                clearError(confirmPassword);
+            }
+
+            if (isValid) {
+                submitBtn.classList.add('btn-loading');
+                submitBtn.disabled = true;
+
+                setTimeout(() => {
+                    form.submit();
+                }, 300);
             }
         });
-
-        [username, email].forEach(input => {
-            input.addEventListener('input', () => clearError(input));
-        });
-
     })();
 </script>
 

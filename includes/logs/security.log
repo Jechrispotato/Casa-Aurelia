@@ -16,3 +16,4 @@
 [2025-12-19 18:26:52] [email_verified] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: User lanczu1 successfully verified their email
 [2025-12-19 18:35:51] [successful_registration] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: New user registered (pending verification): lanczu
 [2025-12-19 18:36:05] [email_verified] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: User lanczu successfully verified their email
+[2025-12-19 18:45:07] [failed_login] IP: ::1 | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 | Details: Login attempt for non-existent username: lanczu1
