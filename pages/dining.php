@@ -189,22 +189,21 @@ unset($_SESSION['success']);
             rounded-full blur-3xl pointer-events-none z-0"></div>
     <div class="container mx-auto px-4 relative z-10">
         <div class="text-center mb-16 space-y-4">
-            <h3 class="text-yellow-500 font-medium tracking-widest text-sm uppercase reveal ">Why Choose Us</h3>
-            <h2 class="text-3xl md:text-7xl font-bold reveal">World Class Amenities</h2>
+            <h3 class="text-yellow-500 font-medium tracking-widest text-sm uppercase reveal ">Dine with Us</h3>
+            <h2 class="text-3xl md:text-7xl font-bold reveal">From the Taste of the World</h2>
 
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             <!-- Feature 1 -->
             <div
                 class="ameneties_box group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-800 hover:border-yellow-500/30 transition-all duration-300 hover:-translate-y-2 reveal">
                 <div
                     class="w-14 h-14 rounded-full bg-gray-700/50 flex items-center justify-center mb-6 group-hover:bg-yellow-500/20 group-hover:text-yellow-500 transition-colors duration-300">
-                    <i class="fas fa-wifi text-2xl"></i>
+                    <i class="fas fa-utensils text-2xl"></i>
                 </div>
-                <h3 class="ameneties text-xl font-semibold mb-3">High-Speed Wi-Fi</h3>
-                <p class="ameneties_description text-gray-400 text-sm leading-relaxed">Stay seamlessly connected with
-                    our complimentary premium internet access throughout the property.</p>
+                <h3 class="ameneties text-xl font-semibold mb-3">Master Chefs</h3>
+                <p class="ameneties_description text-gray-400 text-sm leading-relaxed">Our world-renowned culinary experts craft every dish with precision and passion for an unrivaled taste.</p>
             </div>
 
             <!-- Feature 2 -->
@@ -212,11 +211,10 @@ unset($_SESSION['success']);
                 class="ameneties_box group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-800 hover:border-yellow-500/30 transition-all duration-300 hover:-translate-y-2 reveal">
                 <div
                     class="w-14 h-14 rounded-full bg-gray-700/50 flex items-center justify-center mb-6 group-hover:bg-yellow-500/20 group-hover:text-yellow-500 transition-colors duration-300">
-                    <i class="fas fa-parking text-2xl"></i>
+                    <i class="fas fa-leaf text-2xl"></i>
                 </div>
-                <h3 class="ameneties text-xl font-semibold mb-3">Valet Parking</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Secure and convenient parking services available 24/7
-                    for all our valued guests.</p>
+                <h3 class="ameneties text-xl font-semibold mb-3">Organic Ingredients</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">We source the finest seasonal produce directly from local organic farms to ensure the highest quality and freshness.</p>
             </div>
 
             <!-- Feature 3 -->
@@ -224,11 +222,10 @@ unset($_SESSION['success']);
                 class="ameneties_box group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-800 hover:border-yellow-500/30 transition-all duration-300 hover:-translate-y-2 reveal">
                 <div
                     class="w-14 h-14 rounded-full bg-gray-700/50 flex items-center justify-center mb-6 group-hover:bg-yellow-500/20 group-hover:text-yellow-500 transition-colors duration-300">
-                    <i class="fas fa-utensils text-2xl"></i>
+                    <i class="fas fa-wine-glass-alt text-2xl"></i>
                 </div>
-                <h3 class="ameneties text-xl font-semibold mb-3">Gourmet Dining</h3>
-                <p class="ameneties_description text-gray-400 text-sm leading-relaxed">Indulge in exquisite culinary
-                    masterpieces at our award-winning fine dining restaurants.</p>
+                <h3 class="ameneties text-xl font-semibold mb-3">Premium Pairings</h3>
+                <p class="ameneties_description text-gray-400 text-sm leading-relaxed">Experience perfectly curated wine and beverage selections that complement the unique flavors of our signature menu.</p>
             </div>
 
             <!-- Feature 4 -->
@@ -236,11 +233,10 @@ unset($_SESSION['success']);
                 class="ameneties_box group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-800 hover:border-yellow-500/30 transition-all duration-300 hover:-translate-y-2 reveal">
                 <div
                     class="w-14 h-14 rounded-full bg-gray-700/50 flex items-center justify-center mb-6 group-hover:bg-yellow-500/20 group-hover:text-yellow-500 transition-colors duration-300">
-                    <i class="fas fa-spa text-2xl"></i>
+                    <i class="fas fa-star text-2xl"></i>
                 </div>
-                <h3 class="ameneties text-xl font-semibold mb-3">Luxury Spa</h3>
-                <p class="ameneties_description text-gray-400 text-sm leading-relaxed">Rejuvenate your senses with our
-                    world-class treatments and wellness facilities.</p>
+                <h3 class="ameneties text-xl font-semibold mb-3">Exclusive Ambiance</h3>
+                <p class="ameneties_description text-gray-400 text-sm leading-relaxed">Dine in a sophisticated and elegant setting designed to elevate your overall culinary journey at Casa Aurelia.</p>
             </div>
         </div>
     </div>
