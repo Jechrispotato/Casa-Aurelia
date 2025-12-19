@@ -339,8 +339,8 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                                          transition-all duration-300 hover:bg-white/10 hover:border-white/50 hover:-translate-y-0.5 hover:shadow-xl focus:outline-none pl-2">
 
                                 <?php
-                                $header_profile_img = SITE_ROOT . 'profileimg/' . $_SESSION['user_id'] . '.jpg';
-                                $header_profile_img_check = $_SERVER['DOCUMENT_ROOT'] . '/Casa-Aurelia/profileimg/' . $_SESSION['user_id'] . '.jpg';
+                                $header_profile_img = SITE_ROOT . 'profile/profileimg/' . $_SESSION['user_id'] . '.jpg';
+                                $header_profile_img_check = $_SERVER['DOCUMENT_ROOT'] . '/Casa-Aurelia/profile/profileimg/' . $_SESSION['user_id'] . '.jpg';
                                 $has_header_img = file_exists($header_profile_img_check);
                                 $user_initial = strtoupper(substr($_SESSION['username'], 0, 1));
                                 ?>

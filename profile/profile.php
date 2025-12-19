@@ -273,7 +273,8 @@ $recent_activities = array_slice($recent_activities, 0, 5);
                 <div class="bg-gray-900 rounded-2xl shadow-lg p-8 border border-gray-800 mb-8">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-bold font-serif text-white">Recent Activity</h2>
-                        <a href="../booking/view_bookings.php" class="text-sm font-bold text-yellow-600 hover:text-yellow-500">View
+                        <a href="../booking/view_bookings.php"
+                            class="text-sm font-bold text-yellow-600 hover:text-yellow-500">View
                             All</a>
                     </div>
 
@@ -335,7 +336,8 @@ $recent_activities = array_slice($recent_activities, 0, 5);
                                     </div>
                                     <div class="flex-grow min-w-0">
                                         <h4 class="font-bold text-white truncate">
-                                            <?php echo htmlspecialchars($activity['title']); ?></h4>
+                                            <?php echo htmlspecialchars($activity['title']); ?>
+                                        </h4>
                                         <p class="text-xs md:text-sm text-gray-400 font-medium"><?php echo $subtext; ?></p>
                                     </div>
                                     <div class="ml-4 shrink-0">
@@ -367,25 +369,49 @@ $recent_activities = array_slice($recent_activities, 0, 5);
 
                 <!-- Update Info Form -->
                 <!-- Placeholder for future functionality, kept simple for now -->
+                <!-- Update Info Form -->
                 <div class="bg-gray-900 rounded-2xl shadow-lg p-8 border border-gray-800">
                     <h2 class="text-2xl font-bold font-serif text-white mb-6">Personal Details</h2>
-                    <form class="space-y-6">
+
+                    <?php if (isset($_SESSION['success'])): ?>
+                        <div
+                            class="mb-6 bg-green-900/20 text-green-400 px-4 py-3 rounded-xl border border-green-900/50 flex items-center gap-3">
+                            <i class="fas fa-check-circle"></i>
+                            <?php echo htmlspecialchars($_SESSION['success']);
+                            unset($_SESSION['success']); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (isset($_SESSION['error'])): ?>
+                        <div
+                            class="mb-6 bg-red-900/20 text-red-500 px-4 py-3 rounded-xl border border-red-900/50 flex items-center gap-3">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <?php echo htmlspecialchars($_SESSION['error']);
+                            unset($_SESSION['error']); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form action="process_update_details.php" method="POST" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Username</label>
-                                <input type="text" value="<?php echo htmlspecialchars($user['username']); ?>" disabled
-                                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-gray-500 cursor-not-allowed">
+                                <input type="text" name="username"
+                                    value="<?php echo htmlspecialchars($user['username']); ?>" required
+                                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-colors">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Email
                                     Address</label>
-                                <input type="email" value="<?php echo htmlspecialchars($user['email']); ?>" disabled
-                                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-gray-500 cursor-not-allowed">
+                                <input type="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>"
+                                    required
+                                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-900 transition-colors">
                             </div>
                         </div>
                         <div class="pt-4 border-t border-gray-800 flex justify-end">
-                            <button type="button" class="text-sm font-bold text-gray-600 cursor-not-allowed"
-                                disabled>Edit functionality coming soon</button>
+                            <button type="submit"
+                                class="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-yellow-600/30 transform hover:-translate-y-0.5">
+                                Save Changes
+                            </button>
                         </div>
                     </form>
                 </div>
