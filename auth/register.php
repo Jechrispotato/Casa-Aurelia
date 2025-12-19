@@ -129,8 +129,8 @@ $csrf_token = generate_csrf_token();
 
                 <div class="text-center mt-3">
                     <p class="text-xs text-gray-500">
-                        By creating an account, you agree to our <a href="terms.php"
-                            class="underline hover:text-gray-400">Terms</a> and <a href="privacy.php"
+                        By creating an account, you agree to our <a href="../pages/terms.php"
+                            class="underline hover:text-gray-400">Terms</a> and <a href="../pages/privacy.php"
                             class="underline hover:text-gray-400">Privacy Policy</a>.
                     </p>
                 </div>
@@ -507,5 +507,3 @@ $csrf_token = generate_csrf_token();
         });
     })();
 </script>
-
-<?php include('../includes/footer.php'); ?>

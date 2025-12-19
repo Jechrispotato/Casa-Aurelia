@@ -436,5 +436,3 @@ $csrf_token = generate_csrf_token();
         passwordInput.addEventListener('input', () => clearError(passwordInput));
     })();
 </script>
-
-<?php include('../includes/footer.php'); ?>
