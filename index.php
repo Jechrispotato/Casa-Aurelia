@@ -1,7 +1,7 @@
 <?php include 'includes/header.php'; ?>
 
 <!-- Hero Section -->
-<div class="relative h-screen min-h-[400px] flex items-center justify-center overflow-hidden ">
+<div class="relative h-screen min-h-[400px] flex items-center justify-center overflow-hidden" style="max-width: 100vw;">
     <!-- Background Image with Parallax Effect -->
     <div class="absolute inset-0 z-0">
         <img src="images/background.jpg" alt="Luxury Hotel"
@@ -98,8 +98,8 @@
     </div>
 </section>
 
-<section class="autoblur-section">
-    <div class="fixed bottom-32 right-0 w-96 h-96 bg-blue-500/10 
+<section class="autoblur-section" style="overflow: hidden;">
+    <div class="hidden lg:block fixed bottom-32 right-0 w-96 h-96 bg-blue-500/10 
             rounded-full blur-3xl pointer-events-none z-0">
     </div>
     <div class="autoblur italic reveal">NUMBER 1</div>
@@ -149,7 +149,7 @@
 
         <!-- Spa -->
         <div class="flex flex-col lg:flex-row-reverse items-center gap-12 autoblur_image">
-            <div class="fixed bottom-32 right-0 w-96 h-96 bg-blue-500/20 
+            <div class="hidden lg:block fixed bottom-32 right-0 w-96 h-96 bg-blue-500/20 
             rounded-full blur-3xl pointer-events-none z-0"></div>
 
             <div class="lg:w-1/2 relative group">

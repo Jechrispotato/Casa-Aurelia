@@ -149,7 +149,7 @@ if ($stmt->execute()) {
     log_security_event('email_verified', "User {$user['username']} successfully verified their email");
 
     // Redirect to home page
-    $_SESSION['success'] = "Email verified successfully! Welcome to The Grand Aurelia.";
+    $_SESSION['success'] = "Email verified successfully! Welcome to The Casa Aurelia.";
     header('Location: ../../index.php');
     exit;
 } else {

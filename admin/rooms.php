@@ -362,8 +362,9 @@ function formatPrice($price)
                     data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-8 pt-4">
-                <form id="editRoomForm">
+                <form id="editRoomForm" enctype="multipart/form-data">
                     <input type="hidden" id="editRoomId">
+                    <input type="hidden" id="editExistingImages" value="">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div>
                             <label for="editRoomName" class="block text-xs font-bold text-gray-400 uppercase mb-2">Room
@@ -383,13 +384,43 @@ function formatPrice($price)
                             </div>
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <label for="editRoomImage" class="block text-xs font-bold text-gray-400 uppercase mb-2">Image
-                            Filename</label>
-                        <input type="text"
-                            class="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:border-yellow-600 focus:ring-2 focus:ring-yellow-900 transition-all outline-none"
-                            id="editRoomImage" placeholder="e.g. room.jpg">
+
+                    <!-- Multi-Image Upload Section -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-xs font-bold text-gray-400 uppercase">Room Images</label>
+                            <span class="text-xs text-gray-500" id="editImageCount">0/4 images</span>
+                        </div>
+
+                        <!-- Current Images Preview -->
+                        <div id="editCurrentImages" class="mb-4 hidden">
+                            <p class="text-xs text-gray-500 mb-2">Current Images (click X to remove):</p>
+                            <div id="editCurrentImagesGrid"
+                                style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;"></div>
+                        </div>
+
+                        <!-- Hidden file input -->
+                        <input type="file" id="editRoomImages" name="room_images[]" multiple
+                            accept="image/jpeg,image/png,image/gif,image/webp" class="hidden">
+
+                        <!-- Upload Dropzone -->
+                        <div id="editDropzone"
+                            class="border-2 border-dashed border-gray-700 rounded-xl p-6 text-center cursor-pointer hover:border-yellow-600 hover:bg-gray-800/50 transition-all">
+                            <div class="flex flex-col items-center gap-3">
+                                <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-cloud-upload-alt text-xl text-gray-500"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">Click or drag images to upload</p>
+                                    <p class="text-xs text-gray-600">JPG, PNG, GIF, WebP (max 5MB each)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- New Images Preview Grid -->
+                        <div id="editPreviewGrid" class="grid grid-cols-4 gap-2 mt-4 hidden"></div>
                     </div>
+
                     <div class="mb-4">
                         <label for="editRoomDescription"
                             class="block text-xs font-bold text-gray-400 uppercase mb-2">Description</label>
@@ -736,12 +767,18 @@ function formatPrice($price)
                 document.getElementById('editRoomName').value = roomName;
                 document.getElementById('editRoomPrice').value = roomPrice;
                 document.getElementById('editRoomDescription').value = roomDescription;
-                document.getElementById('editRoomImage').value = roomImage;
+
+                // Reset and populate images
+                editSelectedFiles = [];
+                const existingImgs = roomImage ? roomImage.split(',').map(img => img.trim()).filter(img => img !== '') : [];
+                displayEditCurrentImages(existingImgs);
+                updateEditPreview();
 
                 // Update Hero Image in Edit Modal
                 const heroImg = document.getElementById('editModalHeroImg');
                 if (heroImg) {
-                    heroImg.src = `<?php echo IMAGES_PATH; ?>${roomImage || 'default-room.jpg'}`;
+                    const firstImg = existingImgs.length > 0 ? existingImgs[0] : 'default-room.jpg';
+                    heroImg.src = `<?php echo IMAGES_PATH; ?>${firstImg}`;
                 }
 
                 new bootstrap.Modal(document.getElementById('editRoomModal')).show();
@@ -778,7 +815,7 @@ function formatPrice($price)
 
                 // Reset force mode when opening modal normally
                 forceDeleteMode = false;
-                
+
                 // Store room ID and show confirmation modal
                 document.getElementById('deleteRoomId').value = roomId;
                 getDeleteModal().show();
@@ -802,7 +839,7 @@ function formatPrice($price)
                 if (forceDeleteMode) {
                     body += '&force=true';
                 }
-                
+
                 const response = await fetch('delete_room.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -821,7 +858,7 @@ function formatPrice($price)
                     getDeleteModal().hide();
                     btn.innerHTML = originalText;
                     btn.disabled = false;
-                    
+
                     setTimeout(() => {
                         if (confirm(text + '\n\nDo you want to FORCE DELETE this room?\n⚠️ WARNING: This will also DELETE all associated bookings!')) {
                             // Set force mode and re-trigger delete
@@ -848,12 +885,12 @@ function formatPrice($price)
                 forceDeleteMode = false;
             }
         });
-        
+
         // Separate function for force delete
         async function performForceDelete(roomId, btn, originalText) {
             btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Force Deleting...';
             btn.disabled = true;
-            
+
             try {
                 const response = await fetch('delete_room.php', {
                     method: 'POST',
@@ -890,13 +927,200 @@ function formatPrice($price)
             if (roomName && roomPrice) addNewRoom(roomName, roomPrice, roomDescription, roomImage);
         });
 
-        document.getElementById('updateRoom').addEventListener('click', () => {
+        // ========== EDIT ROOM IMAGE UPLOAD FUNCTIONALITY ==========
+        let editSelectedFiles = [];
+        let editExistingImages = []; // Current images to keep
+
+        const editDropzone = document.getElementById('editDropzone');
+        const editFileInput = document.getElementById('editRoomImages');
+        const editPreviewGrid = document.getElementById('editPreviewGrid');
+        const editCurrentImagesGrid = document.getElementById('editCurrentImagesGrid');
+        const editCurrentImagesSection = document.getElementById('editCurrentImages');
+        const editImageCount = document.getElementById('editImageCount');
+
+        // Click to upload
+        editDropzone.addEventListener('click', () => editFileInput.click());
+
+        // Drag and drop
+        editDropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            editDropzone.classList.add('border-yellow-500', 'bg-yellow-500/10');
+        });
+        editDropzone.addEventListener('dragleave', () => {
+            editDropzone.classList.remove('border-yellow-500', 'bg-yellow-500/10');
+        });
+        editDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            editDropzone.classList.remove('border-yellow-500', 'bg-yellow-500/10');
+            handleEditFiles(e.dataTransfer.files);
+        });
+
+        editFileInput.addEventListener('change', (e) => {
+            handleEditFiles(e.target.files);
+        });
+
+        function handleEditFiles(files) {
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            const maxSize = 5 * 1024 * 1024; // 5MB
+
+            for (let file of files) {
+                if (!validTypes.includes(file.type)) {
+                    alert(`Invalid file type: ${file.name}`);
+                    continue;
+                }
+                if (file.size > maxSize) {
+                    alert(`File too large: ${file.name} (max 5MB)`);
+                    continue;
+                }
+                if (editSelectedFiles.length + editExistingImages.length < 4) {
+                    editSelectedFiles.push(file);
+                }
+            }
+            updateEditPreview();
+        }
+
+        function updateEditImageCount() {
+            const total = editExistingImages.length + editSelectedFiles.length;
+            editImageCount.textContent = `${total}/4 images`;
+            editImageCount.classList.remove('text-green-400', 'text-red-400', 'text-gray-500');
+            if (total === 0) {
+                editImageCount.classList.add('text-gray-500');
+            } else if (total >= 1) {
+                editImageCount.classList.add('text-green-400');
+            }
+        }
+
+        function updateEditPreview() {
+            editPreviewGrid.innerHTML = '';
+            editPreviewGrid.style.cssText = 'display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px;';
+
+            if (editSelectedFiles.length === 0) {
+                editPreviewGrid.classList.add('hidden');
+            } else {
+                editPreviewGrid.classList.remove('hidden');
+
+                editSelectedFiles.forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const card = document.createElement('div');
+                        card.style.cssText = 'position: relative; border-radius: 12px; overflow: hidden; background: #1f2937; border: 1px solid #374151;';
+                        card.innerHTML = `
+                            <img src="${e.target.result}" alt="Preview" style="width: 100%; height: 80px; object-fit: cover;">
+                            <button type="button" data-index="${index}" class="edit-remove-new" 
+                                style="position: absolute; top: 4px; right: 4px; width: 24px; height: 24px; background: #dc2626; color: white; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 10; font-weight: bold;">
+                                ✕
+                            </button>
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; font-size: 10px; padding: 4px; text-align: center;">New</div>
+                        `;
+                        editPreviewGrid.appendChild(card);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            updateEditImageCount();
+        }
+
+        function displayEditCurrentImages(images) {
+            editCurrentImagesGrid.innerHTML = '';
+            editExistingImages = images.filter(img => img.trim() !== '');
+
+            if (editExistingImages.length === 0) {
+                editCurrentImagesSection.classList.add('hidden');
+                return;
+            }
+
+            editCurrentImagesSection.classList.remove('hidden');
+
+            editExistingImages.forEach((img, index) => {
+                const card = document.createElement('div');
+                card.style.cssText = 'position: relative; border-radius: 12px; overflow: hidden; background: #1f2937; border: 1px solid #374151;';
+                card.innerHTML = `
+                    <img src="../images/${img.trim()}" alt="${img}" style="width: 100%; height: 80px; object-fit: cover;" onerror="this.src='../images/default-room.jpg'">
+                    <button type="button" data-img="${img.trim()}" class="edit-remove-existing" 
+                        style="position: absolute; top: 4px; right: 4px; width: 24px; height: 24px; background: #dc2626; color: white; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 10; font-weight: bold;">
+                        ✕
+                    </button>
+                    ${index === 0 ? '<div style="position: absolute; top: 4px; left: 4px; background: #ca8a04; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px;">Main</div>' : ''}
+                `;
+                editCurrentImagesGrid.appendChild(card);
+            });
+
+            updateEditImageCount();
+        }
+
+        // Event delegation for remove buttons
+        editPreviewGrid.addEventListener('click', (e) => {
+            const btn = e.target.closest('.edit-remove-new');
+            if (btn) {
+                e.preventDefault();
+                const index = parseInt(btn.dataset.index);
+                editSelectedFiles.splice(index, 1);
+                updateEditPreview();
+            }
+        });
+
+        editCurrentImagesGrid.addEventListener('click', (e) => {
+            const btn = e.target.closest('.edit-remove-existing');
+            if (btn) {
+                e.preventDefault();
+                const imgToRemove = btn.dataset.img;
+                editExistingImages = editExistingImages.filter(img => img.trim() !== imgToRemove);
+                displayEditCurrentImages(editExistingImages);
+            }
+        });
+
+        // Update Room button click
+        document.getElementById('updateRoom').addEventListener('click', async () => {
             const roomId = document.getElementById('editRoomId').value;
             const roomName = document.getElementById('editRoomName').value;
             const roomPrice = document.getElementById('editRoomPrice').value;
             const roomDescription = document.getElementById('editRoomDescription').value;
-            const roomImage = document.getElementById('editRoomImage').value;
-            if (roomId && roomName && roomPrice) updateRoom(roomId, roomName, roomPrice, roomDescription, roomImage);
+
+            if (!roomId || !roomName || !roomPrice) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const btn = document.getElementById('updateRoom');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Updating...';
+            btn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('room_id', roomId);
+            formData.append('room_name', roomName);
+            formData.append('price', roomPrice);
+            formData.append('description', roomDescription);
+            formData.append('existing_images', editExistingImages.join(','));
+
+            // Add new files
+            editSelectedFiles.forEach((file, index) => {
+                formData.append('new_images[]', file);
+            });
+
+            try {
+                const response = await fetch('update_room.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const text = await response.text();
+                console.log('Update response:', response.status, text);
+
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Error updating room: ' + text);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Update error:', error);
+                alert('Connection error: ' + error.message);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         });
 
         // Modals cleanup and video pause
