@@ -83,21 +83,8 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
         }
     </style>
     <style>
-        html,
         body {
             overflow-x: hidden;
-            max-width: 100vw;
-            background: #111827;
-        }
-
-        /* Fix for mobile white edge */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            min-height: 100vh;
-            position: relative;
         }
 
         /* Scrollbar width */
@@ -158,7 +145,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
         }
 
         .navbar_custom {
-            background: rgba(17, 24, 39, 0.95);
+            background: rgba(17, 24, 39, 0.85);
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
             position: fixed;
@@ -172,17 +159,6 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
             border-radius: 50px;
             box-sizing: border-box;
             overflow: visible;
-        }
-
-        /* Mobile navbar adjustments */
-        @media (max-width: 1023px) {
-            .navbar_custom {
-                width: calc(100% - 24px);
-                top: 8px;
-                padding: 8px 16px;
-                border-radius: 20px;
-                background: rgba(17, 24, 39, 0.98);
-            }
         }
 
         /* Base navbar button */
