@@ -166,9 +166,9 @@ $unread_count = ($unread_res) ? (int) mysqli_fetch_assoc($unread_res)['c'] : 0;
                                         </span>
 
                                         <?php if (!empty($url)): ?>
-                                            <a href="<?php echo BOOKING_PATH; ?>view_bookings.php" 
-                                               class="text-sm text-yellow-500 hover:text-yellow-400 font-medium flex items-center gap-1 transition-colors">
-                                                View Details <i class="fas fa-arrow-right text-xs"></i>
+                                            <a href="<?php echo BOOKING_PATH; ?>view_bookings.php"
+                                                class="text-sm text-yellow-500 hover:text-yellow-400 font-medium flex items-center gap-1 transition-colors">
+                                                View All Details <i class="fas fa-arrow-right text-xs"></i>
                                             </a>
                                         <?php endif; ?>
                                     </div>

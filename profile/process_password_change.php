@@ -3,11 +3,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: ../auth/login.php');
     exit;
 }
 
-require('db.php'); // Adjust if you use a different file for DB
+require(__DIR__ . '/../includes/db.php'); // Adjust if you use a different file for DB
 
 $user_id = $_SESSION['user_id'];
 $current_password = $_POST['current_password'];

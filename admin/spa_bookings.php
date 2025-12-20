@@ -3,7 +3,7 @@ session_start();
 
 // Check if user is logged in and is admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../auth/login.php');
+    header('Location: ' . AUTH_PATH . 'login.php');
     exit;
 }
 
@@ -149,56 +149,146 @@ $bookings = mysqli_query($conn, $query);
                     <i class="fas fa-spa text-2xl"></i>
                 </div>
                 <p class="text-gray-400 font-medium">No appointments found matching your criteria.</p>
-                <a href="spa_bookings.php"
+                <a href="<?php echo ADMIN_PATH; ?>spa_bookings.php"
                     class="text-yellow-500 hover:text-yellow-400 text-sm font-bold mt-2 inline-block">Clear Filters</a>
             </div>
         <?php endif; ?>
     </div>
 </div>
 
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden bg-gray-900">
+            <div class="modal-header border-0 p-6" id="modalHeader">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center" id="modalIconBg">
+                        <i class="fas" id="modalIcon"></i>
+                    </div>
+                    <h5 class="modal-title font-bold text-xl text-white" id="modalTitle">Confirm Action</h5>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-6 text-center">
+                <p class="text-gray-300 mb-2" id="modalMessage">Are you sure?</p>
+                <input type="hidden" id="actionBookingId">
+                <input type="hidden" id="actionType">
+            </div>
+            <div class="modal-footer border-0 p-6 pt-0 flex justify-center gap-3">
+                <button type="button"
+                    class="px-6 py-2.5 rounded-xl text-gray-400 font-bold hover:bg-gray-800 transition-all"
+                    data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="px-6 py-2.5 rounded-xl font-bold text-white transition-all shadow-lg"
+                    id="confirmActionBtn">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Helper function to update spa booking status
-        async function updateSpaStatus(bookingId, status) {
-            // Friendly action name for the confirm dialog
-            const actionName = status === 'confirmed' ? 'approve' : 'reject';
+        // Initialize Modal
+        const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+        const modalEl = document.getElementById('confirmationModal');
 
-            if (confirm(`Are you sure you want to ${actionName} this booking?`)) {
-                try {
-                    const response = await fetch('update_spa_booking.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: `booking_id=${bookingId}&status=${status}`
-                    });
+        // Elements
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalIconBg = document.getElementById('modalIconBg');
+        const modalHeader = document.getElementById('modalHeader');
+        const confirmBtn = document.getElementById('confirmActionBtn');
+        const bookingIdInput = document.getElementById('actionBookingId');
+        const actionTypeInput = document.getElementById('actionType');
 
-                    if (response.ok) {
-                        location.reload();
-                    } else {
-                        alert('Error updating booking status');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('Error updating booking status');
-                }
-            }
+        // Move modal to body to avoid z-index issues
+        if (modalEl.parentElement !== document.body) {
+            document.body.appendChild(modalEl);
         }
 
-        // Approve buttons
-        document.querySelectorAll('.approve-booking').forEach(button => {
-            button.addEventListener('click', function () {
-                const bookingId = this.dataset.bookingId;
-                updateSpaStatus(bookingId, 'confirmed');
-            });
+        // Cleanup modal backdrop
+        modalEl.addEventListener('hidden.bs.modal', function () {
+            document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+            document.body.style.overflow = '';
         });
 
-        // Reject buttons
-        document.querySelectorAll('.reject-booking').forEach(button => {
-            button.addEventListener('click', function () {
-                const bookingId = this.dataset.bookingId;
-                updateSpaStatus(bookingId, 'cancelled');
-            });
+        // Event Delegation for Approve/Reject Actions
+        document.body.addEventListener('click', function (e) {
+            const btn = e.target.closest('.approve-booking, .reject-booking');
+            if (!btn) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            const isApprove = btn.classList.contains('approve-booking');
+            const bookingId = btn.dataset.bookingId;
+            const action = isApprove ? 'confirmed' : 'cancelled'; // SPA status logic
+
+            // Configure Modal
+            bookingIdInput.value = bookingId;
+            actionTypeInput.value = action;
+
+            if (isApprove) {
+                modalTitle.textContent = 'Confirm Appointment';
+                modalMessage.textContent = 'Are you sure you want to confirm this spa appointment?';
+                modalIcon.className = 'fas fa-check text-xl';
+                modalIconBg.className = 'w-12 h-12 rounded-full bg-green-900/20 text-green-500 flex items-center justify-center';
+                modalHeader.className = 'modal-header border-0 bg-green-900/10 p-6';
+                confirmBtn.className = 'px-6 py-2.5 rounded-xl font-bold text-white transition-all shadow-lg bg-green-600 hover:bg-green-700';
+                confirmBtn.textContent = 'Confirm Appointment';
+            } else {
+                modalTitle.textContent = 'Cancel Appointment';
+                modalMessage.textContent = 'Are you sure you want to cancel this spa appointment?';
+                modalIcon.className = 'fas fa-times text-xl';
+                modalIconBg.className = 'w-12 h-12 rounded-full bg-red-900/20 text-red-500 flex items-center justify-center';
+                modalHeader.className = 'modal-header border-0 bg-red-900/10 p-6';
+                confirmBtn.className = 'px-6 py-2.5 rounded-xl font-bold text-white transition-all shadow-lg bg-red-600 hover:bg-red-700';
+                confirmBtn.textContent = 'Cancel Appointment';
+            }
+
+            confirmationModal.show();
+        });
+
+        // Handle Confirm Click
+        confirmBtn.addEventListener('click', async function () {
+            const bookingId = bookingIdInput.value;
+            const status = actionTypeInput.value;
+            const btn = this;
+
+            // Loading State
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('update_spa_booking.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `booking_id=${bookingId}&status=${status}`
+                });
+
+                const text = await response.text();
+
+                if (response.ok) {
+                    confirmationModal.hide();
+                    location.reload();
+                } else {
+                    alert('Error: ' + text);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Network error:', error);
+                alert('Connection error. Please try again.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         });
     });
 </script>

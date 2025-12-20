@@ -250,7 +250,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                 <!-- Logo and Brand -->
                 <a href="<?php echo SITE_ROOT; ?>index.php" class="logoo">
                     <img src="<?php echo AURELIA_ASSETS; ?>casaaurelialogo1_white.png" alt="Hotel Logo"
-                        class="h-8 w-auto rounded-full object-cover transition-all duration-500 ease-in-out group-hover:scale-110">
+                        class="h-10 w-auto transition-all duration-500 ease-in-out hover:scale-105">
                 </a>
 
                 <!-- Desktop Navigation -->
@@ -310,7 +310,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                                   <?php echo ($current_page === 'index.php') ? 'active' : ''; ?>">
                             HOME
                         </a>
-                        <a href="<?php echo PAGES_PATH; ?>view_rooms.php" class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
+                        <a href="<?php echo PAGES_PATH; ?>view_rooms.php" class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-xs tracking-wide transition-all duration-300 whitespace-nowrap
                                   hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg
                                   <?php echo ($current_page === 'view_rooms.php') ? 'active' : ''; ?>">
                             ROOM & SUITES
@@ -320,7 +320,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                                   <?php echo ($current_page === 'dining.php') ? 'active' : ''; ?>">
                             DINING
                         </a>
-                        <a href="<?php echo PAGES_PATH; ?>spa.php" class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-sm tracking-wide transition-all duration-300
+                        <a href="<?php echo PAGES_PATH; ?>spa.php" class="navbar_button px-4 py-2 rounded-[50px] font-semibold text-xs tracking-wide transition-all duration-300 whitespace-nowrap
                                   hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-lg
                                   <?php echo ($current_page === 'spa.php') ? 'active' : ''; ?>">
                             SPA & WELLNESS
@@ -330,7 +330,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                 </div>
 
                 <!-- User Account Section -->
-                <div class="hidden lg:flex items-center gap-3">
+                <div class="hidden lg:flex items-center gap-3 pl-8">
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <!-- User Dropdown -->
                         <div class="relative group">
@@ -423,7 +423,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                             </div>
                         </div>
                     <?php else: ?>
-                        <a href="<?php echo AUTH_PATH; ?>login.php" class="navbar_button px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300
+                        <a href="<?php echo AUTH_PATH; ?>login.php" class="navbar_button px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300 flex items-center gap-2
                                   hover:bg-white/10 hover:-translate-y-0.5">
                             <i class="fas fa-sign-in-alt"></i>
                             <span>Login</span>
@@ -431,7 +431,7 @@ if (isset($_SESSION['user_id']) && !$is_admin_page) {
                     <?php endif; ?>
 
                     <?php if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin'): ?>
-                        <a href="<?php echo BOOKING_PATH; ?>add_booking.php" class="navbar_button px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300
+                        <a href="<?php echo BOOKING_PATH; ?>add_booking.php" class="navbar_button px-4 py-2 rounded-lg font-semibold text-sm tracking-wide transition-all duration-300 whitespace-nowrap flex items-center gap-2
                                   hover:bg-white/10 hover:-translate-y-0.5 ">
                             <i class="fas fa-calendar-check"></i>
                             <span>Book Now</span>

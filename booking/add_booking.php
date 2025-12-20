@@ -1,11 +1,38 @@
 <?php
 session_start();
+
+// Authentication must be checked BEFORE including header (which outputs HTML)
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Store the current page and room_id if any for redirect after login
+    $redirect_url = 'booking/add_booking.php';
+    if (isset($_GET['room_id'])) {
+        $redirect_url .= '?room_id=' . (int) $_GET['room_id'];
+    }
+    $_SESSION['redirect_after_login'] = $redirect_url;
+    $_SESSION['error'] = "Please login to make a booking";
+    header('Location: ../auth/login.php');
+    exit;
+}
+
+// Now safe to include files that output HTML
 include('../includes/header.php');
 include('../includes/db.php');
 include('../includes/security.php');
 
 // Generate CSRF token
 $csrf_token = generate_csrf_token();
+
+// Prefill name for logged-in users
+$prefill_name = '';
+if (isset($_SESSION['user_id'])) {
+    $uid = (int) $_SESSION['user_id'];
+    $uqr = mysqli_query($conn, "SELECT username FROM users WHERE id = $uid LIMIT 1");
+    if ($uqr && mysqli_num_rows($uqr) > 0) {
+        $urow = mysqli_fetch_assoc($uqr);
+        $prefill_name = !empty($urow['username']) ? $urow['username'] : '';
+    }
+}
 
 // Get the room_id from URL if available
 $selected_room_id = isset($_GET['room_id']) ? (int) $_GET['room_id'] : '';
@@ -80,9 +107,24 @@ unset($_SESSION['error']); // Clear the message after getting it
 
     .form-label {
         font-weight: 600;
-        color: #9ca3af;
-        /* gray-400 */
+        color: white;
         margin-bottom: 8px;
+    }
+
+    ::placeholder {
+        color: rgba(255, 255, 255, 0.7) !important;
+        opacity: 1;
+        /* Firefox */
+    }
+
+    :-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    ::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: rgba(255, 255, 255, 0.7) !important;
     }
 
     .form-control,
@@ -232,7 +274,8 @@ unset($_SESSION['error']); // Clear the message after getting it
                             <div class="mb-4">
                                 <label for="customer_name" class="form-label">Your Name</label>
                                 <input type="text" name="customer_name" id="customer_name" class="form-control"
-                                    placeholder="Enter your full name" required>
+                                    placeholder="Enter your full name"
+                                    value="<?php echo htmlspecialchars($prefill_name); ?>" required>
                             </div>
 
                             <div class="mb-4">

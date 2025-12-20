@@ -3,7 +3,7 @@ session_start();
 
 // Check if user is logged in and is admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../auth/login.php');
+    header('Location: ' . AUTH_PATH . 'login.php');
     exit;
 }
 
@@ -77,48 +77,116 @@ function formatPrice($price)
                         </div>
                     <?php endif; ?>
 
-                    <?php if (!empty($room['room_image'])): ?>
-                        <div id="admin-carousel-<?php echo $room['id']; ?>" class="carousel slide h-full" data-bs-ride="carousel">
-                            <div class="carousel-indicators mb-2">
-                                <button type="button" data-bs-target="#admin-carousel-<?php echo $room['id']; ?>"
-                                    data-bs-slide-to="0" class="active"></button>
-                                <?php
-                                $roomType = strtolower(explode(' ', $room['room_name'])[0]);
-                                $additionalImages = glob("../images/{$roomType}*.jpg");
-                                for ($i = 0; $i < count($additionalImages) && $i < 3; $i++) {
-                                    echo '<button type="button" data-bs-target="#admin-carousel-' . $room['id'] . '" data-bs-slide-to="' . ($i + 1) . '"></button>';
+                    <?php
+                    // Parse room images - handle both comma-separated and single image
+                    $room_images = [];
+                    $use_legacy_pattern = false;
+
+                    if (!empty($room['room_image'])) {
+                        if (strpos($room['room_image'], ',') !== false) {
+                            // Multiple images stored as comma-separated (new format)
+                            $room_images = array_filter(array_map('trim', explode(',', $room['room_image'])));
+                        } else {
+                            // Single image (legacy format) - need to find additional images
+                            $room_images[] = $room['room_image'];
+                            $use_legacy_pattern = true;
+                        }
+                    }
+
+                    // For legacy single images, find additional images using pattern matching
+                    if ($use_legacy_pattern && count($room_images) === 1) {
+                        $roomType = strtolower(preg_replace('/\s+/', '', $room['room_name']));
+                        $searchPatterns = [
+                            'penthousesuite' => 'penthouse',
+                            'bridalsuite' => 'bridalsuite',
+                            'honeymoon' => 'honeymoon',
+                            'honeymoonroom' => 'honeymoon',
+                            'honeymoonsuite' => 'honeymoon',
+                            'king' => 'kings',
+                            'kingsbed' => 'kings',
+                            'kingbed' => 'kings',
+                            'queen' => 'queen',
+                            'queensbed' => 'queen',
+                            'queenbed' => 'queen',
+                            'singleroom' => 'singleroom',
+                            'doubleroom' => 'doubleroom',
+                            'suiteroom' => 'suiteroom',
+                            'seasideview' => 'seaside'
+                        ];
+                        $normalizedRoomName = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $room['room_name']));
+
+                        $searchPattern = $roomType;
+                        if (isset($searchPatterns[$roomType])) {
+                            $searchPattern = $searchPatterns[$roomType];
+                        } elseif (isset($searchPatterns[$normalizedRoomName])) {
+                            $searchPattern = $searchPatterns[$normalizedRoomName];
+                        } else {
+                            foreach ($searchPatterns as $key => $pattern) {
+                                if (strpos($normalizedRoomName, $key) !== false) {
+                                    $searchPattern = $pattern;
+                                    break;
                                 }
-                                ?>
-                            </div>
-                            <div class="carousel-inner h-full">
-                                <div class="carousel-item active h-full">
-                                    <img src="../images/<?php echo htmlspecialchars($room['room_image']); ?>"
-                                        class="d-block w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                                        alt="Main View">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            }
+                        }
+
+                        $roomAdditionalImages = [
+                            'honeymoon' => ['honeymoonbathroom.jpg', 'honeymoonkitchen.jpg', 'honeymoonlivingarea.jpg'],
+                            'penthouse' => ['penthousebathroom.jpg', 'penthousebedroom.jpg', 'penthouse kitchen.jpg'],
+                            'bridalsuite' => ['bridalsuitebathroom.jpg', 'bridalsuitediningroom.jpg', 'bridalsuitebredroom.jpg'],
+                            'kings' => ['kingsbathroom.jpg', 'kingskitchen.jpg'],
+                            'queen' => ['queenbalcony.jpg', 'queenkitchen.jpg'],
+                            'singleroom' => ['singleroombathroom.jpg', 'singleroomkitchen.jpg', 'singleroomworkarea.jpg'],
+                            'doubleroom' => ['doubleroombathroom.jpg', 'doubleroomkitchen.jpg', 'doubleroombalcony.jpg'],
+                            'suiteroom' => ['suiteroombalcony.jpg', 'suiteroomkitchen.jpg'],
+                            'seaside' => ['seasidebathroom.jpg', 'seasidekitchen.jpg']
+                        ];
+
+                        if (isset($roomAdditionalImages[$searchPattern])) {
+                            foreach ($roomAdditionalImages[$searchPattern] as $imageName) {
+                                // Check if file exists (absolute path for server-side check)
+                                $absolutePath = $_SERVER['DOCUMENT_ROOT'] . '/Casa-Aurelia/images/' . $imageName;
+                                if (file_exists($absolutePath)) {
+                                    $room_images[] = $imageName;
+                                }
+                            }
+                        }
+                    }
+
+                    if (!empty($room_images)):
+                        ?>
+                        <div id="admin-carousel-<?php echo $room['id']; ?>" class="carousel slide h-full" data-bs-ride="carousel">
+                            <?php if (count($room_images) > 1): ?>
+                                <div class="carousel-indicators mb-2">
+                                    <?php for ($i = 0; $i < count($room_images); $i++): ?>
+                                        <button type="button" data-bs-target="#admin-carousel-<?php echo $room['id']; ?>"
+                                            data-bs-slide-to="<?php echo $i; ?>" <?php echo $i === 0 ? 'class="active"' : ''; ?>></button>
+                                    <?php endfor; ?>
                                 </div>
-                                <?php foreach ($additionalImages as $index => $image):
-                                    if ($index < 3): ?>
-                                        <div class="carousel-item h-full">
-                                            <img src="../images/<?php echo basename($image); ?>"
-                                                class="d-block w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                                                alt="Room View">
-                                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                                        </div>
-                                    <?php endif;
-                                endforeach; ?>
+                            <?php endif; ?>
+                            <div class="carousel-inner h-full">
+                                <?php foreach ($room_images as $index => $image): ?>
+                                    <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?> h-full">
+                                        <img src="<?php echo IMAGES_PATH . htmlspecialchars(trim($image)); ?>"
+                                            class="d-block w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                            alt="<?php echo $index === 0 ? 'Main View' : 'Room View ' . ($index + 1); ?>"
+                                            onerror="this.src='<?php echo IMAGES_PATH; ?>default-room.jpg'">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
-                            <button class="carousel-control-prev z-20" type="button"
-                                data-bs-target="#admin-carousel-<?php echo $room['id']; ?>" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon transform scale-75" aria-hidden="true"></span>
-                            </button>
-                            <button class="carousel-control-next z-20" type="button"
-                                data-bs-target="#admin-carousel-<?php echo $room['id']; ?>" data-bs-slide="next">
-                                <span class="carousel-control-next-icon transform scale-75" aria-hidden="true"></span>
-                            </button>
+                            <?php if (count($room_images) > 1): ?>
+                                <button class="carousel-control-prev z-20" type="button"
+                                    data-bs-target="#admin-carousel-<?php echo $room['id']; ?>" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon transform scale-75" aria-hidden="true"></span>
+                                </button>
+                                <button class="carousel-control-next z-20" type="button"
+                                    data-bs-target="#admin-carousel-<?php echo $room['id']; ?>" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon transform scale-75" aria-hidden="true"></span>
+                                </button>
+                            <?php endif; ?>
                         </div>
                     <?php else: ?>
-                        <img src="../images/default-room.jpg" class="w-full h-full object-cover" alt="Default Room">
+                        <img src="<?php echo IMAGES_PATH; ?>default-room.jpg" class="w-full h-full object-cover" alt="Default Room">
                     <?php endif; ?>
                 </div>
 
@@ -399,6 +467,40 @@ function formatPrice($price)
     </div>
 </div>
 
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden bg-gray-900">
+            <div class="modal-header border-0 bg-red-900/20 p-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center">
+                        <i class="fas fa-exclamation-triangle text-xl"></i>
+                    </div>
+                    <h5 class="modal-title font-bold text-xl text-white">Delete Room</h5>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-6 text-center">
+                <p class="text-gray-300 mb-2">Are you sure you want to delete this room?</p>
+                <p class="text-gray-500 text-sm">This action cannot be undone.</p>
+                <input type="hidden" id="deleteRoomId" value="">
+            </div>
+            <div class="modal-footer border-0 p-6 pt-0 flex justify-center gap-3">
+                <button type="button"
+                    class="px-6 py-2.5 rounded-xl text-gray-400 font-bold hover:bg-gray-800 transition-all"
+                    data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button"
+                    class="px-6 py-2.5 rounded-xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all"
+                    id="confirmDeleteBtn">
+                    <i class="fas fa-trash-alt mr-2"></i>Delete Room
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
     /* Custom Scrollbar for Modal */
     .modal-body::-webkit-scrollbar {
@@ -466,25 +568,25 @@ function formatPrice($price)
 <script>
     const roomsData = <?php echo json_encode($rooms_data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?: '[]'; ?>;
     const roomVideos = {
-        penthousesuite: '../Videos/Penthouse.mp4',
-        bridalsuite: '../Videos/bridal.mp4',
-        honeymoonsuite: '../Videos/honeymoon.mp4',
-        doubleroom: '../Videos/double.mp4',
-        queenroom: '../Videos/queen.mp4',
-        queens: '../Videos/queen.mp4',
-        kingroom: '../Videos/king.mp4',
-        kings: '../Videos/king.mp4',
-        seasideview: '../Videos/seaside.mp4',
-        singleroom: '../Videos/single.mp4',
-        suiteroom: '../Videos/suite.mp4'
+        penthousesuite: '<?php echo SITE_ROOT; ?>Videos/Penthouse.mp4',
+        bridalsuite: '<?php echo SITE_ROOT; ?>Videos/bridal.mp4',
+        honeymoonsuite: '<?php echo SITE_ROOT; ?>Videos/honeymoon.mp4',
+        doubleroom: '<?php echo SITE_ROOT; ?>Videos/double.mp4',
+        queenroom: '<?php echo SITE_ROOT; ?>Videos/queen.mp4',
+        queens: '<?php echo SITE_ROOT; ?>Videos/queen.mp4',
+        kingroom: '<?php echo SITE_ROOT; ?>Videos/king.mp4',
+        kings: '<?php echo SITE_ROOT; ?>Videos/king.mp4',
+        seasideview: '<?php echo SITE_ROOT; ?>Videos/seaside.mp4',
+        singleroom: '<?php echo SITE_ROOT; ?>Videos/single.mp4',
+        suiteroom: '<?php echo SITE_ROOT; ?>Videos/suite.mp4'
     };
 
     function getRoomVideoSrc(roomName) {
-        if (!roomName) return '../Videos/default.mp4';
+        if (!roomName) return '<?php echo SITE_ROOT; ?>Videos/default.mp4';
         const normalized = roomName.toLowerCase().replace(/[^a-z0-9]/g, '');
         if (roomVideos[normalized]) return roomVideos[normalized];
         const entry = Object.entries(roomVideos).find(([key]) => normalized.includes(key));
-        return entry ? entry[1] : '../Videos/default.mp4';
+        return entry ? entry[1] : '<?php echo SITE_ROOT; ?>Videos/default.mp4';
     }
 
     function getRoomFeatures(roomName) {
@@ -639,23 +741,146 @@ function formatPrice($price)
                 // Update Hero Image in Edit Modal
                 const heroImg = document.getElementById('editModalHeroImg');
                 if (heroImg) {
-                    heroImg.src = `../images/${roomImage || 'default-room.jpg'}`;
+                    heroImg.src = `<?php echo IMAGES_PATH; ?>${roomImage || 'default-room.jpg'}`;
                 }
 
                 new bootstrap.Modal(document.getElementById('editRoomModal')).show();
             });
         });
 
-        // Existing operations with updated query selectors
-        document.querySelectorAll('.delete-room').forEach(button => {
-            button.addEventListener('click', function (e) {
+        // Delete room - open confirmation modal
+        let deleteConfirmModal = null;
+
+        let forceDeleteMode = false; // Global flag for force delete
+
+        function getDeleteModal() {
+            const el = document.getElementById('deleteConfirmModal');
+            // Move modal to body if needed
+            if (el && el.parentElement !== document.body) {
+                document.body.appendChild(el);
+            }
+            // Get or create Bootstrap Modal instance
+            let instance = bootstrap.Modal.getInstance(el);
+            if (!instance) {
+                instance = new bootstrap.Modal(el);
+            }
+            return instance;
+        }
+
+        document.addEventListener('click', function (e) {
+            const deleteBtn = e.target.closest('.delete-room');
+            if (deleteBtn) {
                 e.stopPropagation();
-                const roomId = this.dataset.roomId;
-                if (confirm('Are you sure you want to delete this room?')) {
-                    deleteRoom(roomId);
-                }
-            });
+                e.preventDefault();
+
+                const roomId = deleteBtn.dataset.roomId;
+                console.log('Delete button clicked for room:', roomId);
+
+                // Reset force mode when opening modal normally
+                forceDeleteMode = false;
+                
+                // Store room ID and show confirmation modal
+                document.getElementById('deleteRoomId').value = roomId;
+                getDeleteModal().show();
+            }
         });
+
+        // Handle confirm delete button click
+        document.getElementById('confirmDeleteBtn').addEventListener('click', async function () {
+            const roomId = document.getElementById('deleteRoomId').value;
+            const btn = this;
+
+            console.log('Confirmed deletion for room:', roomId, 'Force:', forceDeleteMode);
+
+            // Show loading state
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Deleting...';
+            btn.disabled = true;
+
+            try {
+                let body = `room_id=${roomId}`;
+                if (forceDeleteMode) {
+                    body += '&force=true';
+                }
+                
+                const response = await fetch('delete_room.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: body
+                });
+
+                const text = await response.text();
+                console.log('Delete response:', response.status, text);
+
+                if (response.ok) {
+                    getDeleteModal().hide();
+                    forceDeleteMode = false;
+                    location.reload();
+                } else if (response.status === 400 && text.includes('active booking')) {
+                    // Has active bookings - offer force delete
+                    getDeleteModal().hide();
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    
+                    setTimeout(() => {
+                        if (confirm(text + '\n\nDo you want to FORCE DELETE this room?\n⚠️ WARNING: This will also DELETE all associated bookings!')) {
+                            // Set force mode and re-trigger delete
+                            forceDeleteMode = true;
+                            document.getElementById('deleteRoomId').value = roomId;
+                            // Directly call the delete instead of using modal
+                            performForceDelete(roomId, btn, originalText);
+                        }
+                    }, 300);
+                } else {
+                    getDeleteModal().hide();
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    forceDeleteMode = false;
+                    setTimeout(() => {
+                        alert('Error: ' + text);
+                    }, 300);
+                }
+            } catch (error) {
+                console.error('Delete error:', error);
+                alert('Connection error: ' + error.message);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                forceDeleteMode = false;
+            }
+        });
+        
+        // Separate function for force delete
+        async function performForceDelete(roomId, btn, originalText) {
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Force Deleting...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('delete_room.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `room_id=${roomId}&force=true`
+                });
+
+                const text = await response.text();
+                console.log('Force delete response:', response.status, text);
+
+                if (response.ok) {
+                    forceDeleteMode = false;
+                    location.reload();
+                } else {
+                    alert('Force delete failed: ' + text);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    forceDeleteMode = false;
+                }
+            } catch (error) {
+                console.error('Force delete error:', error);
+                alert('Connection error: ' + error.message);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                forceDeleteMode = false;
+            }
+        }
 
         document.getElementById('saveRoom').addEventListener('click', () => {
             const roomName = document.getElementById('roomName').value;
@@ -675,7 +900,7 @@ function formatPrice($price)
         });
 
         // Modals cleanup and video pause
-        ['roomDetailModal', 'addRoomModal', 'editRoomModal'].forEach(id => {
+        ['roomDetailModal', 'addRoomModal', 'editRoomModal', 'deleteConfirmModal'].forEach(id => {
             const el = document.getElementById(id);
             if (el) {
                 el.addEventListener('hidden.bs.modal', function () {
@@ -689,39 +914,78 @@ function formatPrice($price)
 
         // Move modals to body to avoid clipping
         setTimeout(() => {
-            ['roomDetailModal', 'addRoomModal', 'editRoomModal'].forEach(id => {
+            ['roomDetailModal', 'addRoomModal', 'editRoomModal', 'deleteConfirmModal'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el && el.parentElement !== document.body) document.body.appendChild(el);
             });
         }, 500);
     });
 
-    // Helper functions (same as before)
+    // Helper functions - using direct relative paths since we're in /admin/
     async function deleteRoom(roomId) {
-        const response = await fetch('delete_room.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `room_id=${roomId}`
-        });
-        if (response.ok) location.reload(); else alert('Error deleting room');
+        try {
+            const response = await fetch('delete_room.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `room_id=${roomId}`
+            });
+
+            const text = await response.text();
+            console.log('Delete response:', response.status, text);
+
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Error deleting room: ' + text);
+            }
+        } catch (error) {
+            console.error('Delete error:', error);
+            alert('Connection error while deleting room.');
+        }
     }
 
     async function addNewRoom(roomName, roomPrice, roomDescription, roomImage) {
-        const response = await fetch('add_room.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `room_name=${encodeURIComponent(roomName)}&price=${roomPrice}&description=${encodeURIComponent(roomDescription)}&room_image=${encodeURIComponent(roomImage)}`
-        });
-        if (response.ok) location.reload(); else alert('Error adding room');
+        try {
+            const response = await fetch('add_room.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `room_name=${encodeURIComponent(roomName)}&price=${roomPrice}&description=${encodeURIComponent(roomDescription)}&room_image=${encodeURIComponent(roomImage)}`
+            });
+
+            const text = await response.text();
+            console.log('Add response:', response.status, text);
+
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Error adding room: ' + text);
+            }
+        } catch (error) {
+            console.error('Add error:', error);
+            alert('Connection error while adding room.');
+        }
     }
 
     async function updateRoom(roomId, roomName, roomPrice, roomDescription, roomImage) {
-        const response = await fetch('update_room.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `room_id=${roomId}&room_name=${encodeURIComponent(roomName)}&price=${roomPrice}&description=${encodeURIComponent(roomDescription)}&room_image=${encodeURIComponent(roomImage)}`
-        });
-        if (response.ok) location.reload(); else alert('Error updating room');
+        try {
+            const response = await fetch('update_room.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `room_id=${roomId}&room_name=${encodeURIComponent(roomName)}&price=${roomPrice}&description=${encodeURIComponent(roomDescription)}&room_image=${encodeURIComponent(roomImage)}`
+            });
+
+            const text = await response.text();
+            console.log('Update response:', response.status, text);
+
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Error updating room: ' + text);
+            }
+        } catch (error) {
+            console.error('Update error:', error);
+            alert('Connection error while updating room.');
+        }
     }
 </script>
 

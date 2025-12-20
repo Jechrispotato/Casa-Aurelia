@@ -14,7 +14,7 @@ $current_admin_page = basename($_SERVER['PHP_SELF']);
 
         <nav class="mt-2 text-white">
             <div class="px-4 mb-2 text-xs font-bold text-white uppercase tracking-wider opacity-60">Main</div>
-            <a href="dashboard.php"
+            <a href="<?php echo ADMIN_PATH; ?>dashboard.php"
                 class="group flex items-center px-6 py-3 text-sm font-medium transition-colors <?php echo $current_admin_page === 'dashboard.php' ? 'bg-yellow-600 text-white border-r-4 border-yellow-400' : 'text-white hover:bg-white/10'; ?>">
                 <i
                     class="fas fa-tachometer-alt w-6 text-center mr-3 <?php echo $current_admin_page === 'dashboard.php' ? 'text-white' : 'text-white/60 group-hover:text-yellow-500'; ?>"></i>
@@ -24,19 +24,19 @@ $current_admin_page = basename($_SERVER['PHP_SELF']);
             <div class="px-4 mt-8 mb-2 text-xs font-bold text-white uppercase tracking-wider opacity-60">Bookings &
                 Reservations
             </div>
-            <a href="bookings.php"
+            <a href="<?php echo ADMIN_PATH; ?>bookings.php"
                 class="group flex items-center px-6 py-3 text-sm font-medium transition-colors <?php echo $current_admin_page === 'bookings.php' ? 'bg-yellow-600 text-white border-r-4 border-yellow-400' : 'text-white hover:bg-white/10'; ?>">
                 <i
                     class="fas fa-hotel w-6 text-center mr-3 <?php echo $current_admin_page === 'bookings.php' ? 'text-white' : 'text-white/60 group-hover:text-yellow-500'; ?>"></i>
                 Room Bookings
             </a>
-            <a href="dining_bookings.php"
+            <a href="<?php echo ADMIN_PATH; ?>dining_bookings.php"
                 class="group flex items-center px-6 py-3 text-sm font-medium transition-colors <?php echo $current_admin_page === 'dining_bookings.php' ? 'bg-yellow-600 text-white border-r-4 border-yellow-400' : 'text-white hover:bg-white/10'; ?>">
                 <i
                     class="fas fa-utensils w-6 text-center mr-3 <?php echo $current_admin_page === 'dining_bookings.php' ? 'text-white' : 'text-white/60 group-hover:text-yellow-500'; ?>"></i>
                 Dining Reservations
             </a>
-            <a href="spa_bookings.php"
+            <a href="<?php echo ADMIN_PATH; ?>spa_bookings.php"
                 class="group flex items-center px-6 py-3 text-sm font-medium transition-colors <?php echo $current_admin_page === 'spa_bookings.php' ? 'bg-yellow-600 text-white border-r-4 border-yellow-400' : 'text-white hover:bg-white/10'; ?>">
                 <i
                     class="fas fa-spa w-6 text-center mr-3 <?php echo $current_admin_page === 'spa_bookings.php' ? 'text-white' : 'text-white/60 group-hover:text-yellow-500'; ?>"></i>
@@ -45,13 +45,13 @@ $current_admin_page = basename($_SERVER['PHP_SELF']);
 
             <div class="px-4 mt-8 mb-2 text-xs font-bold text-white uppercase tracking-wider opacity-60">Management
             </div>
-            <a href="rooms.php"
+            <a href="<?php echo ADMIN_PATH; ?>rooms.php"
                 class="group flex items-center px-6 py-3 text-sm font-medium transition-colors <?php echo $current_admin_page === 'rooms.php' ? 'bg-yellow-600 text-white border-r-4 border-yellow-400' : 'text-white hover:bg-white/10'; ?>">
                 <i
                     class="fas fa-door-open w-6 text-center mr-3 <?php echo $current_admin_page === 'rooms.php' ? 'text-white' : 'text-white/60 group-hover:text-yellow-500'; ?>"></i>
                 Manage Rooms
             </a>
-            <a href="add_room.php"
+            <a href="<?php echo ADMIN_PATH; ?>add_room.php"
                 class="group flex items-center px-6 py-3 text-sm font-medium transition-colors <?php echo $current_admin_page === 'add_room.php' ? 'bg-yellow-600 text-white border-r-4 border-yellow-400' : 'text-white hover:bg-white/10'; ?>">
                 <i
                     class="fas fa-plus-circle w-6 text-center mr-3 <?php echo $current_admin_page === 'add_room.php' ? 'text-white' : 'text-white/60 group-hover:text-yellow-500'; ?>"></i>
@@ -60,7 +60,8 @@ $current_admin_page = basename($_SERVER['PHP_SELF']);
         </nav>
 
         <div class="absolute bottom-0 w-full p-6">
-            <a href="../auth/logout.php" class="flex items-center text-white hover:text-yellow-500 transition-colors">
+            <a href="<?php echo AUTH_PATH; ?>logout.php"
+                class="flex items-center text-white hover:text-yellow-500 transition-colors">
                 <i class="fas fa-sign-out-alt mr-3"></i> Logout
             </a>
         </div>

@@ -74,125 +74,114 @@ function formatPrice($price)
                             </div>
                         <?php endif; ?>
 
-                        <?php if (!empty($room['room_image'])): ?>
+                        <?php
+                        // Parse room images - handle both comma-separated (new) and single image (legacy)
+                        $room_images = [];
+                        $use_legacy_pattern = false;
+
+                        if (!empty($room['room_image'])) {
+                            if (strpos($room['room_image'], ',') !== false) {
+                                // Multiple images stored as comma-separated (new format)
+                                $room_images = array_filter(array_map('trim', explode(',', $room['room_image'])));
+                            } else {
+                                // Single image - could be legacy format, check if we should use pattern matching
+                                $room_images[] = $room['room_image'];
+                                $use_legacy_pattern = true;
+                            }
+                        }
+
+                        // For legacy single images, try to find additional images using pattern matching
+                        if ($use_legacy_pattern && count($room_images) === 1) {
+                            $roomType = strtolower(preg_replace('/\s+/', '', $room['room_name']));
+                            $searchPatterns = [
+                                'penthousesuite' => 'penthouse',
+                                'bridalsuite' => 'bridalsuite',
+                                'honeymoon' => 'honeymoon',
+                                'honeymoonroom' => 'honeymoon',
+                                'honeymoonbedroom' => 'honeymoon',
+                                'honeymoomsuite' => 'honeymoon',
+                                'honeymoonsuite' => 'honeymoon',
+                                'king' => 'kings',
+                                'kingsbed' => 'kings',
+                                'kingbed' => 'kings',
+                                'queen' => 'queen',
+                                'queensbed' => 'queen',
+                                'queenbed' => 'queen',
+                                'singleroom' => 'singleroom',
+                                'doubleroom' => 'doubleroom',
+                                'suiteroom' => 'suiteroom',
+                                'seasideview' => 'seaside'
+                            ];
+                            $normalizedRoomName = strtolower(trim(preg_replace('/[^a-zA-Z0-9]/', '', $room['room_name'])));
+                            if (isset($searchPatterns[$roomType])) {
+                                $searchPattern = $searchPatterns[$roomType];
+                            } elseif (isset($searchPatterns[$normalizedRoomName])) {
+                                $searchPattern = $searchPatterns[$normalizedRoomName];
+                            } else {
+                                $searchPattern = $roomType;
+                                foreach ($searchPatterns as $key => $pattern) {
+                                    if (strpos($normalizedRoomName, $key) !== false) {
+                                        $searchPattern = $pattern;
+                                        break;
+                                    }
+                                }
+                            }
+                            $roomAdditionalImages = [
+                                'honeymoon' => ['honeymoonbathroom.jpg', 'honeymoonkitchen.jpg', 'honeymoonlivingarea.jpg'],
+                                'penthouse' => ['penthousebathroom.jpg', 'penthousebedroom.jpg', 'penthouse kitchen.jpg'],
+                                'bridalsuite' => ['bridalsuitebathroom.jpg', 'bridalsuitediningroom.jpg', 'bridalsuitebredroom.jpg'],
+                                'kings' => ['kingsbathroom.jpg', 'kingskitchen.jpg'],
+                                'queen' => ['queenbalcony.jpg', 'queenkitchen.jpg'],
+                                'singleroom' => ['singleroombathroom.jpg', 'singleroomkitchen.jpg', 'singleroomworkarea.jpg'],
+                                'doubleroom' => ['doubleroombathroom.jpg', 'doubleroomkitchen.jpg', 'doubleroombalcony.jpg'],
+                                'suiteroom' => ['suiteroombalcony.jpg', 'suiteroomkitchen.jpg'],
+                                'seaside' => ['seasidebathroom.jpg', 'seasidekitchen.jpg']
+                            ];
+                            if (isset($roomAdditionalImages[$searchPattern])) {
+                                foreach ($roomAdditionalImages[$searchPattern] as $imageName) {
+                                    // Check if file exists (absolute path for server-side check)
+                                    $absolutePath = $_SERVER['DOCUMENT_ROOT'] . '/Casa-Aurelia/images/' . $imageName;
+                                    if (file_exists($absolutePath)) {
+                                        $room_images[] = $imageName;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (!empty($room_images)):
+                            ?>
                             <div id="carousel-<?php echo $room['id']; ?>" class="carousel slide h-full" data-bs-ride="carousel">
-                                <div class="carousel-indicators mb-2">
-                                    <button type="button" data-bs-target="#carousel-<?php echo $room['id']; ?>"
-                                        data-bs-slide-to="0" class="active"></button>
-                                    <?php
-                                    // -------- IMAGE SEARCH LOGIC MATCHING ORIGINAL --------
-                                    $roomType = strtolower(preg_replace('/\s+/', '', $room['room_name']));
-                                    $searchPatterns = [
-                                        'penthousesuite' => 'penthouse',
-                                        'bridalsuite' => 'bridalsuite',
-                                        'honeymoon' => 'honeymoon',
-                                        'honeymoonroom' => 'honeymoon',
-                                        'honeymoonbedroom' => 'honeymoon',
-                                        'honeymoomsuite' => 'honeymoon',
-                                        'honeymoonsuite' => 'honeymoon',
-                                        'king' => 'kings',
-                                        'kingsbed' => 'kings',
-                                        'kingbed' => 'kings',
-                                        'queen' => 'queen',
-                                        'queensbed' => 'queen',
-                                        'queenbed' => 'queen',
-                                        'singleroom' => 'singleroom',
-                                        'doubleroom' => 'doubleroom',
-                                        'suiteroom' => 'suiteroom',
-                                        'seasideview' => 'seaside'
-                                    ];
-                                    $normalizedRoomName = strtolower(trim(preg_replace('/[^a-zA-Z0-9]/', '', $room['room_name'])));
-                                    if (isset($searchPatterns[$roomType])) {
-                                        $searchPattern = $searchPatterns[$roomType];
-                                    } elseif (isset($searchPatterns[$normalizedRoomName])) {
-                                        $searchPattern = $searchPatterns[$normalizedRoomName];
-                                    } else {
-                                        $searchPattern = $roomType;
-                                        foreach ($searchPatterns as $key => $pattern) {
-                                            if (strpos($normalizedRoomName, $key) !== false) {
-                                                $searchPattern = $pattern;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    $additionalImages = [];
-                                    $roomImages = [
-                                        'honeymoon' => ['honeymoonbathroom.jpg', 'honeymoonkitchen.jpg', 'honeymoonlivingarea.jpg'],
-                                        'penthouse' => ['penthousebathroom.jpg', 'penthousebedroom.jpg', 'penthouse kitchen.jpg'],
-                                        'bridalsuite' => ['bridalsuitebathroom.jpg', 'bridalsuitediningroom.jpg', 'bridalsuitebredroom.jpg'],
-                                        'kings' => ['kingsbathroom.jpg', 'kingskitchen.jpg'],
-                                        'queen' => ['queenbalcony.jpg', 'queenkitchen.jpg'],
-                                        'singleroom' => ['singleroombathroom.jpg', 'singleroomkitchen.jpg', 'singleroomworkarea.jpg'],
-                                        'doubleroom' => ['doubleroombathroom.jpg', 'doubleroomkitchen.jpg', 'doubleroombalcony.jpg'],
-                                        'suiteroom' => ['suiteroombalcony.jpg', 'suiteroomkitchen.jpg'],
-                                        'seaside' => ['seasidebathroom.jpg', 'seasidekitchen.jpg']
-                                    ];
-                                    if (isset($roomImages[$searchPattern])) {
-                                        foreach ($roomImages[$searchPattern] as $imageName) {
-                                            if (file_exists("../images/" . $imageName)) {
-                                                $additionalImages[] = "../images/" . $imageName;
-                                            }
-                                        }
-                                    } else {
-                                        $allImages = glob("../images/*.jpg");
-                                        foreach ($allImages as $imagePath) {
-                                            $imageName = strtolower(basename($imagePath));
-                                            if ($imageName != strtolower($room['room_image']) && strpos($imageName, $searchPattern) !== false) {
-                                                $additionalImages[] = $imagePath;
-                                            }
-                                        }
-                                    }
-                                    if (($searchPattern == 'honeymoon' || $searchPattern == 'kings' || $searchPattern == 'queen') && count($additionalImages) == 0) {
-                                        $allImages = glob("../images/*.jpg");
-                                        foreach ($allImages as $imagePath) {
-                                            if (basename($imagePath) != $room['room_image'] && strpos(basename($imagePath), $searchPattern) !== false) {
-                                                $additionalImages[] = $imagePath;
-                                            }
-                                        }
-                                    }
-                                    if (count($additionalImages) == 0) {
-                                        $genericImages = ['bathroom.jpg', 'kitchen.jpg', 'balcony.jpg', 'livingarea.jpg'];
-                                        foreach ($genericImages as $generic) {
-                                            $possible = glob("../images/*" . $generic);
-                                            if (!empty($possible)) {
-                                                $additionalImages[] = $possible[0];
-                                            }
-                                        }
-                                    }
-                                    // Indicators loop
-                                    for ($i = 0; $i < count($additionalImages) && $i < 3; $i++) {
-                                        echo '<button type="button" data-bs-target="#carousel-' . $room['id'] . '" data-bs-slide-to="' . ($i + 1) . '"></button>';
-                                    }
-                                    ?>
-                                </div>
-                                <div class="carousel-inner h-full">
-                                    <div class="carousel-item active h-full">
-                                        <img src="../images/<?php echo htmlspecialchars($room['room_image']); ?>"
-                                            class="d-block w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                                            alt="Main View">
-                                        <div class="absolute inset-0 bg-gradient-to-t    from-black/50 to-transparent"></div>
+                                <?php if (count($room_images) > 1): ?>
+                                    <div class="carousel-indicators mb-2">
+                                        <?php for ($i = 0; $i < count($room_images); $i++): ?>
+                                            <button type="button" data-bs-target="#carousel-<?php echo $room['id']; ?>"
+                                                data-bs-slide-to="<?php echo $i; ?>" <?php echo $i === 0 ? 'class="active"' : ''; ?>></button>
+                                        <?php endfor; ?>
                                     </div>
-                                    <?php foreach ($additionalImages as $index => $image):
-                                        if ($index < 3): ?>
-                                            <div class="carousel-item h-full">
-                                                <img src="<?php echo $image; ?>"
-                                                    class="d-block w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                                                    alt="Room View">
-                                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                                            </div>
-                                        <?php endif;
-                                    endforeach; ?>
+                                <?php endif; ?>
+                                <div class="carousel-inner h-full">
+                                    <?php foreach ($room_images as $index => $image): ?>
+                                        <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?> h-full">
+                                            <img src="../images/<?php echo htmlspecialchars(trim($image)); ?>"
+                                                class="d-block w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                                alt="<?php echo $index === 0 ? 'Main View' : 'Room View ' . ($index + 1); ?>"
+                                                onerror="this.src='../images/default-room.jpg'">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
-                                <button class="carousel-control-prev z-20" type="button"
-                                    data-bs-target="#carousel-<?php echo $room['id']; ?>" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon transform scale-75" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next z-20" type="button"
-                                    data-bs-target="#carousel-<?php echo $room['id']; ?>" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon transform scale-75" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+                                <?php if (count($room_images) > 1): ?>
+                                    <button class="carousel-control-prev z-20" type="button"
+                                        data-bs-target="#carousel-<?php echo $room['id']; ?>" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon transform scale-75" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next z-20" type="button"
+                                        data-bs-target="#carousel-<?php echo $room['id']; ?>" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon transform scale-75" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                <?php endif; ?>
                             </div>
                         <?php else: ?>
                             <img src="../images/default-room.jpg" class="w-full h-full object-cover" alt="Default Room">

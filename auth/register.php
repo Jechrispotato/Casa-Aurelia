@@ -54,7 +54,7 @@ $csrf_token = generate_csrf_token();
                         class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Username</label>
                     <div class="relative">
                         <input type="text" id="username" name="username"
-                            class="block w-full pl-5 pr-12 py-3.5 bg-gray-800 border-2 border-gray-700 rounded-2xl text-white placeholder-transparent focus:outline-none focus:bg-gray-800 focus:border-yellow-600 focus:ring-0 transition-all duration-300 peer font-medium"
+                            class="block w-full pl-8 pr-12 py-3.5 bg-gray-800 border-2 border-gray-700 rounded-2xl text-white placeholder-transparent focus:outline-none focus:bg-gray-800 focus:border-yellow-600 focus:ring-0 transition-all duration-300 peer font-medium"
                             placeholder="Username" pattern="^[a-zA-Z0-9_]+$" minlength="3" maxlength="30" required>
                         <div
                             class="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none text-gray-500 peer-focus:text-yellow-600 transition-colors">
@@ -71,7 +71,7 @@ $csrf_token = generate_csrf_token();
                         Address</label>
                     <div class="relative">
                         <input type="email" id="email" name="email"
-                            class="block w-full pl-5 pr-12 py-3.5 bg-gray-800 border-2 border-gray-700 rounded-2xl text-white placeholder-transparent focus:outline-none focus:bg-gray-800 focus:border-yellow-600 focus:ring-0 transition-all duration-300 peer font-medium"
+                            class="block w-full pl-8 pr-12 py-3.5 bg-gray-800 border-2 border-gray-700 rounded-2xl text-white placeholder-transparent focus:outline-none focus:bg-gray-800 focus:border-yellow-600 focus:ring-0 transition-all duration-300 peer font-medium"
                             placeholder="Email" required>
                         <div
                             class="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none text-gray-500 peer-focus:text-yellow-600 transition-colors">
@@ -87,7 +87,7 @@ $csrf_token = generate_csrf_token();
                         class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Password</label>
                     <div class="relative">
                         <input type="password" id="password" name="password"
-                            class="block w-full pl-5 pr-12 py-3.5 bg-gray-800 border-2 border-gray-700 rounded-2xl text-white placeholder-transparent focus:outline-none focus:bg-gray-800 focus:border-yellow-600 focus:ring-0 transition-all duration-300 peer font-medium"
+                            class="block w-full pl-8 pr-12 py-3.5 bg-gray-800 border-2 border-gray-700 rounded-2xl text-white placeholder-transparent focus:outline-none focus:bg-gray-800 focus:border-yellow-600 focus:ring-0 transition-all duration-300 peer font-medium"
                             placeholder="Password" minlength="8" required>
                         <button type="button"
                             class="absolute inset-y-0 right-0 pr-5 flex items-center z-20 text-gray-500 hover:text-gray-400 transition-colors cursor-pointer focus:outline-none"
@@ -109,7 +109,7 @@ $csrf_token = generate_csrf_token();
                         Password</label>
                     <div class="relative">
                         <input type="password" id="confirm_password" name="confirm_password"
-                            class="block w-full pl-5 pr-12 py-3.5 bg-gray-800 border-2 border-gray-700 rounded-2xl text-white placeholder-transparent focus:outline-none focus:bg-gray-800 focus:border-yellow-600 focus:ring-0 transition-all duration-300 peer font-medium"
+                            class="block w-full pl-8 pr-12 py-3.5 bg-gray-800 border-2 border-gray-700 rounded-2xl text-white placeholder-transparent focus:outline-none focus:bg-gray-800 focus:border-yellow-600 focus:ring-0 transition-all duration-300 peer font-medium"
                             placeholder="Confirm Password" required>
                         <button type="button"
                             class="absolute inset-y-0 right-0 pr-5 flex items-center z-20 text-gray-500 hover:text-gray-400 transition-colors cursor-pointer focus:outline-none"

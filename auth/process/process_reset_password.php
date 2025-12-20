@@ -19,19 +19,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validation
     if (empty($email) || empty($code) || empty($password) || empty($confirm_password)) {
         $_SESSION['error'] = "All fields are required.";
-        header("Location: reset_password.php");
+        header("Location: ../reset_password.php");
         exit;
     }
 
     if ($password !== $confirm_password) {
         $_SESSION['error'] = "Passwords do not match.";
-        header("Location: reset_password.php");
+        header("Location: ../reset_password.php");
         exit;
     }
 
     if (strlen($password) < 8) {
         $_SESSION['error'] = "Password must be at least 8 characters long.";
-        header("Location: reset_password.php");
+        header("Location: ../reset_password.php");
         exit;
     }
 
@@ -55,20 +55,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Clear reset email from session
             unset($_SESSION['reset_email']);
 
-            header("Location: login.php");
+            header("Location: ../login.php");
             exit;
         } else {
             $_SESSION['error'] = "Database error. Please try again.";
-            header("Location: reset_password.php");
+            header("Location: ../reset_password.php");
             exit;
         }
     } else {
         // Invalid or expired code
         $_SESSION['error'] = "Invalid or expired reset code. Please request a new one.";
-        header("Location: reset_password.php");
+        header("Location: ../reset_password.php");
         exit;
     }
 } else {
-    header("Location: reset_password.php");
+    header("Location: ../reset_password.php");
     exit;
 }

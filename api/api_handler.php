@@ -41,8 +41,13 @@ switch ($_SESSION['chat_state']) {
 
         // BOOKING
         if (strpos($choice, 'book') !== false || strpos($choice, 'reserv') !== false) {
-            $_SESSION['chat_state'] = 'AWAIT_CHECKIN_DATE';
-            send_response("Excellent! Let's get you booked. Please select your check-in date (YYYY-MM-DD), or type 'Cancel' to return to the main menu.");
+            // Check if user is logged in before starting booking process
+            if (!isset($_SESSION['user_id'])) {
+                send_response("To make a booking, you need to be logged in first. Please log in or create an account to continue.", ['Back to Menu']);
+            } else {
+                $_SESSION['chat_state'] = 'AWAIT_CHECKIN_DATE';
+                send_response("Excellent! Let's get you booked. Please select your check-in date (YYYY-MM-DD), or type 'Cancel' to return to the main menu.");
+            }
 
             // POLICIES
         } elseif (strpos($choice, 'polic') !== false || strpos($choice, 'term') !== false) {
@@ -317,30 +322,27 @@ switch ($_SESSION['chat_state']) {
 
     case 'AWAIT_CONFIRM':
         if (strtolower($input) === 'yes') {
-            if (!isset($_SESSION['user_id'])) {
-                send_response("You need to be logged in to confirm. Please log in.");
+            // User is already authenticated (checked at booking start)
+            $user_id = $_SESSION['user_id'];
+            $room_id = $_SESSION['chat_data']['room_id'];
+            // Get customer name from users table
+            $u_res = mysqli_query($conn, "SELECT username FROM users WHERE id = $user_id");
+            $u_row = mysqli_fetch_assoc($u_res);
+            $customer_name = $u_row['username'];
+
+            $check_in = $_SESSION['chat_data']['check_in'];
+            $check_out = $_SESSION['chat_data']['check_out'];
+            $total = $_SESSION['chat_data']['total_price'];
+
+            $sql = "INSERT INTO bookings (user_id, room_id, customer_name, check_in_date, check_out_date, total_price, status, created_at) 
+                    VALUES ($user_id, $room_id, '$customer_name', '$check_in', '$check_out', $total, 'pending', NOW())";
+
+            if (mysqli_query($conn, $sql)) {
+                $_SESSION['chat_state'] = 'START';
+                $_SESSION['chat_data'] = [];
+                send_response("Booking Confirmed! Your Reference ID is " . mysqli_insert_id($conn) . ". Thank you for choosing Casa Aurelia!");
             } else {
-                $user_id = $_SESSION['user_id'];
-                $room_id = $_SESSION['chat_data']['room_id'];
-                // Get customer name from users table
-                $u_res = mysqli_query($conn, "SELECT username FROM users WHERE id = $user_id");
-                $u_row = mysqli_fetch_assoc($u_res);
-                $customer_name = $u_row['username'];
-
-                $check_in = $_SESSION['chat_data']['check_in'];
-                $check_out = $_SESSION['chat_data']['check_out'];
-                $total = $_SESSION['chat_data']['total_price'];
-
-                $sql = "INSERT INTO bookings (user_id, room_id, customer_name, check_in_date, check_out_date, total_price, status, created_at) 
-                        VALUES ($user_id, $room_id, '$customer_name', '$check_in', '$check_out', $total, 'pending', NOW())";
-
-                if (mysqli_query($conn, $sql)) {
-                    $_SESSION['chat_state'] = 'START';
-                    $_SESSION['chat_data'] = [];
-                    send_response("Booking Confirmed! Your Reference ID is " . mysqli_insert_id($conn) . ". Thank you for choosing Casa Aurelia!");
-                } else {
-                    send_response("Error saving booking. Please try again.");
-                }
+                send_response("Error saving booking. Please try again.");
             }
         } elseif (strtolower($input) === 'no') {
             $_SESSION['chat_state'] = 'START';

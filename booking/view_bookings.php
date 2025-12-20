@@ -547,8 +547,9 @@ function getStatusBadge($status)
                                                                     class="btn btn-sm action-btn btn-edit">
                                                                     <i class="fas fa-edit"></i> Edit
                                                                 </a>
-                                                                <button type="button" class="btn btn-sm action-btn btn-cancel"
-                                                                    onclick="confirmCancel(<?php echo $booking['id']; ?>)">
+                                                                <button type="button"
+                                                                    class="btn btn-sm action-btn btn-cancel cancel-booking-btn"
+                                                                    data-booking-id="<?php echo $booking['id']; ?>" data-type="room">
                                                                     <i class="fas fa-times"></i> Cancel
                                                                 </button>
                                                             </div>
@@ -571,8 +572,10 @@ function getStatusBadge($status)
                                                                     class="btn btn-sm action-btn btn-edit">
                                                                     <i class="fas fa-edit"></i> Edit
                                                                 </a>
-                                                                <button type="button" class="btn btn-sm action-btn btn-cancel"
-                                                                    onclick="confirmCancelReservation(<?php echo $booking['id']; ?>, '<?php echo $type; ?>')">
+                                                                <button type="button"
+                                                                    class="btn btn-sm action-btn btn-cancel cancel-booking-btn"
+                                                                    data-booking-id="<?php echo $booking['id']; ?>"
+                                                                    data-type="<?php echo $type; ?>">
                                                                     <i class="fas fa-times"></i> Cancel
                                                                 </button>
                                                             </div>
@@ -620,18 +623,124 @@ function getStatusBadge($status)
     </div>
 </div>
 
-<script>
-    function confirmCancel(bookingId) {
-        if (confirm('Are you sure you want to cancel this booking?')) {
-            window.location.href = 'cancel_booking.php?id=' + bookingId;
-        }
+<!-- Cancellation Confirmation Modal -->
+<div class="modal fade" id="cancelConfirmModal" tabindex="-1" aria-labelledby="cancelModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"
+            style="background: #1f2937; border: 2px solid #d97706; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+            <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <h5 class="modal-title text-white" id="cancelModalTitle">
+                    <i class="fas fa-exclamation-triangle text-warning me-2"></i>Confirm Cancellation
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-white" id="cancelModalBody" style="padding: 25px; font-size: 1.1rem;">
+                Are you sure you want to cancel this booking?
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid rgba(255,255,255,0.1);">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 10px 20px;">
+                    <i class="fas fa-times me-1"></i>No, Keep It
+                </button>
+                <button type="button" class="btn btn-danger" id="confirmCancelBtn"
+                    style="padding: 10px 20px; background: #dc2626;">
+                    <i class="fas fa-check me-1"></i>Yes, Cancel Booking
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS to fix modal z-index -->
+<style>
+    /* Ensure modal appears above the custom navbar (z-index 9999) */
+    .modal-backdrop {
+        z-index: 10000 !important;
     }
-</script>
+
+    .modal {
+        z-index: 10001 !important;
+    }
+</style>
+
+<!-- Bootstrap JS (Required for Modal) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    function confirmCancelReservation(id, type) {
-        if (confirm('Are you sure you want to cancel this reservation?')) {
-            window.location.href = 'cancel_reservation.php?id=' + id + '&type=' + encodeURIComponent(type);
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('Initializing cancel booking system...');
+
+        // CRITICAL FIX: Move modal to body to prevent backdrop issues and nesting problems
+        const modalElement = document.getElementById('cancelConfirmModal');
+        if (modalElement) {
+            document.body.appendChild(modalElement);
+            console.log('Moved modal to document body');
         }
-    }
+
+        // Initialize Bootstrap Modal
+        const modal = new bootstrap.Modal(modalElement, {
+            backdrop: true,
+            keyboard: true,
+            focus: true
+        });
+
+        const modalBody = document.getElementById('cancelModalBody');
+        const confirmBtn = document.getElementById('confirmCancelBtn');
+
+        // Variables to store current cancellation details
+        let currentBookingId = null;
+        let currentType = null;
+
+        // Get all cancel buttons
+        const cancelButtons = document.querySelectorAll('.cancel-booking-btn');
+        console.log('Found ' + cancelButtons.length + ' cancel buttons');
+
+        // Attach click listener to each button
+        cancelButtons.forEach(function (button) {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation(); // Stop event bubbling
+
+                // Get data attributes
+                currentBookingId = button.getAttribute('data-booking-id');
+                currentType = button.getAttribute('data-type');
+
+                console.log('Cancel requested for ID: ' + currentBookingId + ', Type: ' + currentType);
+
+                if (!currentBookingId) {
+                    alert('Error: Booking ID not found');
+                    return;
+                }
+
+                // Update modal message based on type
+                const message = currentType === 'room'
+                    ? 'Are you sure you want to cancel this room booking?'
+                    : 'Are you sure you want to cancel this ' + (currentType || 'reservation') + ' reservation?';
+
+                if (modalBody) modalBody.textContent = message;
+
+                // Show the modal
+                modal.show();
+            });
+        });
+
+        // Handle "Yes, Cancel Booking" button click
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', function () {
+                console.log('Confirmed cancellation for ID: ' + currentBookingId);
+
+                // Hide modal
+                modal.hide();
+
+                // Redirect logic
+                if (currentType === 'room') {
+                    window.location.href = 'cancel_booking.php?id=' + encodeURIComponent(currentBookingId);
+                } else if (currentType === 'dining' || currentType === 'spa') {
+                    window.location.href = 'cancel_reservation.php?id=' + encodeURIComponent(currentBookingId) + '&type=' + encodeURIComponent(currentType);
+                } else {
+                    alert('Error: Invalid booking type: ' + currentType);
+                }
+            });
+        }
+    });
 </script>
